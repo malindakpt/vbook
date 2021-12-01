@@ -1,11 +1,14 @@
 import { Login } from './components/presentational/login/Login';
+import './config/firebase';
+// import { useEffect } from 'react';
 
-function App() {
+export const App = () => {
+  // useEffect(() => {
+
+  // }, [])
   return (
     <div className="App">
       <Login />
     </div>
   );
-}
-
-export default App;
+};
