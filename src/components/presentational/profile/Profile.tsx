@@ -1,10 +1,10 @@
-import classes from './Google.module.scss';
+import classes from './Profile.module.scss';
 
 interface Props {
   name: string;
   imageUrl: string;
 }
-export const ProfilePicture = ({ name, imageUrl }: Props) => {
+export const Profile = ({ name, imageUrl }: Props) => {
   return (
     <div className={classes.body}>
       <img alt="profile picture" src={imageUrl} />
