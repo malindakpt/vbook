@@ -2,12 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { RootState, AppThunk } from '../store';
 import { fetchVehicleTypes } from '../../dataAPI/metaAPI';
 import { MetaState } from '../../types/interfaces/MetaState';
+import { getState } from '../storage';
 
-const initialState: MetaState = {
-  status: 'idle',
-  vehicleTypes: []
-};
+// const initialState: MetaState = {
+//   status: 'idle',
+//   vehicleTypes: []
+// };
 
+const initialState: MetaState = getState();
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
@@ -50,6 +52,16 @@ const counterSlice = createSlice({
       })
       .addCase(vehicleTypesAsync.fulfilled, (state, action) => {
         state.status = 'idle';
+        // state.value += action.payload;
+        console.log(action);
+      })
+      .addCase(vehicleTypesAsync.rejected, (state) => {
+        state.status = 'idle';
+        // state.value += action.payload;
+        // console.log(action);
+      })
+      .addDefaultCase((state, action) => {
+        state.status = 'loading';
         // state.value += action.payload;
         console.log(action);
       });
