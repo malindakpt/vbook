@@ -19,3 +19,11 @@ export const fetchVehicleTypes = () => {
     )
   );
 };
+
+export const getName = () => {
+  return new Promise<string>((resolve) => setTimeout(() => resolve('Malinda'), 500));
+};
+
+export const getMetaVersion = () => {
+  return new Promise<string>((resolve) => setTimeout(() => resolve('1.0.0'), 500));
+};

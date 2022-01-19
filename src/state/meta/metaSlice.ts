@@ -2,14 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { RootState, AppThunk } from '../store';
 import { fetchVehicleTypes } from '../../dataAPI/metaAPI';
 import { MetaState } from '../../types/interfaces/MetaState';
-import { getState } from '../storage';
+import { LocalStorage } from '../localStorage';
 
 // const initialState: MetaState = {
 //   status: 'idle',
 //   vehicleTypes: []
 // };
 
-const initialState: MetaState = getState();
+const initialState: MetaState = LocalStorage.getState();
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
@@ -17,10 +17,15 @@ const initialState: MetaState = getState();
 // typically used to make async requests.
 export const vehicleTypesAsync = createAsyncThunk('meta/vehicleTypes', async () => {
   const response = await fetchVehicleTypes();
-  // console.log(thunkAPI);
-  // The value we return becomes the `fulfilled` action payload
   return response;
 });
+
+// export const fetchName = createAsyncThunk('meta/getName', async () => {
+//   const response = await getName();
+//   return response;
+// });
+
+// fetchName.re
 
 const counterSlice = createSlice({
   name: 'counter',
@@ -35,7 +40,7 @@ const counterSlice = createSlice({
     //   // state.value += 1;
     // },
     // decrement: (state) => {
-    //   state.value -= 1;
+    //   state. -= 1;
     // },
     // // Use the PayloadAction type to declare the contents of `action.payload`
     // incrementByAmount: (state, action: PayloadAction<number>) => {
