@@ -13,7 +13,7 @@ export const isMetaUpdated = () => {
         }
       })
       .catch(() => {
-        resolve(false);
+        resolve(true);
       });
   });
 };

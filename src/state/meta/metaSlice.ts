@@ -16,8 +16,8 @@ const initialState: MetaState = LocalStorage.getState();
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
 export const vehicleTypesAsync = createAsyncThunk('meta/vehicleTypes', async () => {
-  const response = await fetchVehicleTypes();
-  return response;
+  const metaData = await fetchVehicleTypes();
+  return metaData;
 });
 
 // export const fetchName = createAsyncThunk('meta/getName', async () => {
