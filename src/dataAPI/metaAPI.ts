@@ -7,7 +7,7 @@ export function fetchCount(amount = 1) {
   );
 }
 
-export const fetchVehicleTypes = () => {
+export const fetchMetaData = () => {
   return new Promise<MetaState>((resolve) =>
     setTimeout(
       () =>

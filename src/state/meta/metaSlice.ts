@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { RootState, AppThunk } from '../store';
-import { fetchVehicleTypes } from '../../dataAPI/metaAPI';
+import { fetchMetaData } from '../../dataAPI/metaAPI';
 import { MetaState } from '../../types/interfaces/MetaState';
 import { LocalStorage } from '../localStorage';
 
@@ -15,8 +15,8 @@ const initialState: MetaState = LocalStorage.getState();
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
-export const vehicleTypesAsync = createAsyncThunk('meta/vehicleTypes', async () => {
-  const metaData = await fetchVehicleTypes();
+export const vehicleTypesAsync = createAsyncThunk('meta/metaData', async () => {
+  const metaData = await fetchMetaData();
   return metaData;
 });
 
@@ -56,8 +56,9 @@ const counterSlice = createSlice({
         console.log(action);
       })
       .addCase(vehicleTypesAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        // state.value += action.payload;
+        state = action.payload;
+        console.log('Network call');
+        LocalStorage.persist(LocalStorage.META, action.payload);
         console.log(action);
       })
       .addCase(vehicleTypesAsync.rejected, (state) => {

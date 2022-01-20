@@ -1,10 +1,10 @@
 export class LocalStorage {
-  public static META_VERSION = 'META_VERSION';
+  public static META = 'META';
   public static STATE = 'STATE';
 
-  public static persist = (state: any) => {
+  public static persist = (key: string, state: any) => {
     const str = JSON.stringify(state);
-    localStorage.setItem(LocalStorage.STATE, str);
+    localStorage.setItem(key, str);
   };
 
   public static getState = () => {
@@ -15,5 +15,14 @@ export class LocalStorage {
   public static getString = (key: string) => {
     const str = localStorage.getItem(key);
     return str;
+  };
+
+  public static getObject = <T>(key: string): T | null => {
+    const str = localStorage.getItem(key);
+    if (str) {
+      const obj: T = JSON.parse(str);
+      return obj;
+    }
+    return null;
   };
 }
