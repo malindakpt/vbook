@@ -42,7 +42,7 @@ export const deleteDocument = (entityName: Entity, id: string) =>
       });
   });
 
-export const addDocWithId = <T>(entityName: Entity, id: string, obj: T) =>
+export const addDocumentWithId = <T>(entityName: Entity, id: string, obj: T) =>
   new Promise((resolve, reject) => {
     const saveObj = { ...obj, createdAt: new Date().getTime() };
     // @ts-ignore
@@ -78,7 +78,7 @@ export const updateDocument = (entityName: Entity, id: string, obj: any) =>
       });
   });
 
-export const addOrUpdate = <T>(entityName: Entity, id: string, obj: T) =>
+export const addOrUpdateDocument = <T>(entityName: Entity, id: string, obj: T) =>
   new Promise((resolve, reject) => {
     const saveObj = { ...obj, updatedAt: new Date().getTime() };
 
@@ -93,7 +93,7 @@ export const addOrUpdate = <T>(entityName: Entity, id: string, obj: T) =>
       });
   });
 
-export const getDocsWithProps = <T>(
+export const getDocumentsWithProps = <T>(
   entityName: Entity,
   conditions: Partial<T>,
   showLoading: boolean = true
@@ -143,7 +143,7 @@ export const getDocsWithProps = <T>(
       });
   });
 
-export const getDocWithId = <T>(
+export const getDocumentWithId = <T>(
   entityName: Entity,
   id: string,
   showLoading: boolean = true
