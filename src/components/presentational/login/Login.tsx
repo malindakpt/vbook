@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 import { FC } from 'react';
 // import { Dispatch } from '@reduxjs/toolkit';
 // import { fetchName } from '../../../state/meta/metaSlice';
+// @ts-ignore
 import { RootState } from '../../../state/store';
 
 export type LoginProps = typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
-const Login: FC<LoginProps> = (prop: LoginProps) => {
+const Login: FC<LoginProps> = () => {
   return (
     <div className={classes.red}>
-      {prop.name}
       <Google />
     </div>
   );

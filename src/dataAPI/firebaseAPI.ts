@@ -7,7 +7,8 @@ import {
   doc,
   deleteDoc,
   setDoc,
-  updateDoc
+  updateDoc,
+  Timestamp
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -17,7 +18,7 @@ let setLoading = (loading: boolean) => {
 // export const addDoc = ()
 export const addDocument = <T>(entityName: Entity, obj: T) =>
   new Promise<string>((resolve, reject) => {
-    const saveObj = { ...obj, createdAt: new Date().getTime() };
+    const saveObj = { ...obj, updated: Timestamp.now() };
     // @ts-ignore
     delete saveObj.id; // Allow id auto generation and remove exsting id params
     addDoc(collection(db, entityName), saveObj)
@@ -44,7 +45,7 @@ export const deleteDocument = (entityName: Entity, id: string) =>
 
 export const addDocumentWithId = <T>(entityName: Entity, id: string, obj: T) =>
   new Promise((resolve, reject) => {
-    const saveObj = { ...obj, createdAt: new Date().getTime() };
+    const saveObj = { ...obj, updated: Timestamp.now() };
     // @ts-ignore
     delete saveObj.id; // Allow id auto generation and remove exsting id params
 
@@ -62,7 +63,7 @@ export const addDocumentWithId = <T>(entityName: Entity, id: string, obj: T) =>
 
 export const updateDocument = (entityName: Entity, id: string, obj: any) =>
   new Promise((resolve, reject) => {
-    const saveObj = { ...obj, updatedAt: new Date().getTime() };
+    const saveObj = { ...obj, updated: Timestamp.now() };
     // @ts-ignore
     delete saveObj.id; // Allow id auto generation and remove exsting id params
 
@@ -80,7 +81,7 @@ export const updateDocument = (entityName: Entity, id: string, obj: any) =>
 
 export const addOrUpdateDocument = <T>(entityName: Entity, id: string, obj: T) =>
   new Promise((resolve, reject) => {
-    const saveObj = { ...obj, updatedAt: new Date().getTime() };
+    const saveObj = { ...obj, updated: Timestamp.now() };
 
     const ref = doc(db, entityName, id);
     setDoc(ref, saveObj, { merge: true })

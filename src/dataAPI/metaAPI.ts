@@ -12,8 +12,6 @@ export const fetchMetaData = () => {
     setTimeout(
       () =>
         resolve({
-          name: 'name',
-          status: 'idle',
           vehicleTypes: [
             { id: '0', label: 'Car' },
             { id: '1', label: 'Van' }
