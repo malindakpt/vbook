@@ -15,7 +15,7 @@ export const withScroll = (Wrapped: React.FC<Props>, useData: any) => {
     const [ready, setReady] = useState(false);
     const [baseQueryParams, setBaseQueryParams] = useState<DataApiArgs>({
       url: '',
-      params: { page: 1, limit: 50 },
+      params: { page: 1, limit: 50 }
     });
 
     const { data, isFetching } = useData(ready ? baseQueryParams : undefined);
@@ -56,15 +56,12 @@ export const withScroll = (Wrapped: React.FC<Props>, useData: any) => {
       // `rootMargin` is passed to `IntersectionObserver`.
       // We can use it to trigger 'onLoadMore' when the sentry comes near to become
       // visible, instead of becoming fully visible on the screen.
-      rootMargin: '0px 0px 400px 0px',
+      rootMargin: '0px 0px 400px 0px'
     });
 
     return (
       <>
-        <Wrapped
-          data={data?.arr}
-          onQueryParamChange={handleQueryParamChange}
-        ></Wrapped>
+        <Wrapped data={data?.arr} onQueryParamChange={handleQueryParamChange}></Wrapped>
         {(isFetching || hasNext) && (
           <div ref={sentryRef}>
             <div>Loader</div>

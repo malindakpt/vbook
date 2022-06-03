@@ -19,7 +19,7 @@ export interface Props {
   onQueryParamChange: (params: any) => void;
 }
 
-const ArtistSearch: React.FC<Props> = ({ data, onQueryParamChange }: Props) => {
+const ArtistSearch: React.FC<Props> = ({ data }: Props) => {
   // TODO: introduce a debounce method to avoid unnecessary server requests
 
   // const handleChange = (e: any) => {
@@ -29,20 +29,18 @@ const ArtistSearch: React.FC<Props> = ({ data, onQueryParamChange }: Props) => {
 
   return (
     <div>
-
       {data?.length > 0 ? (
-         <div>
+        <div>
           {data?.map((ele: any) => (
             <div key={ele.url}>
               <div>
-                <div>{ele.name}
-                  </div>
+                <div>{ele.name}</div>
               </div>
             </div>
           ))}
-         </div>
+        </div>
       ) : (
-          <div>Logo</div>
+        <div>Logo</div>
       )}
     </div>
   );

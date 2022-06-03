@@ -7,7 +7,11 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     searchArtists: builder.query({
       // TODO: If args are undefined, request should not sent to the server
-      query: (args: FetchArgs) => getURL('artist.search', `artist=${args?.params?.name}&page=${args?.params?.page}&limit=${args?.params?.limit}`),
+      query: (args: FetchArgs) =>
+        getURL(
+          'artist.search',
+          `artist=${args?.params?.name}&page=${args?.params?.page}&limit=${args?.params?.limit}`
+        ),
       transformResponse: (response: { results: any }, meta, arg) => {
         if (arg) {
           const newData = response?.results?.artistmatches?.artist ?? [];
@@ -21,10 +25,14 @@ export const apiSlice = createApi({
             totalSize: 0
           };
         }
-      },
+      }
     }),
     topAlbums: builder.query({
-      query: (args: FetchArgs) => getURL('artist.gettopalbums', `mbid=${args?.params?.mbid}&page=${args?.params?.page}&limit=${args?.params?.limit}`),
+      query: (args: FetchArgs) =>
+        getURL(
+          'artist.gettopalbums',
+          `mbid=${args?.params?.mbid}&page=${args?.params?.page}&limit=${args?.params?.limit}`
+        ),
       transformResponse: (response: { topalbums: any }, meta, arg) => {
         if (arg) {
           const newData = response?.topalbums?.album ?? [];
@@ -40,10 +48,11 @@ export const apiSlice = createApi({
             totalSize: 0
           };
         }
-      },
+      }
     }),
     albumDetails: builder.query({
-      query: (args: FetchArgs) => getURL('album.getinfo', `artist=${args?.params?.artist}&album=${args?.params?.album}`),
+      query: (args: FetchArgs) =>
+        getURL('album.getinfo', `artist=${args?.params?.artist}&album=${args?.params?.album}`),
       transformResponse: (response: { album: any }, meta, arg) => {
         if (arg) {
           const newData = response?.album?.tracks?.track ?? [];
@@ -58,11 +67,10 @@ export const apiSlice = createApi({
             totalSize: 0
           };
         }
-      },
-    }),
-  }),
+      }
+    })
+  })
 });
-
 
 export const { useSearchArtistsQuery, useTopAlbumsQuery, useAlbumDetailsQuery } = apiSlice;
 
