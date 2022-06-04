@@ -3,11 +3,15 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import ArtistSearch from './components/ArtistSearch/ArtistSearch';
+import { Router } from './routes/Router';
+import { Link } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <ArtistSearch />
+      {/* <Link to="/login">Login</Link> */}
+      <Router />
+      {/* <ArtistSearch />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
@@ -48,7 +52,7 @@ function App() {
             React Redux
           </a>
         </span>
-      </header>
+      </header> */}
     </div>
   );
 }
