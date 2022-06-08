@@ -18,12 +18,13 @@ const persistConfig = {
   storage
 };
 
-const persistedReducer = persistReducer(persistConfig, counterReducer);
+const persistedAppReducer = persistReducer(persistConfig, counterReducer);
+const persistedApiReducer = persistReducer(persistConfig, apiReducer);
 
 export const store = configureStore({
   reducer: {
-    counter: persistedReducer,
-    api: apiReducer
+    counter: persistedAppReducer,
+    api: persistedApiReducer
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware()
   middleware: (getDefaultMiddleware) =>
