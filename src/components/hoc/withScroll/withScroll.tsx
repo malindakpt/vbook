@@ -12,7 +12,7 @@ export interface DataApiArgs extends FetchArgs {
 export const withScroll = (Wrapped: React.FC<Props>, useData: any) => {
   const ScrollableComponent = () => {
     let hasNext = false;
-    const [ready, setReady] = useState(false);
+    const [ready, setReady] = useState(true);
     const [baseQueryParams, setBaseQueryParams] = useState<DataApiArgs>({
       url: '',
       params: { page: 1, limit: 50 }
