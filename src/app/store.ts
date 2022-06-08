@@ -1,4 +1,5 @@
-import { configureStore, ThunkAction, Action, createStore } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import appReducer from '../features/counter/appSlice';
 import counterReducer from '../features/counter/counterSlice';
 import {
   persistStore,
@@ -18,13 +19,15 @@ const persistConfig = {
   storage
 };
 
-const persistedAppReducer = persistReducer(persistConfig, counterReducer);
+const persistedAppReducer = persistReducer(persistConfig, appReducer);
+const persistedCounterReducer = persistReducer(persistConfig, counterReducer);
 const persistedApiReducer = persistReducer(persistConfig, apiReducer);
 
 export const store = configureStore({
   reducer: {
-    counter: persistedAppReducer,
-    api: persistedApiReducer
+    app: persistedAppReducer,
+    api: persistedApiReducer,
+    counter: persistedCounterReducer
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware()
   middleware: (getDefaultMiddleware) =>
