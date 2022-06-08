@@ -5,6 +5,7 @@ import './App.css';
 import ArtistSearch from './components/ArtistSearch/ArtistSearch';
 import { Router } from './routes/Router';
 import { Link } from 'react-router-dom';
+import './config/firebase';
 
 function App() {
   return (
