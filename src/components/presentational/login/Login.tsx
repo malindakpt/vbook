@@ -1,12 +1,24 @@
 import classes from './Login.module.scss';
-import { Google } from './google/Google';
-import { FaceBookLogin } from './facebook/FaceBookLogin';
+import SocialButton from '../../hoc/socialButton';
 
 export const Login = () => {
+  const handleSocialLogin = (user: any) => {
+    console.log(user);
+  };
+
+  const handleSocialLoginFailure = (err: any) => {
+    console.error(err);
+  };
+
   return (
     <div className={classes.red}>
-      <Google />
-      <FaceBookLogin />
+      <SocialButton
+        provider="facebook"
+        appId="YOUR_APP_ID"
+        onLoginSuccess={handleSocialLogin}
+        onLoginFailure={handleSocialLoginFailure}>
+        Login with Facebook
+      </SocialButton>
     </div>
   );
 };
