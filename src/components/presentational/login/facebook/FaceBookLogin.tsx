@@ -2,12 +2,8 @@
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 export const FaceBookLogin = () => {
-  const componentClicked = () => {
-    console.log('component clicked');
-  };
-
-  const responseFacebook = () => {
-    console.log('component clicked');
+  const responseFacebook = (e: any) => {
+    console.log('facabook', e);
   };
   return (
     <div>

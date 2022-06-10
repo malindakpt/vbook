@@ -1,8 +1,8 @@
-import classes from './Google.module.scss';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
+import './config';
 
-export const Google = () => {
+export const GoogleLogin = () => {
   const onLoginClick = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
@@ -39,7 +39,7 @@ export const Google = () => {
   };
 
   return (
-    <div className={classes.red}>
+    <div>
       Google
       <button onClick={onLoginClick}>Google Login</button>
     </div>
