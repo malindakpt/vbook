@@ -6,11 +6,9 @@ import { persistor, store } from './app/store';
 function App() {
   return (
     <div>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Router />
-        </PersistGate>
-      </Provider>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router />
+      </PersistGate>
     </div>
   );
 }

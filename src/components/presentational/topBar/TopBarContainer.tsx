@@ -1,15 +1,13 @@
 import { Action, Dispatch } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
-import { AppState } from '../../../state/appSlice';
+import { RootState } from '../../../app/store';
 import { TopBar } from './TopBar';
 
-// const mapStateToProps = (state: AppState) => {
-//   return {
-//     user: state.user
-//   };
-// };
-
-const mapStateToProps = (state: AppState) => state.user;
+const mapStateToProps = (state: RootState) => {
+  return {
+    user: state.app.user
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch<Action<unknown>>, ownProps: any) => {
   return {
