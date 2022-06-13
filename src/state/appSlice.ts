@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
-import { User } from '../../entities/User';
-import { fetchCount } from './counterAPI';
+import { RootState, AppThunk } from '../app/store';
+import { User } from '../entities/User';
+import { fetchCount } from '../features/counter/counterAPI';
 
 export interface AppState {
   user?: User;

@@ -1,7 +1,7 @@
 import { Action, Dispatch } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
 import { User } from '../../../entities/User';
-import { AppState, setUser } from '../../../features/counter/appSlice';
+import { AppState, setUser } from '../../../state/appSlice';
 import { Login } from './Login';
 
 const mapStateToProps = (state: AppState) => {

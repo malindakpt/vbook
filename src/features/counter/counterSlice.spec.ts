@@ -3,7 +3,7 @@ import counterReducer, {
   increment,
   decrement,
   incrementByAmount,
-} from './appSlice';
+} from '../../state/appSlice';
 
 describe('counter reducer', () => {
   const initialState: AppState = {
