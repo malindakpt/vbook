@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action, createStore } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import appReducer from '../state/appSlice';
 import {
   persistStore,
@@ -13,13 +13,18 @@ import {
 import apiReducer from '../features/counter/apiSlice';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
-const persistConfig = {
-  key: 'root',
+const persistConfigApp = {
+  key: 'app',
   storage
 };
 
-const persistedAppReducer = persistReducer(persistConfig, appReducer);
-const persistedApiReducer = persistReducer(persistConfig, apiReducer);
+const persistConfigApi = {
+  key: 'api',
+  storage
+};
+
+const persistedAppReducer = persistReducer(persistConfigApp, appReducer);
+const persistedApiReducer = persistReducer(persistConfigApi, apiReducer);
 
 export const store = configureStore({
   reducer: {
