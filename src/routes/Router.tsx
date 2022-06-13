@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ArtistSearch from '../components/ArtistSearch/ArtistSearch';
-import { Login } from '../components/presentational/login/Login';
+import Login from '../components/presentational/login/LoginContainer';
 
 export const Router = () => {
   return (
@@ -9,7 +9,7 @@ export const Router = () => {
       <br></br>
       <Link to="/page">Sample Page</Link>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login isEnabled />} />
         <Route path="/page" element={<ArtistSearch />} />
         <Route path="/" element={<div>Root</div>} />
       </Routes>

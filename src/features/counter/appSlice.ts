@@ -2,12 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import { fetchCount } from './counterAPI';
 
-export interface CounterState {
+export interface AppState {
+  userName?: string;
   value: number;
   status: 'idle' | 'loading' | 'failed';
 }
 
-const initialState: CounterState = {
+const initialState: AppState = {
+  // userName: '',
   value: 0,
   status: 'idle'
 };
@@ -23,11 +25,14 @@ export const incrementAsync = createAsyncThunk('counter/fetchCount', async (amou
   return response.data;
 });
 
-export const counterSlice = createSlice({
+export const appSlice = createSlice({
   name: 'counter',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
+    setUser: (state, action: PayloadAction<string>) => {
+      state.userName = action.payload;
+    },
     increment: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
@@ -60,7 +65,7 @@ export const counterSlice = createSlice({
   }
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { setUser, increment, decrement, incrementByAmount } = appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -78,4 +83,4 @@ export const incrementIfOdd =
     }
   };
 
-export default counterSlice.reducer;
+export default appSlice.reducer;
