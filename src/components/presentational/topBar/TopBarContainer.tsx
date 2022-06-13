@@ -1,6 +1,7 @@
 import { Action, Dispatch } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
 import { RootState } from '../../../app/store';
+import { resetUser } from '../../../state/appSlice';
 import { TopBar } from './TopBar';
 
 const mapStateToProps = (state: RootState) => {
@@ -12,6 +13,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch<Action<unknown>>, ownProps: any) => {
   return {
     // setUser: (user: User) => dispatch(setUser(user))
+    logout: () => dispatch(resetUser())
   };
 };
 

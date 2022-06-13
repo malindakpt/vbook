@@ -7,7 +7,6 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <TopBarContainer />
-      <Link to="/login">Login</Link>
       <br></br>
       <Link to="/page">Sample Page</Link>
       <Routes>

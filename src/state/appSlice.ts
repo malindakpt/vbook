@@ -34,6 +34,9 @@ export const appSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    resetUser: (state) => {
+      state.user = undefined;
+    },
     increment: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
@@ -66,7 +69,7 @@ export const appSlice = createSlice({
   }
 });
 
-export const { setUser, increment, decrement, incrementByAmount } = appSlice.actions;
+export const { setUser, resetUser, increment, decrement, incrementByAmount } = appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

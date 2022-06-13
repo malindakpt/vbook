@@ -6,11 +6,7 @@ import { FC, useEffect } from 'react';
 import { Props } from './LoginContainer';
 import { User } from '../../../entities/User';
 
-export const Login: FC<Props> = ({ isEnabled, setUser }) => {
-  useEffect(() => {
-    console.log(isEnabled);
-  }, []);
-
+export const Login: FC<Props> = ({ setUser }) => {
   const handleLoginSuccess = (user: User) => {
     const { ...object } = user;
     setUser(object);
