@@ -1,17 +1,18 @@
 import { Action, Dispatch } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
+import { User } from '../../../entities/User';
 import { AppState, setUser } from '../../../features/counter/appSlice';
 import { Login } from './Login';
 
 const mapStateToProps = (state: AppState) => {
   return {
-    isLoggedIn: state.userName !== undefined
+    isLoggedIn: state.user !== undefined
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Action<unknown>>, ownProps: any) => {
   return {
-    setUser: () => dispatch(setUser(ownProps.todoId))
+    setUser: (user: User) => dispatch(setUser(user))
   };
 };
 

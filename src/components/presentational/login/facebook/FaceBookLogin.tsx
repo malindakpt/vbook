@@ -1,9 +1,15 @@
 // import FacebookLogin from 'react-facebook-login';
+import { FC } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { User } from '../../../../entities/User';
 
-export const FaceBookLogin = () => {
+interface Props {
+  onLoginSuccess: (user: User) => void;
+}
+export const FaceBookLogin: FC<Props> = ({ onLoginSuccess }) => {
   const responseFacebook = (e: any) => {
     console.log('facabook', e);
+    onLoginSuccess(new User(e.id, e.email, e.name));
   };
   return (
     <div>

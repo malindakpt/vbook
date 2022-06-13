@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
+import { User } from '../../entities/User';
 import { fetchCount } from './counterAPI';
 
 export interface AppState {
-  userName?: string;
+  user?: User;
   value: number;
   status: 'idle' | 'loading' | 'failed';
 }
@@ -30,8 +31,8 @@ export const appSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    setUser: (state, action: PayloadAction<string>) => {
-      state.userName = action.payload;
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
     },
     increment: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
