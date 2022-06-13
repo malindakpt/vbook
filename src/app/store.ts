@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action, createStore } from '@reduxjs/toolkit';
-import counterReducer from '../state/appSlice';
+import appReducer from '../state/appSlice';
 import {
   persistStore,
   persistReducer,
@@ -18,12 +18,12 @@ const persistConfig = {
   storage
 };
 
-const persistedAppReducer = persistReducer(persistConfig, counterReducer);
+const persistedAppReducer = persistReducer(persistConfig, appReducer);
 const persistedApiReducer = persistReducer(persistConfig, apiReducer);
 
 export const store = configureStore({
   reducer: {
-    counter: persistedAppReducer,
+    app: persistedAppReducer,
     api: persistedApiReducer
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware()
