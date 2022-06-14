@@ -6,6 +6,7 @@ import { Props } from './LoginContainer';
 import { User } from '../../../entities/User';
 import styled from 'styled-components';
 import bg from '../../../assets/bg.jpg';
+import classes from './Login.module.scss';
 
 export const Login: FC<Props> = ({ setUser }) => {
   const handleLoginSuccess = (user: User) => {
@@ -13,19 +14,13 @@ export const Login: FC<Props> = ({ setUser }) => {
     setUser(object);
   };
 
-  const Container = styled.div`
-    background: url(${bg});
-    background-repeat: no-repeat;
-    background-size: 100vw calc(100vh);
-    width: 100vw;
-    height: 100vh;
-  `;
-
   return (
-    <Container>
-      <FaceBookLogin onLoginSuccess={handleLoginSuccess} />
-      <GoogleLogin />
-      <PasswordLogin />
-    </Container>
+    <div className={classes.container}>
+      <div className={classes.loginTypes}>
+        <FaceBookLogin onLoginSuccess={handleLoginSuccess} />
+        <GoogleLogin />
+        <PasswordLogin />
+      </div>
+    </div>
   );
 };
