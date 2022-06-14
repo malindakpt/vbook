@@ -2,6 +2,8 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { useEffect } from 'react';
+import classes from './GoogleLogin.module.scss';
+import logo from '../../../../assets/google.png';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBPcsMrQkeoSX5wTT0WxmqsxLX5AEjrlQ8',
@@ -54,8 +56,10 @@ export const GoogleLogin = () => {
   };
 
   return (
-    <div>
-      <button onClick={onLoginClick}>Google Login</button>
+    <div className={classes.box}>
+      <button onClick={onLoginClick} className={classes.google}>
+        <img src={logo}></img>Google Login
+      </button>
     </div>
   );
 };

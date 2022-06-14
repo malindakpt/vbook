@@ -1,0 +1,20 @@
+.box {
+    display: grid;
+    width: 100%;
+    place-items: center;
+    background: #f0f0f0;
+
+    .google {
+        height: 42px;
+        border: none;
+        font-size: 20px;
+        display: grid;
+        grid-template-columns: 25px auto;
+        place-items: center start;
+        grid-gap: 5px;
+
+        img {
+            width: 22px;
+        }
+    }
+}

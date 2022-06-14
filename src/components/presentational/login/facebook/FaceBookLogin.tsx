@@ -20,7 +20,7 @@ export const FaceBookLogin: FC<Props> = ({ onLoginSuccess }) => {
       callback={responseFacebook}
       render={(renderProps) => (
         <button className={classes.facebook} onClick={renderProps.onClick}>
-          Login with FaceBook
+          FaceBook Login
         </button>
       )}
     />
