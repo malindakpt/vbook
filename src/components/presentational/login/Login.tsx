@@ -1,10 +1,11 @@
 import { GoogleLogin } from './google/GoogleLogin';
 import { FaceBookLogin } from './facebook/FaceBookLogin';
-import { FaceBookLogin2 } from './facebook2/FaceBookLogin';
 import { PasswordLogin } from './password/PasswordLogin';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Props } from './LoginContainer';
 import { User } from '../../../entities/User';
+import styled from 'styled-components';
+import bg from '../../../assets/bg.jpg';
 
 export const Login: FC<Props> = ({ setUser }) => {
   const handleLoginSuccess = (user: User) => {
@@ -12,12 +13,19 @@ export const Login: FC<Props> = ({ setUser }) => {
     setUser(object);
   };
 
+  const Container = styled.div`
+    background: url(${bg});
+    background-repeat: no-repeat;
+    background-size: 100vw calc(100vh);
+    width: 100vw;
+    height: 100vh;
+  `;
+
   return (
-    <div>
-      {/* <FaceBookLogin2 /> */}
+    <Container>
       <FaceBookLogin onLoginSuccess={handleLoginSuccess} />
       <GoogleLogin />
       <PasswordLogin />
-    </div>
+    </Container>
   );
 };
