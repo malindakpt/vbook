@@ -85,7 +85,6 @@ export const PasswordLogin = () => {
   return (
     <NoPadding>
       <Collapse
-        defaultActiveKey={['1']}
         onChange={onChange}
         bordered={false}
         style={{ height: '42px', background: '#42904c' }}

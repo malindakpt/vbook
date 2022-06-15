@@ -4,8 +4,6 @@ import { PasswordLogin } from './password/PasswordLogin';
 import { FC } from 'react';
 import { Props } from './LoginContainer';
 import { User } from '../../../entities/User';
-import styled from 'styled-components';
-import bg from '../../../assets/bg.jpg';
 import classes from './Login.module.scss';
 
 export const Login: FC<Props> = ({ setUser }) => {
