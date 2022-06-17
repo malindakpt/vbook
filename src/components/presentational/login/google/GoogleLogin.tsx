@@ -1,9 +1,12 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import classes from './GoogleLogin.module.scss';
 import logo from '../../../../assets/google.png';
+import { LoginSubProps } from '../Login';
+import { User } from '../../../../entities/User';
+import { message } from 'antd';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBPcsMrQkeoSX5wTT0WxmqsxLX5AEjrlQ8',
@@ -15,7 +18,7 @@ const firebaseConfig = {
   measurementId: 'G-H65G0C8BD6'
 };
 
-export const GoogleLogin = () => {
+export const GoogleLogin: FC<LoginSubProps> = ({ onLoginSuccess }) => {
   useEffect(() => {
     initializeApp(firebaseConfig);
   }, []);
@@ -35,9 +38,16 @@ export const GoogleLogin = () => {
         // The signed-in user info.
         const user = result.user;
         // ...
-
-        console.log('token', token);
-        console.log('user', user);
+        if (user.email) {
+          const newUser = new User(user.uid, user.email, user.displayName ?? user.email, 'google');
+          onLoginSuccess(newUser);
+          console.log('token', token);
+          console.log('user', user);
+          message.success('User logged in5', 5);
+        } else {
+          console.log('user.email is null');
+          message.error('This account email is null', 10);
+        }
       })
       .catch((error) => {
         // Handle Errors here.

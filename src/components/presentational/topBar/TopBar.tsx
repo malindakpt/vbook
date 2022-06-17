@@ -1,36 +1,50 @@
+import { Avatar } from 'antd';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { User } from '../../../entities/User';
 import { CustomLink } from '../../styled/CustomLink';
+import { Div100 } from '../../styled/Div100';
 import { Props } from './TopBarContainer';
 
 const Container = styled.div`
   position: absolute;
   top: 0px;
-  display: flex;
-  justify-content: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center start;
   background: #00baff;
-  height: 31px;
+  height: 58px;
   width: 100vw;
   padding: 10px;
   color: white;
 `;
 
+const UserInfo = styled.div`
+  grid-gap: 5px;
+  grid-template-columns: auto 54px;
+  width: 100%;
+  display: grid;
+  place-items: center end;
+  text-align: end;
+`;
+
 export const TopBar: FC<Props> = ({ user, logout }) => {
   const renderUser = (user: User) => {
     return (
-      <div>
-        <div>{user.email}</div>
-        <div>{user.name}</div>
-        <button onClick={logout}>Logout</button>
-      </div>
+      <Div100>
+        <UserInfo>
+          <CustomLink to="/login">{user.name}</CustomLink>
+          <Avatar size="large" style={{ backgroundColor: 'orange' }}>
+            Sumudu
+          </Avatar>
+        </UserInfo>
+      </Div100>
     );
   };
 
   const renderWelCome = () => {
     return (
-      <div>
+      <div style={{ display: 'grid', placeItems: 'center end', width: '90%' }}>
         <CustomLink to="/login">Login</CustomLink>
       </div>
     );

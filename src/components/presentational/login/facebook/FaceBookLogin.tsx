@@ -2,14 +2,12 @@ import classes from './FaceBookLogin.module.scss';
 import { FC } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { User } from '../../../../entities/User';
+import { LoginSubProps } from '../Login';
 
-interface Props {
-  onLoginSuccess: (user: User) => void;
-}
-export const FaceBookLogin: FC<Props> = ({ onLoginSuccess }) => {
+export const FaceBookLogin: FC<LoginSubProps> = ({ onLoginSuccess }) => {
   const responseFacebook = (e: any) => {
     console.log('facabook', e);
-    onLoginSuccess(new User(e.id, e.email, e.name));
+    onLoginSuccess(new User(e.id, e.email, e.name, 'facebook'));
   };
   return (
     <FacebookLogin

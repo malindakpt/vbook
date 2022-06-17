@@ -1,12 +1,13 @@
 import { Action, Dispatch } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
+import { RootState } from '../../../app/store';
 import { User } from '../../../entities/User';
 import { AppState, setUser } from '../../../state/appSlice';
 import { Login } from './Login';
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: RootState) => {
   return {
-    isLoggedIn: state.user !== undefined
+    user: state.app.user
   };
 };
 
