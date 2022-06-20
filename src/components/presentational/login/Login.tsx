@@ -28,7 +28,7 @@ export const Login: FC<Props> = ({ setUser, user }) => {
         <div className={classes.loginTypes}>
           <FaceBookLogin onLoginSuccess={handleLoginSuccess} />
           <GoogleLogin onLoginSuccess={handleLoginSuccess} />
-          <PasswordLogin />
+          <PasswordLogin onLoginSuccess={handleLoginSuccess} />
         </div>
       )}
     </div>

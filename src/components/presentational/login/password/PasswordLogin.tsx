@@ -4,11 +4,15 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword
 } from 'firebase/auth';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Collapse } from 'antd';
 import classes from './PasswordLogin.module.scss';
 import styled from 'styled-components';
 import { Input, Button } from 'antd';
+import { getEmailError, getEmailOrPasswordError } from './util';
+import { showError, showInfo } from '../../../../util/util';
+import { LoginSubProps } from '../Login';
+import { User } from '../../../../entities/User';
 
 const NoPadding = styled.div`
   .ant-collapse > .ant-collapse-item > .ant-collapse-header {
@@ -21,7 +25,7 @@ const NoPadding = styled.div`
     place-items: center;
   }
 `;
-export const PasswordLogin = () => {
+export const PasswordLogin: FC<LoginSubProps> = ({ onLoginSuccess }) => {
   const { Panel } = Collapse;
 
   const onChange = (key: string | string[]) => {
@@ -32,54 +36,80 @@ export const PasswordLogin = () => {
   const [password, setPassword] = useState('');
 
   const createUser = () => {
-    console.log(email, password);
     const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        showInfo('A new user is added. Please login');
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        showError(errorMessage);
         // ..
       });
   };
 
   const login = () => {
-    console.log(email, password);
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
+    const error = getEmailOrPasswordError(email, password);
+
+    if (error) {
+      showError(error);
+    } else {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          if (user.email) {
+            const newUser = new User(
+              user.uid,
+              user.email,
+              user.displayName ?? user.email,
+              'google'
+            );
+            onLoginSuccess(newUser);
+          } else {
+            showError('This user does not include an email');
+          }
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          showError(errorMessage);
+          // ..
+        });
+    }
   };
 
   const resetPassword = () => {
-    console.log(email, password);
-    const auth = getAuth();
-    sendPasswordResetEmail(auth, email)
-      .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
-        console.log(userCredential);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
+    const error = getEmailError(email);
+
+    if (error) {
+      showError(error);
+    } else {
+      const auth = getAuth();
+      sendPasswordResetEmail(auth, email)
+        .then((userCredential) => {
+          // Signed in
+          // const user = userCredential.user;
+          console.log(userCredential);
+          showInfo('Password reset email sent. Please check your email inbox/spam/junk');
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          showError(errorMessage);
+          // ..
+        });
+    }
   };
 
   return (
@@ -103,35 +133,14 @@ export const PasswordLogin = () => {
           <Button block onClick={login} type="primary">
             Login
           </Button>
-          <Button block onClick={createUser}>
+          <Button type="link" block onClick={createUser}>
             Create User
           </Button>
-          <Button block onClick={resetPassword} danger>
+          <Button type="link" block onClick={resetPassword} danger>
             Reset password for this email
           </Button>
         </Panel>
       </Collapse>
     </NoPadding>
   );
-  // return (
-  //   <Collapse defaultActiveKey={['1']}>
-  //     <div>
-  //       <div>Password login</div>
-  //       <div>
-  //         <input onChange={(e: any) => setEmail(e.target.value)} value={email}></input>
-  //       </div>
-  //       <div>
-  //         <input
-  //           onChange={(e: any) => setPassword(e.target.value)}
-  //           value={password}
-  //           type="password"></input>
-  //       </div>
-  //       <div>
-  //         <button onClick={createUser}>Create User</button>
-  //         <button onClick={resetPassword}>Reset Password</button>
-  //         <button onClick={login}>Login</button>
-  //       </div>
-  //     </div>
-  //   </Collapse>
-  // );
 };
