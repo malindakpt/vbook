@@ -2,11 +2,11 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { FC, useEffect } from 'react';
-import classes from './GoogleLogin.module.scss';
 import logo from '../../../../assets/google.png';
 import { LoginSubProps } from '../Login';
 import { User } from '../../../../entities/User';
 import { message } from 'antd';
+import { ButtonLarge } from '../../../styled/ButtonLarge';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBPcsMrQkeoSX5wTT0WxmqsxLX5AEjrlQ8',
@@ -66,10 +66,10 @@ export const GoogleLogin: FC<LoginSubProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className={classes.box}>
-      <button onClick={onLoginClick} className={classes.google}>
-        <img src={logo}></img>Google Login
-      </button>
-    </div>
+    <ButtonLarge onClick={onLoginClick} color={'black'} backgroundColor={'#f0f0f0'}>
+      <div>
+        <img src={logo} style={{ width: '22px', marginRight: '10px' }}></img>Google Login
+      </div>
+    </ButtonLarge>
   );
 };

@@ -1,8 +1,8 @@
-import classes from './FaceBookLogin.module.scss';
 import { FC } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { User } from '../../../../entities/User';
 import { LoginSubProps } from '../Login';
+import { ButtonLarge } from '../../../styled/ButtonLarge';
 
 export const FaceBookLogin: FC<LoginSubProps> = ({ onLoginSuccess }) => {
   const responseFacebook = (e: any) => {
@@ -17,9 +17,9 @@ export const FaceBookLogin: FC<LoginSubProps> = ({ onLoginSuccess }) => {
       // onClick={componentClicked}
       callback={responseFacebook}
       render={(renderProps) => (
-        <button className={classes.facebook} onClick={renderProps.onClick}>
+        <ButtonLarge onClick={renderProps.onClick} color={'white'} backgroundColor={'#1259cc'}>
           FaceBook Login
-        </button>
+        </ButtonLarge>
       )}
     />
   );
