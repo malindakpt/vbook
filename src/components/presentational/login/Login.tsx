@@ -6,11 +6,15 @@ import { Props } from './LoginContainer';
 import { User } from '../../../entities/User';
 import classes from './Login.module.scss';
 import { ButtonLarge } from '../../styled/ButtonLarge';
+import { useNavigate } from 'react-router-dom';
 
 export const Login: FC<Props> = ({ setUser, user }) => {
+  const navigate = useNavigate();
+
   const handleLoginSuccess = (user: User) => {
     const { ...object } = user;
     setUser(object);
+    navigate('/');
   };
 
   const logout = () => {
