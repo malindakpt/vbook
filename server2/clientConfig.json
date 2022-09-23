@@ -1,0 +1,25 @@
+{
+  "default": {
+      "default": {
+          "projectId": "bd960758-11d8-40bd-9061-0a5f18db08fa",
+          "modelId": "bf8f0d76-bb5f-4b40-88cc-ee40fc8b41ff",
+          "usePointerLock": false,
+          "endpoint": "https://api.pureweb.io"
+      }
+  },
+  "twin-test": {
+      "default": {
+          "modelId": "bf8f0d76-bb5f-4b40-88cc-ee40fc8b41ff"
+      }
+  },
+  "omv-dev": {
+      "default": {
+          "modelId": "7a8a2feb-a589-4a00-9519-db32897e8b43"
+      }
+  },
+  "stena": {
+      "default": {
+          "modelId": "9c664dd3-acfd-4754-b90b-648aa188c6fd"
+      }
+  }
+}
