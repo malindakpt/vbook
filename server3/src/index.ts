@@ -1,20 +1,19 @@
-import { Sequelize } from 'sequelize';
+import { DB } from 'dbConnection/DBConnection';
+import { User } from '../../shared/src/index';
 
-console.log('start');
-
-const sequelize = new Sequelize('postgres', 'postgres', '123', {
-  host: 'localhost',
-  dialect:
-    'postgres' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-});
-
-const auth = async () => {
+const authenticateConnnection = async () => {
   try {
-    await sequelize.authenticate();
+    await DB.getInstance().authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 };
 
-auth();
+const db = new DB();
+authenticateConnnection();
+
+const user = new User('', 'asd');
+user.firstName = 'asdad';
+// const user = UsersModel.build({firstName: 'Malinda'});
+// UsersModel.create()
