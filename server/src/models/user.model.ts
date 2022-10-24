@@ -20,11 +20,14 @@ export const attributes = {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
   phone: {
-    type: DataTypes.STRING,
-    allowNull: true
+    type: DataTypes.NUMBER,
+    allowNull: true,
   },
   password: {
     type: DataTypes.STRING,
