@@ -1,13 +1,17 @@
-import { DataTypes } from 'sequelize';
+import { DB } from 'dbConnection/DBConnection';
+import { DataTypes, Model } from 'sequelize';
 
-export default {
+export  class UserModel extends Model {
+  declare name: string;
+}
+export const attributes = {
   // Model attributes are defined here
-  firstName: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  lastName: {
-    type: DataTypes.STRING
-    // allowNull defaults to true
-  }
 };
+UserModel.init(attributes, { // Other model options go here
+  sequelize: DB.getInstance(), // We need to pass the connection instance
+  modelName: 'User' // We need to choose the model name
+});
