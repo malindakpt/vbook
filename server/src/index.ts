@@ -7,7 +7,7 @@ const authenticateConnnection = async () => {
   try {
     // await DB.getInstance().authenticate();
     // await UserModel.drop();
-    await UserModel.sync();
+    // await UserModel.sync();
     // const user = UserModel.build({name: 'anumi'});
     // await user.save();
     // const data = await UserModel.findAll();
@@ -18,7 +18,7 @@ const authenticateConnnection = async () => {
 };
 
 // const db = new DB();
-authenticateConnnection();
+// authenticateConnnection();
 startApplication();
 
 
