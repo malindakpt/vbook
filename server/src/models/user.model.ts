@@ -1,7 +1,7 @@
-import { DB } from 'services/DBConnection';
+import { DB } from 'services/db.connection';
 import { DataTypes, Model } from 'sequelize';
 
-export  class User extends Model {
+export  class UserModel extends Model {
   declare firstName: string;
   declare lastName: string;
   declare email: string;
@@ -31,7 +31,7 @@ export const attributes = {
     allowNull: false
   },
 };
-User.init(attributes, { // Other model options go here
+UserModel.init(attributes, { // Other model options go here
   sequelize: DB.getInstance(), // We need to pass the connection instance
   modelName: 'User' // We need to choose the model name
 });
