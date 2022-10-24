@@ -1,5 +1,5 @@
 import { DB } from 'services/db.connection';
-import { UserModel } from 'models/user.model';
+import { UserModel } from 'models/user/user.model';
 import { startApplication } from 'services/app.service';
 // import { User } from '../../shared/src/index';
 

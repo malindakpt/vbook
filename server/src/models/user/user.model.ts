@@ -1,15 +1,9 @@
 import { DB } from 'services/db.connection';
 import { DataTypes, Model } from 'sequelize';
 
-export  class UserModel extends Model {
-  declare loginType: string; //  need to be changed
-  declare firstName: string;
-  declare lastName: string;
-  declare email: string;
-  declare phone: string;
-  declare password: string;
-  declare country: string;
-}
+class Entity extends Model {}
+export class UserModel extends Model {};
+
 export const attributes = {
   // Model attributes are defined here
   loginType: {

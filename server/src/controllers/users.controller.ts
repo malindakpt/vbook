@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { Request, Response} from 'express';
-import { UserModel } from 'models/user.model';
+import { UserModel } from 'models/user/user.model';
 
 export const insert = async (req: Request, res: Response) => {
     let salt = crypto.randomBytes(16).toString('base64');
