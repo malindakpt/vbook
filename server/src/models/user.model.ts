@@ -13,7 +13,7 @@ export  class UserModel extends Model {
 export const attributes = {
   // Model attributes are defined here
   loginType: {
-    type: DataTypes.ENUM,
+    type: DataTypes.STRING,
     allowNull: false
   },
   firstName: {
@@ -32,7 +32,7 @@ export const attributes = {
     }
   },
   phone: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   password: {

@@ -13,6 +13,14 @@ export const insert = (req: Request, res: Response) => {
         });
 };
 
+export const getAllUsers = (req: Request, res: Response) => {
+    UserModel.findAll()
+        .then((result) => {
+            res.status(200).send(result);
+        });
+};
+
+
 // exports.list = (req, res) => {
 //     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
 //     let page = 0;

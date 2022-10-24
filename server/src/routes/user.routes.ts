@@ -1,8 +1,9 @@
 import { Application } from "express";
-import { insert } from "./users.controller";
+import { getAllUsers, insert } from "../controllers/users.controller";
 
 export const setUserRoutes = (app: Application) => {
     app.post('/users', [insert]);
+    app.get('/users/all', [getAllUsers]);
     // app.get('/users', [
     //     ValidationMiddleware.validJWTNeeded,
     //     PermissionMiddleware.minimumPermissionLevelRequired(PAID),

@@ -6,11 +6,11 @@ import { startApplication } from 'services/app.service';
 const authenticateConnnection = async () => {
   try {
     // await DB.getInstance().authenticate();
-    // await User.drop();
+    // await UserModel.drop();
     await UserModel.sync();
     // const user = UserModel.build({name: 'anumi'});
     // await user.save();
-    const data = await UserModel.findAll();
+    // const data = await UserModel.findAll();
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);

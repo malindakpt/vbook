@@ -1,6 +1,6 @@
 import { config } from "config";
 import express from "express";
-import { setUserRoutes } from "./routes";
+import { setUserRoutes } from "../routes/user.routes";
 import bodyParser from 'body-parser';
 const app = express();
 
