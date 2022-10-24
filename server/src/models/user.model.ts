@@ -2,14 +2,20 @@ import { DB } from 'services/db.connection';
 import { DataTypes, Model } from 'sequelize';
 
 export  class UserModel extends Model {
+  declare loginType: string; //  need to be changed
   declare firstName: string;
   declare lastName: string;
   declare email: string;
   declare phone: string;
   declare password: string;
+  declare country: string;
 }
 export const attributes = {
   // Model attributes are defined here
+  loginType: {
+    type: DataTypes.ENUM,
+    allowNull: false
+  },
   firstName: {
     type: DataTypes.STRING,
     allowNull: false
@@ -30,6 +36,10 @@ export const attributes = {
     allowNull: true,
   },
   password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  country: {
     type: DataTypes.STRING,
     allowNull: false
   },
