@@ -1,17 +1,16 @@
-import { DB } from 'dbConnection/DBConnection';
-import { UserModel } from 'models/User';
+import { DB } from 'services/DBConnection';
+import { User } from 'models/User';
 // import { User } from '../../shared/src/index';
 
 const authenticateConnnection = async () => {
   try {
-    await DB.getInstance().authenticate();
-    await UserModel.sync();
-
-
+    // await DB.getInstance().authenticate();
+    // await User.drop();
+    await User.sync();
     // const user = UserModel.build({name: 'anumi'});
     // await user.save();
-    const data = await UserModel.findAll();
-    console.log('Connection has been established successfully.', data.map(user => `${user.toJSON()} ${user}`));
+    const data = await User.findAll();
+    console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
