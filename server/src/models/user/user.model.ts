@@ -37,6 +37,14 @@ export const attributes = {
     type: DataTypes.STRING,
     allowNull: false
   },
+  resetCode: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  resetCodeExpire: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  }
 };
 UserModel.init(attributes, { // Other model options go here
   sequelize: DB.getInstance(), // We need to pass the connection instance

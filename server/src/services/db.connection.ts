@@ -1,3 +1,4 @@
+import { config } from 'config';
 import { Sequelize } from 'sequelize';
 export class DB {
   private static sequelize: Sequelize;
@@ -5,7 +6,7 @@ export class DB {
   public static getInstance = () => {
     if (!this.sequelize) {
       this.sequelize = new Sequelize('postgres', 'postgres', '123', {
-        logging: false,
+        logging: config.dbLogger,
         host: 'localhost',
         dialect:
           'postgres' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */

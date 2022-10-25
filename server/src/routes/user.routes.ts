@@ -1,9 +1,10 @@
 import { Application } from "express";
-import { getAllUsers, insert } from "../controllers/users.controller";
+import { getAllUsers, insert, resetPassordToEmail } from "../controllers/users.controller";
 
 export const setUserRoutes = (app: Application) => {
-    app.post('/users', [insert]);
-    app.get('/users/all', [getAllUsers]);
+    app.post('/user', [insert]);
+    app.get('/user/all', [getAllUsers]);
+    app.post('/user/reset/email', [resetPassordToEmail]);
     // app.get('/users', [
     //     ValidationMiddleware.validJWTNeeded,
     //     PermissionMiddleware.minimumPermissionLevelRequired(PAID),

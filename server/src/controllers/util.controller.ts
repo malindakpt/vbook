@@ -1,24 +1,9 @@
-import { config } from 'config';
 import crypto from 'crypto';
 import { Request, Response} from 'express';
 import { UserModel } from 'models/user/user.model';
 import { sendEmail } from 'services/mail.service';
-import { generateRandomCode, getFutureTime } from 'util/util';
 
-export const insert = async (req: Request, res: Response) => {
-    let salt = crypto.randomBytes(16).toString('base64');
-    let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-    req.body.password = salt + "$" + hash;
-    req.body.permissionLevel = 1;
 
-    try {
-        const result =  await UserModel.create(req.body)
-        res.status(201).send({id: result});
-
-    } catch(e) {
-        res.status(500).send({});
-    }
-};
 
 export const getAllUsers = (req: Request, res: Response) => {
     UserModel.findAll()
@@ -26,24 +11,6 @@ export const getAllUsers = (req: Request, res: Response) => {
             // res.set('Cache-control', 'public, max-age=300');
             res.status(200).send({data: result});
         });
-};
-
-export const resetPassordToEmail = async (req: Request, res: Response) => {
-    const { email } = req.body;
-    try {
-        const resetCode = generateRandomCode(config.resetPasswordDigits);
-        const resetCodeExpire = getFutureTime(new Date().getTime(), config.resetPasswordValidityMinutes);
-        const result = await UserModel.update({ resetCode, resetCodeExpire }, {
-            where: {
-              email
-            }
-          });
-          console.log('changed', result, email)
-        await sendEmail(email, 'Reset password', `${resetCode}`);
-        res.status(201).send({data: { email, count: result[0]}});
-    } catch(e) {
-        res.status(500).send(e);
-    }
 };
 
 

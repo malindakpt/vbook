@@ -1,0 +1,3 @@
+How to add a column to existing table
+Sync table schema with actual db at startup
+Reset password windw and generate link

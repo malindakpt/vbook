@@ -3,11 +3,11 @@ import { UserModel } from 'models/user/user.model';
 import { startApplication } from 'services/app.service';
 // import { User } from '../../shared/src/index';
 
-const authenticateConnnection = async () => {
+const resetDB = async () => {
   try {
-    // await DB.getInstance().authenticate();
+    await DB.getInstance().authenticate();
     // await UserModel.drop();
-    // await UserModel.sync();
+    await UserModel.sync();
     // const user = UserModel.build({name: 'anumi'});
     // await user.save();
     // const data = await UserModel.findAll();
@@ -18,7 +18,7 @@ const authenticateConnnection = async () => {
 };
 
 // const db = new DB();
-// authenticateConnnection();
+resetDB();
 startApplication();
 
 

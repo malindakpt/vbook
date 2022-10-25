@@ -4,7 +4,6 @@ import { setUserRoutes } from "../routes/user.routes";
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { logger } from "middlewares/logger.middleware";
-
 const app = express();
 
 app.use(cors());

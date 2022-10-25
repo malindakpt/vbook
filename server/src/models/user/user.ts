@@ -6,4 +6,7 @@ export  class User {
     declare phone: string;
     declare password: string;
     declare country: string;
+  
+    declare resetCode: string;
+    declare resetCodeExpire: number;
   }
