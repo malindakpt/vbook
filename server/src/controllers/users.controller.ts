@@ -39,7 +39,7 @@ export const resetPassordToEmail = async (req: Request, res: Response) => {
             }
           });
           console.log('changed', result, email)
-        await sendEmail(email, 'Reset password', `${resetCode}`);
+        await sendEmail(email, 'Reset password', `Please click <a href="${config.feUrl}/user/reset/${resetCode}">here</a> if you want to reset the password`);
         res.status(201).send({data: { email, count: result[0]}});
     } catch(e) {
         res.status(500).send(e);

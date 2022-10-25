@@ -1,4 +1,5 @@
 export const config = {
+    feUrl: 'http//localhost:3000',
     dbLogger: true,
     fromEmail: "malindakpt@gmail.com",
     password: "ghkmmuqpneeibyis",
