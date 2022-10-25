@@ -20,7 +20,7 @@ export const insert = async (req: Request, res: Response) => {
 export const getAllUsers = (req: Request, res: Response) => {
     UserModel.findAll()
         .then((result) => {
-            res.status(200).send(result);
+            res.status(200).send({data: result});
         });
 };
 

@@ -5,8 +5,9 @@ import { useGetAllUsersQuery } from './state/api/user.api';
 
 function App() {
 
-const { data } = useGetAllUsersQuery();
-console.log(data);
+const { data, isLoading } = useGetAllUsersQuery();
+
+console.log(`loading: ${isLoading}   data: ${data}`);
 
   return (
     <div className="App">

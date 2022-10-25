@@ -5,6 +5,7 @@ export class DB {
   public static getInstance = () => {
     if (!this.sequelize) {
       this.sequelize = new Sequelize('postgres', 'postgres', '123', {
+        logging: false,
         host: 'localhost',
         dialect:
           'postgres' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
