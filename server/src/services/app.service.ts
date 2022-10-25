@@ -3,15 +3,16 @@ import express from "express";
 import { setUserRoutes } from "../routes/user.routes";
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { logger } from "middlewares/logger.middleware";
+
 const app = express();
 
 app.use(cors());
-
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-
+app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json())
+app.use(logger)
 
 setUserRoutes(app);
 
