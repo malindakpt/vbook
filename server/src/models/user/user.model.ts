@@ -1,8 +1,6 @@
 import { DB } from 'services/db.connection';
 import { DataTypes, Model } from 'sequelize';
-import { ResetModel } from 'models/reset/reset.model';
 
-class Entity extends Model {}
 export class UserModel extends Model {};
 
 export const attributes = {

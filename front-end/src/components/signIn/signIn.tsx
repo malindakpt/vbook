@@ -123,7 +123,7 @@ export const SignIn = () => {
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Reset password?
                 </Link>
               </Grid>
               {/* <Grid item>
