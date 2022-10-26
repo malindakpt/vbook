@@ -26,6 +26,7 @@ interface Props {
   onCreateUser: (user: User) => void;
   onSignIn: (identifier: string, password: string) => void;
   onReset: (identifier: string) => void;
+  onAuthSuccess: () => void;
 }
 
 export const SignIn: FC<Props> = ({
@@ -70,7 +71,7 @@ export const SignIn: FC<Props> = ({
         if (!identifier) {
           alert("Missing identifier");
           break;
-        } 
+        }
         onReset(identifier);
         break;
     }
