@@ -1,6 +1,7 @@
 // Need to use the React-specific entry point to allow generating React hooks
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { User } from '../../../../server/src/models/user/user'
+import type { User } from '../../../../be/src/models/user/user';
+import type { BEResponse } from '../../../../be/src/types/BEResponse';
 // import { REHYDRATE } from 'redux-persist'
 
 // Define a service using a base URL and expected endpoints
@@ -63,7 +64,7 @@ export const userApi = createApi({
 
 
 
-    // @ts-ignore
+     
     signUp: build.mutation<User, Partial<User> & Pick<User, 'id'>>({
       // note: an optional `queryFn` may be used in place of `query`
       query: ({ id, ...patch }) => ({
@@ -96,9 +97,44 @@ export const userApi = createApi({
         }
       ) {},
     }),
+
+    resetPassword: build.mutation<BEResponse, string>({
+      // note: an optional `queryFn` may be used in place of `query`
+      query: (identifier) => ({
+        url: `user/reset`,
+        method: 'POST',
+        body: {
+          identifier
+        },
+      }),
+      // Pick out data and prevent nested properties in a hook or selector
+      transformResponse: (response: BEResponse, meta, arg) => {
+        return response.data
+      },
+      // invalidatesTags: ['User'],
+      // onQueryStarted is useful for optimistic updates
+      // The 2nd parameter is the destructured `MutationLifecycleApi`
+      async onQueryStarted(
+        arg,
+        { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry }
+      ) {},
+      // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
+      async onCacheEntryAdded(
+        arg,
+        {
+          dispatch,
+          getState,
+          extra,
+          requestId,
+          cacheEntryRemoved,
+          cacheDataLoaded,
+          getCacheEntry,
+        }
+      ) {},
+    }),
   }),
 })
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useSignUpMutation, useLazyGetUserQuery, reducer: userReducer, reducerPath: userReducerPath } = userApi;
+export const { useGetAllUsersQuery, useSignUpMutation, useLazyGetUserQuery, useResetPasswordMutation, reducer: userReducer, reducerPath: userReducerPath } = userApi;

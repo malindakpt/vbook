@@ -12,56 +12,68 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  useLazyGetUserQuery,
-  useSignUpMutation,
-} from "../../state/api/user.api";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { FC } from "react";
+import { Copyright } from "./copyright";
+import { Mode } from "./signIn.container";
+import { User } from "../../../../be/src/models/user/user";
+import { isEmail } from "../../util/helper";
 
 const theme = createTheme();
 
-export const SignIn = () => {
-  const [createUser, _result] = useSignUpMutation();
+interface Props {
+  mode: Mode;
+  onModeChange: (mode: Mode) => void;
+  onCreateUser: (user: User) => void;
+  onSignIn: (identifier: string, password: string) => void;
+  onReset: (identifier: string) => void;
+}
 
-  const [trigger, {data, isLoading}, lastPromiseInfo] = useLazyGetUserQuery({});
-
-  console.log( isLoading);
-  console.log(data);
-
+export const SignIn: FC<Props> = ({
+  mode,
+  onModeChange,
+  onCreateUser,
+  onSignIn,
+  onReset,
+}) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-    // createUser({
-    //     id:1,
-    //     country: 'LK',
-    //     email: 'malinds@lksadjl.com',
-    //     firstName: 'malinya',
-    //     password: '123',
-    //     phone: '0771141193'
-    // })
 
-    trigger({ identifier: "malinds@lksadjl.com", password: "123" });
+    const identifier = data.get("identifier")?.toString();
+    const name = data.get("name")?.toString();
+    const password1 = data.get("password1")?.toString();
+    const password2 = data.get("password2")?.toString();
+
+    switch (mode) {
+      case Mode.SIGN_IN:
+        identifier && password1 && onSignIn(identifier, password1);
+        break;
+
+      case Mode.SIGN_UP:
+        if (password1 !== password2) {
+          alert("Mismatched Password");
+          break;
+        }
+        if (identifier && name && password1) {
+          onCreateUser({
+            country: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            email: isEmail(identifier) ? identifier : null,
+            firstName: name,
+            password: password1,
+            phone: !isEmail(identifier) ? identifier : null,
+          });
+          break;
+        }
+        break;
+
+      case Mode.RESET:
+        if (!identifier) {
+          alert("Missing identifier");
+          break;
+        } 
+        onReset(identifier);
+        break;
+    }
   };
 
   return (
@@ -80,7 +92,11 @@ export const SignIn = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {mode === Mode.SIGN_IN
+              ? `Sign in`
+              : mode === Mode.SIGN_UP
+              ? `Sign up`
+              : `Reset Password`}
           </Typography>
           <Box
             component="form"
@@ -88,26 +104,55 @@ export const SignIn = () => {
             noValidate
             sx={{ mt: 1 }}
           >
+            {mode === Mode.SIGN_UP && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Enter Your Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+              />
+            )}
+
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
+              id="identifier"
+              label="Email Address/ Phone Number"
+              name="identifier"
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+
+            {mode !== Mode.RESET && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password1"
+                label="Enter Password"
+                type="password"
+                id="password1"
+                autoComplete="Enter Password"
+              />
+            )}
+
+            {mode === Mode.SIGN_UP && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password2"
+                label="Enter Password Again"
+                type="password"
+                id="password2"
+                autoComplete="Enter Password Again"
+              />
+            )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -116,25 +161,48 @@ export const SignIn = () => {
               type="submit"
               fullWidth
               variant="contained"
+              color={
+                mode === Mode.SIGN_IN
+                  ? `primary`
+                  : mode === Mode.SIGN_UP
+                  ? `warning`
+                  : `success`
+              }
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {mode === Mode.SIGN_IN
+                ? `Sign In`
+                : mode === Mode.SIGN_UP
+                ? `Create Account`
+                : `Send Reset Password Link`}
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => onModeChange(Mode.RESET)}
+                >
                   Reset password?
                 </Link>
               </Grid>
-              {/* <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+              <Grid item xs>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() =>
+                    onModeChange(
+                      mode === Mode.SIGN_IN ? Mode.SIGN_UP : Mode.SIGN_IN
+                    )
+                  }
+                >
+                  {"Sign In / Create Account"}
                 </Link>
-              </Grid> */}
+              </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright />
       </Container>
     </ThemeProvider>
   );
