@@ -4,6 +4,61 @@ import { Request, Response} from 'express';
 import { UserModel } from 'models/user/user.model';
 import { sendEmail } from 'services/mail.service';
 import { generateRandomCode, getFutureTime } from 'util/util';
+import bcrypt from 'bcrypt';
+
+export const signIn = async (req: Request, res: Response) => {
+    // req.body.password = salt + "$" + hash;
+    // req.body.permissionLevel = 1;
+
+    // try {
+    //     const result =  await UserModel.create(req.body)
+    //     res.status(201).send({id: result});
+
+    // } catch(e) {
+    //     res.status(500).send({});
+    // }
+};
+
+export const signUp = async (req: Request, res: Response) => {
+    try {
+        const { password } = req.body;
+        const hash = await bcrypt.hash(password, 10);
+        req.body.password = hash;
+        const result =  await UserModel.create(req.body)
+        res.status(201).send({id: result});
+
+    } catch(e) {
+        res.status(500).send({error: e});
+    }
+};
+
+export const getUser = async (req: Request, res: Response) => {
+    try {
+        const identi: string = req.body.identifier;
+
+        const matchWith = identi.includes('@') ? 'email' : 'phone';
+
+        const foundUser = await UserModel.findOne({
+            where: {
+                [matchWith]: identi
+              }
+        })
+        if(foundUser){
+            res.status(200).send({data: foundUser});
+        } else {
+            res.status(401).send({error: 'unauthorized'});
+        }
+
+        // const hash = await bcrypt.hash(password, 10);
+        // req.body.password = hash;
+        // const result =  await UserModel.create(req.body)
+        // res.status(201).send({id: result});
+
+    } catch(e) {
+        res.status(500).send({error: e});
+    }
+};
+
 
 export const insert = async (req: Request, res: Response) => {
     let salt = crypto.randomBytes(16).toString('base64');

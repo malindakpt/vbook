@@ -1,8 +1,10 @@
 import { Application } from "express";
-import { getAllUsers, insert, resetPassordToEmail } from "../controllers/users.controller";
+import { getAllUsers, getUser, resetPassordToEmail, signUp } from "../controllers/users.controller";
 
 export const setUserRoutes = (app: Application) => {
-    app.post('/user', [insert]);
+    app.post('/user/signUp', [signUp]);
+    app.post('/user/getUser', [getUser]);
+    // app.post('/user', [insert]);
     app.get('/user/all', [getAllUsers]);
     app.post('/user/reset/email', [resetPassordToEmail]);
     // app.get('/users', [
@@ -16,7 +18,7 @@ export const setUserRoutes = (app: Application) => {
     //     PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
     //     UsersController.getById
     // ]);
-    // app.patch('/users/:userId', [
+    // app.patch('/users/:userId', [    
     //     ValidationMiddleware.validJWTNeeded,
     //     PermissionMiddleware.minimumPermissionLevelRequired(FREE),
     //     PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,

@@ -1,20 +1,12 @@
 import { DB } from 'services/db.connection';
 import { DataTypes, Model } from 'sequelize';
+import { ResetModel } from 'models/reset/reset.model';
 
 class Entity extends Model {}
 export class UserModel extends Model {};
 
 export const attributes = {
-  // Model attributes are defined here
-  loginType: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   firstName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  lastName: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -37,16 +29,9 @@ export const attributes = {
     type: DataTypes.STRING,
     allowNull: false
   },
-  resetCode: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  resetCodeExpire: {
-    type: DataTypes.FLOAT,
-    allowNull: true
-  }
 };
 UserModel.init(attributes, { // Other model options go here
   sequelize: DB.getInstance(), // We need to pass the connection instance
   modelName: 'User' // We need to choose the model name
 });
+
