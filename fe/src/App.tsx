@@ -1,7 +1,6 @@
-import { SignIn } from './components/signIn/signIn';
-import './App.css';
 import { useGetAllUsersQuery } from './state/api/user.api';
 import { SignInContainer } from './components/signIn/signIn.container';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
 
@@ -11,7 +10,10 @@ console.log(`loading: ${isLoading}   data: ${data}`);
 
   return (
     <div className="App">
-      <SignInContainer />
+      <Routes>
+        <Route path="/login" element={<SignInContainer />} />
+        <Route path="about" element={<div></div>} />
+      </Routes>
     </div>
   );
 }
