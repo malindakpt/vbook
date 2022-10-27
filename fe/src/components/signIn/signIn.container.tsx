@@ -27,7 +27,7 @@ export const SignInContainer = () => {
 
   useEffect(() => {
     if (isSuccessSignIn || isSuccessSignUp || data) {
-      navigate("/home/");
+      navigate("/");
     }
   }, [isSuccessSignIn, isSuccessSignUp, data, navigate]);
 
@@ -53,7 +53,6 @@ export const SignInContainer = () => {
       onCreateUser={handleCreateUser}
       onSignIn={handleSignIn}
       onReset={handleReset}
-      // onAuthSuccess={handleAuthSuccess}
       mode={mode}
     />
   );
