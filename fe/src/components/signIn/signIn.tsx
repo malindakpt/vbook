@@ -26,7 +26,6 @@ interface Props {
   onCreateUser: (user: User) => void;
   onSignIn: (identifier: string, password: string) => void;
   onReset: (identifier: string) => void;
-  // onAuthSuccess: () => void;
 }
 
 export const SignIn: FC<Props> = ({
@@ -96,7 +95,7 @@ export const SignIn: FC<Props> = ({
             {mode === Mode.SIGN_IN
               ? `Sign in`
               : mode === Mode.SIGN_UP
-              ? `Sign up`
+              ? `Create Account`
               : `Reset Password`}
           </Typography>
           <Box
@@ -178,7 +177,7 @@ export const SignIn: FC<Props> = ({
                 : `Send Reset Password Link`}
             </Button>
             <Grid container>
-              <Grid item xs>
+              <Grid item xs={6} alignItems="center" >
                 <Link
                   href="#"
                   variant="body2"
@@ -187,17 +186,18 @@ export const SignIn: FC<Props> = ({
                   Reset password?
                 </Link>
               </Grid>
-              <Grid item xs>
+              <Grid item xs={6}>
                 <Link
                   href="#"
                   variant="body2"
+                  align="center"
                   onClick={() =>
                     onModeChange(
                       mode === Mode.SIGN_IN ? Mode.SIGN_UP : Mode.SIGN_IN
                     )
                   }
                 >
-                  {"Sign In / Create Account"}
+                  { mode === Mode.SIGN_IN ? "Create Account" : "Sign In"}
                 </Link>
               </Grid>
             </Grid>
