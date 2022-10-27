@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "../../../../be/src/models/user/user";
 import { useLazyGetUserQuery, useResetPasswordMutation, useSignUpMutation } from "../../state/api/user.api";
 import { SignIn } from "./signIn";
@@ -13,20 +13,21 @@ export const enum Mode {
 
 export const SignInContainer = () => {
 
-    let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [mode, setMode] = useState(Mode.SIGN_IN);
   const [createUser, createResult] = useSignUpMutation();
   const [resetUser, resetResult] = useResetPasswordMutation();
   const [getUser, { data, isLoading }, lastPromiseInfo] = useLazyGetUserQuery({});
 
-  if(createResult.data){
+  useEffect(() => {
+    console.log(createResult);
+    if(createResult.isSuccess ){
     navigate('/home/');
-  }
+    }
+  }, [createResult.isSuccess])
 
-  const handleAuthSuccess = () => {
-    // navigate('/home/');
-  }
+
   const handleModeChange = (mode: Mode) => {
     setMode(mode);
   };
@@ -49,7 +50,7 @@ export const SignInContainer = () => {
       onCreateUser={handleCreateUser}
       onSignIn={handleSignIn}
       onReset={handleReset}
-      onAuthSuccess={handleAuthSuccess}
+      // onAuthSuccess={handleAuthSuccess}
       mode={mode}
     />
   );

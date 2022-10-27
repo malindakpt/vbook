@@ -26,7 +26,7 @@ interface Props {
   onCreateUser: (user: User) => void;
   onSignIn: (identifier: string, password: string) => void;
   onReset: (identifier: string) => void;
-  onAuthSuccess: () => void;
+  // onAuthSuccess: () => void;
 }
 
 export const SignIn: FC<Props> = ({
