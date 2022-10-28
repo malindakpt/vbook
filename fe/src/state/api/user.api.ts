@@ -2,11 +2,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { User } from '../../../../be/src/models/user/user';
 import type { BEResponse } from '../../../../be/src/types/BEResponse';
+import { store } from '../store';
+import { login } from './app';
 // import { REHYDRATE } from 'redux-persist'
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
   reducerPath: 'userApi',
+  // reducerPath: ,
+  // reducer: store.reducer,
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3600/' }),
 
   // extractRehydrationInfo(action, { reducerPath }) {
@@ -29,7 +33,10 @@ export const userApi = createApi({
         identifier, password
       },   method: 'POST' }),
       // Pick out data and prevent nested properties in a hook or selector
-      transformResponse: (response: { data: User }, meta, arg) => response.data,
+      transformResponse: (response: { data: User }, meta, arg) => {
+        console.log('transform')
+        return response.data;
+      },
       // providesTags: (result, error, id) => [{ type: 'Post', id }],
       // The 2nd parameter is the destructured `QueryLifecycleApi`
       async onQueryStarted(
@@ -43,7 +50,9 @@ export const userApi = createApi({
           getCacheEntry,
           updateCachedData,
         }
-      ) {},
+      ) {
+        console.log('query started');
+      },
       // The 2nd parameter is the destructured `QueryCacheLifecycleApi`
       async onCacheEntryAdded(
         arg,
@@ -57,14 +66,12 @@ export const userApi = createApi({
           getCacheEntry,
           updateCachedData,
         }
-      ) {},
+      ) {
+        console.log('fullState', getState());
+        dispatch(login(true));
+      },
     }),
 
-
-
-
-
-     
     signUp: build.mutation<User, Partial<User> & Pick<User, 'id'>>({
       // note: an optional `queryFn` may be used in place of `query`
       query: ({ id, ...patch }) => ({
