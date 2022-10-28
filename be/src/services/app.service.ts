@@ -4,6 +4,8 @@ import { setUserRoutes } from "../routes/user.routes";
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { logger } from "middlewares/logger.middleware";
+import { validateToken } from "middlewares/token.middleware";
+import cookies from 'cookie-parser';
 const app = express();
 
 app.use(cors());
@@ -11,7 +13,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json())
+app.use(cookies());
 app.use(logger)
+app.use(validateToken);
 
 setUserRoutes(app);
 

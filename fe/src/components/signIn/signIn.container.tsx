@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { User } from "../../../../be/src/models/user/user";
 import {
-  useLazyGetUserQuery,
+  
+  useLazySignInQuery,
   useResetPasswordMutation,
   useSignUpMutation,
 } from "../../state/api/user.api";
@@ -21,15 +22,15 @@ export const SignInContainer = () => {
   const [mode, setMode] = useState(Mode.SIGN_IN);
   const [createUser, {isSuccess: isSuccessSignUp}] = useSignUpMutation();
   const [resetUser, {isSuccess: isSuccessSignIn}] = useResetPasswordMutation();
-  const [getUser, { data, isLoading }, lastPromiseInfo] = useLazyGetUserQuery(
+  const [getUser, { data, isLoading }, lastPromiseInfo] = useLazySignInQuery(
     {}
   );
 
-  useEffect(() => {
-    if (isSuccessSignIn || isSuccessSignUp || data) {
-      navigate("/");
-    }
-  }, [isSuccessSignIn, isSuccessSignUp, data, navigate]);
+  // useEffect(() => {
+  //   if (isSuccessSignIn || isSuccessSignUp || data) {
+  //     navigate("/");
+  //   }
+  // }, [isSuccessSignIn, isSuccessSignUp, data, navigate]);
 
   const handleModeChange = (mode: Mode) => {
     setMode(mode);

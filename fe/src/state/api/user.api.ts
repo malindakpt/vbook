@@ -2,9 +2,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { User } from '../../../../be/src/models/user/user';
 import type { BEResponse } from '../../../../be/src/types/BEResponse';
-import { store } from '../store';
-import { login } from './app';
-// import { REHYDRATE } from 'redux-persist'
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
@@ -27,15 +24,17 @@ export const userApi = createApi({
 
 
 
-    getUser: build.query<User, {identifier: string, password: string}>({
+    signIn: build.query<User, {identifier: string, password: string}>({
       // note: an optional `queryFn` may be used in place of `query`
-      query: ({identifier, password}) => ({ url: `user/getUser`, body: {
+      query: ({identifier, password}) => ({ url: `user/signIn`, body: {
         identifier, password
       },   method: 'POST' }),
       // Pick out data and prevent nested properties in a hook or selector
       transformResponse: (response: { data: User }, meta, arg) => {
         console.log('transform')
-        return response.data;
+        const user = response.data;
+
+        return user;
       },
       // providesTags: (result, error, id) => [{ type: 'Post', id }],
       // The 2nd parameter is the destructured `QueryLifecycleApi`
@@ -68,7 +67,6 @@ export const userApi = createApi({
         }
       ) {
         console.log('fullState', getState());
-        dispatch(login(true));
       },
     }),
 
@@ -116,15 +114,19 @@ export const userApi = createApi({
       }),
       // Pick out data and prevent nested properties in a hook or selector
       transformResponse: (response: BEResponse, meta, arg) => {
+        console.log('transformResponse');
         return response.data
       },
+      
       // invalidatesTags: ['User'],
       // onQueryStarted is useful for optimistic updates
       // The 2nd parameter is the destructured `MutationLifecycleApi`
       async onQueryStarted(
         arg,
         { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry }
-      ) {},
+      ) {
+        console.log('Cache entry onQueryStarted');
+      },
       // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
       async onCacheEntryAdded(
         arg,
@@ -137,11 +139,13 @@ export const userApi = createApi({
           cacheDataLoaded,
           getCacheEntry,
         }
-      ) {},
+      ) {
+        console.log('Cache entry added');
+      },
     }),
   }),
 })
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useSignUpMutation, useLazyGetUserQuery, useResetPasswordMutation, reducer: userReducer, reducerPath: userReducerPath } = userApi;
+export const { useGetAllUsersQuery, useSignUpMutation, useLazySignInQuery, useResetPasswordMutation, reducer: userReducer, reducerPath: userReducerPath } = userApi;

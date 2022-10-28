@@ -1,12 +1,12 @@
 import { Application } from "express";
-import { getAllUsers, getUser, resetPassordToEmail, addUser } from "../controllers/users.controller";
+import { getAllUsers, addUser, signIn } from "../controllers/users.controller";
 
 export const setUserRoutes = (app: Application) => {
     app.post('/user/signUp', [addUser]);
-    app.post('/user/getUser', [getUser]);
+    app.post('/user/signIn', [signIn]);
     // app.post('/user', [insert]);
     app.get('/user/all', [getAllUsers]);
-    app.post('/user/reset/email', [resetPassordToEmail]);
+    // app.post('/user/reset/email', [resetPassordToEmail]);
     // app.get('/users', [
     //     ValidationMiddleware.validJWTNeeded,
     //     PermissionMiddleware.minimumPermissionLevelRequired(PAID),

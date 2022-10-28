@@ -2,10 +2,10 @@ import { SignInContainer } from "./components/signIn/signIn.container";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
-import { isLoggedIn } from "./state/api/app";
+import { user } from "./state/api/app";
 
 function App() {
-  const loggedIn = useSelector(isLoggedIn);
+  const loggedIn = useSelector(user);
 
   return (
     <div className="App">

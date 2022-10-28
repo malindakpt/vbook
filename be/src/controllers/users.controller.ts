@@ -6,19 +6,6 @@ import { sendEmail } from 'services/mail.service';
 import { createTokens, generateRandomCode, getFutureTime } from 'util/util';
 import bcrypt from 'bcrypt';
 
-export const signIn = async (req: Request, res: Response) => {
-    // req.body.password = salt + "$" + hash;
-    // req.body.permissionLevel = 1;
-
-    // try {
-    //     const result =  await UserModel.create(req.body)
-    //     res.status(201).send({id: result});
-
-    // } catch(e) {
-    //     res.status(500).send({});
-    // }
-};
-
 export const addUser = async (req: Request, res: Response) => {
     try {
         const { password } = req.body;
@@ -30,7 +17,7 @@ export const addUser = async (req: Request, res: Response) => {
 
         res.cookie("access-token", accessToken, {
             maxAge: 60 * 60 * 24 * 30 * 1000,
-            httpOnly: true,
+            // httpOnly: true,
         });
         res.status(201).send({id: result});
 
@@ -39,9 +26,37 @@ export const addUser = async (req: Request, res: Response) => {
     }
 };
 
+export const signIn = async (req: Request, res: Response) => {
+    try {
+        const identi: string =  req.body.identifier;
+
+        const matchWith = identi.includes('@') ? 'email' : 'phone';
+
+        const foundUser = await UserModel.findOne({
+            where: {
+                [matchWith]: identi
+              }
+        });
+      
+        if(foundUser){
+            const accessToken = createTokens(foundUser);
+            res.cookie("access-token", accessToken, {
+                maxAge: 60 * 60 * 24 * 30 * 1000,
+                // httpOnly: true,
+            });
+            res.status(200).send({data: foundUser});
+        } else {
+            res.status(401).send({error: 'unauthorized'});
+        }
+
+    } catch(e) {
+        res.status(500).send({error: e});
+    }
+};
+
 export const getUser = async (req: Request, res: Response) => {
     try {
-        const identi: string = req.body.identifier;
+        const identi: string =  req.body.identifier;
 
         const matchWith = identi.includes('@') ? 'email' : 'phone';
 
@@ -94,23 +109,23 @@ export const getAllUsers = (req: Request, res: Response) => {
         });
 };
 
-export const resetPassordToEmail = async (req: Request, res: Response) => {
-    const { email } = req.body;
-    try {
-        const resetCode = generateRandomCode(config.resetPasswordDigits);
-        const resetCodeExpire = getFutureTime(new Date().getTime(), config.resetPasswordValidityMinutes);
-        const result = await UserModel.update({ resetCode, resetCodeExpire }, {
-            where: {
-              email
-            }
-          });
-          console.log('changed', result, email)
-        await sendEmail(email, 'Reset password', `Please click <a href="${config.feUrl}/user/reset/${resetCode}">here</a> if you want to reset the password`);
-        res.status(201).send({data: { email, count: result[0]}});
-    } catch(e) {
-        res.status(500).send(e);
-    }
-};
+// export const resetPassordToEmail = async (req: Request, res: Response) => {
+//     const { email } = req.body;
+//     try {
+//         const resetCode = generateRandomCode(config.resetPasswordDigits);
+//         const resetCodeExpire = getFutureTime(new Date().getTime(), config.resetPasswordValidityMinutes);
+//         const result = await UserModel.update({ resetCode, resetCodeExpire }, {
+//             where: {
+//               email
+//             }
+//           });
+//           console.log('changed', result, email)
+//         await sendEmail(email, 'Reset password', `Please click <a href="${config.feUrl}/user/reset/${resetCode}">here</a> if you want to reset the password`);
+//         res.status(201).send({data: { email, count: result[0]}});
+//     } catch(e) {
+//         res.status(500).send(e);
+//     }
+// };
 
 
 // exports.list = (req, res) => {
