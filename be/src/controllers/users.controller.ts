@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { Request, Response} from 'express';
 import { UserModel } from 'models/user/user.model';
 import { sendEmail } from 'services/mail.service';
-import { generateRandomCode, getFutureTime } from 'util/util';
+import { createTokens, generateRandomCode, getFutureTime } from 'util/util';
 import bcrypt from 'bcrypt';
 
 export const signIn = async (req: Request, res: Response) => {
@@ -24,7 +24,14 @@ export const addUser = async (req: Request, res: Response) => {
         const { password } = req.body;
         const hash = await bcrypt.hash(password, 10);
         req.body.password = hash;
-        const result =  await UserModel.create(req.body)
+        const result =  await UserModel.create(req.body);
+
+        const accessToken = createTokens(result.toJSON());
+
+        res.cookie("access-token", accessToken, {
+            maxAge: 60 * 60 * 24 * 30 * 1000,
+            httpOnly: true,
+        });
         res.status(201).send({id: result});
 
     } catch(e) {
@@ -42,17 +49,21 @@ export const getUser = async (req: Request, res: Response) => {
             where: {
                 [matchWith]: identi
               }
-        })
+        });
+
+      
+
         if(foundUser){
+            const accessToken = createTokens(foundUser.toJSON());
+
+            res.cookie("access-token", accessToken, {
+                maxAge: 60 * 60 * 24 * 30 * 1000,
+                // httpOnly: true,
+            });
             res.status(200).send({data: foundUser});
         } else {
             res.status(401).send({error: 'unauthorized'});
         }
-
-        // const hash = await bcrypt.hash(password, 10);
-        // req.body.password = hash;
-        // const result =  await UserModel.create(req.body)
-        // res.status(201).send({id: result});
 
     } catch(e) {
         res.status(500).send({error: e});
