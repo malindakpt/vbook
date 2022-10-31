@@ -8,3 +8,9 @@ learn about commonJS module expport kind of things
 how does salt value works
 headless package
 validate email in helper FE
+
+
+
+Trade vehicles
+Trade parts
+Insurance company integration
