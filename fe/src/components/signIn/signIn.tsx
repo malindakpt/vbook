@@ -15,8 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FC } from "react";
 import { Copyright } from "./copyright";
 import { Mode } from "./signIn.container";
-import { User } from "../../../../be/src/models/user/user";
 import { isEmail } from "../../util/helper";
+import { User } from "../../types/User";
 
 const theme = createTheme();
 
@@ -55,13 +55,14 @@ export const SignIn: FC<Props> = ({
           break;
         }
         if (identifier && name && password1) {
-          onCreateUser({
+          const user = new User({
             country: Intl.DateTimeFormat().resolvedOptions().timeZone,
             email: isEmail(identifier) ? identifier : null,
             firstName: name,
             password: password1,
             phone: !isEmail(identifier) ? identifier : null,
           });
+          onCreateUser(user);
           break;
         }
         break;

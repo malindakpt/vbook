@@ -11,15 +11,21 @@ export const signUp = async (req: Request, res: Response) => {
         const { password } = req.body;
         const hash = await bcrypt.hash(password, 10);
         req.body.password = hash;
-        const result =  await UserModel.create(req.body);
+        const user =  await UserModel.create(req.body);
 
-        const accessToken = createTokens(result.toJSON());
+        const accessToken = createTokens(user.toJSON());
 
         res.cookie("access-token", accessToken, {
             maxAge: 60 * 60 * 24 * 30 * 1000,
             // httpOnly: true,
         });
-        res.status(201).send({id: result});
+        const responseData = {
+            name: user.firstName,
+            country: user.country,
+            email: user.email,
+            phone: user.phone
+        };
+        res.status(201).send(responseData);
 
     } catch(e) {
         res.status(500).send({error: e});
@@ -28,13 +34,12 @@ export const signUp = async (req: Request, res: Response) => {
 
 export const signIn = async (req: Request, res: Response) => {
     try {
-        const identi: string =  req.body.identifier;
-
-        const matchWith = identi.includes('@') ? 'email' : 'phone';
+        const { identifier } =  req.body;
+        const matchWith = identifier.includes('@') ? 'email' : 'phone';
 
         const foundUser = await UserModel.findOne({
             where: {
-                [matchWith]: identi
+                [matchWith]: identifier
               }
         });
       
@@ -44,7 +49,7 @@ export const signIn = async (req: Request, res: Response) => {
                 maxAge: 60 * 60 * 24 * 30 * 1000,
                 // httpOnly: true,
             });
-            res.status(200).send({data: foundUser});
+            res.status(200).send(foundUser);
         } else {
             res.status(401).send({error: 'unauthorized'});
         }

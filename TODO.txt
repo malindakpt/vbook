@@ -14,3 +14,8 @@ validate email in helper FE
 Trade vehicles
 Trade parts
 Insurance company integration
+
+
+commmonJS esm es umd module 
+package.json module attr
+module system of nodejs

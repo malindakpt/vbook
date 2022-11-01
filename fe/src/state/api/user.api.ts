@@ -1,14 +1,14 @@
 // Need to use the React-specific entry point to allow generating React hooks
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { User } from '../../../../be/src/models/user/user';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BEResponse } from '../../../../be/src/types/BEResponse';
+import { User } from '../../types/User';
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
   reducerPath: 'userApi',
   // reducerPath: ,
   // reducer: store.reducer,
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3600/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3600/user/signUp' }),
 
   // extractRehydrationInfo(action, { reducerPath }) {
   //   if (action.type === REHYDRATE) {

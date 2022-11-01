@@ -1,9 +1,10 @@
 export class User {
-    public id: number;
+    id?: number;
     firstName: string;
     email: string | null;
     phone: string | null;
     country: string;
+    password?: string;
 
     constructor(usr: any) {
         this.id = usr.id;
@@ -11,6 +12,7 @@ export class User {
         this.email = usr.email;
         this.phone = usr.phone;
         this.country = usr.country;
+        this.password = usr.password;
     }
 
     public isValid() {
