@@ -6,7 +6,7 @@ import { sendEmail } from 'services/mail.service';
 import { createTokens, generateRandomCode, getFutureTime } from 'util/util';
 import bcrypt from 'bcrypt';
 
-export const addUser = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
     try {
         const { password } = req.body;
         const hash = await bcrypt.hash(password, 10);

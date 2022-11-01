@@ -1,8 +1,8 @@
 import { Application } from "express";
-import { getAllUsers, addUser, signIn } from "../controllers/users.controller";
+import { getAllUsers, signUp, signIn } from "../controllers/users.controller";
 
 export const setUserRoutes = (app: Application) => {
-    app.post('/user/signUp', [addUser]);
+    app.post('/user/signUp', [signUp]);
     app.post('/user/signIn', [signIn]);
     // app.post('/user', [insert]);
     app.get('/user/all', [getAllUsers]);
