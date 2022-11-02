@@ -8,8 +8,10 @@ import { validateToken } from "middlewares/token.middleware";
 import cookies from 'cookie-parser';
 const app = express();
 
+// app.use(cors());
 app.use(cors({
-  origin: '*'
+  credentials: true,
+  origin: "http://localhost:3000"
 }));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

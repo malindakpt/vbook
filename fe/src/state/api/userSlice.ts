@@ -8,6 +8,11 @@ export interface InitialState {
 const initialState: InitialState = {
   user: null,
 };
+axios.defaults.withCredentials = true;
+
+// const axios = axiosA.create({
+//   withCredentials: true
+// })
 
 export const signUp = createAsyncThunk(
   "users/signUp",
@@ -27,10 +32,7 @@ export const signIn = createAsyncThunk(
   async (args: { identifier: string; password: string }, thunkAPI) => {
     const response = await axios.post(
       `http://localhost:3600/user/signIn`,
-      args,
-      {
-        withCredentials: true
-      }
+      args
     );
     return response.data;
   }
