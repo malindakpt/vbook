@@ -27,7 +27,21 @@ export const signIn = createAsyncThunk(
   async (args: { identifier: string; password: string }, thunkAPI) => {
     const response = await axios.post(
       `http://localhost:3600/user/signIn`,
-      args
+      args,
+      {
+        withCredentials: true
+      }
+    );
+    return response.data;
+  }
+);
+
+export const getAllUsers = createAsyncThunk(
+  "users/signIn",
+  // if you type your function argument here
+  async (thunkAPI) => {
+    const response = await axios.post(
+      `http://localhost:3600/user/all`
     );
     return response.data;
   }
@@ -71,6 +85,6 @@ export const userSlice = createSlice({
     //     (state, action) => {}
     //   )
     //   // and provide a default case if no other handlers matched
-    //   .addDefaultCase((state, action) => {})
+    builder.addDefaultCase((state, action) => {})
   },
 });

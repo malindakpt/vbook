@@ -8,7 +8,9 @@ import { validateToken } from "middlewares/token.middleware";
 import cookies from 'cookie-parser';
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
