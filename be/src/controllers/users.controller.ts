@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 import { Request, Response} from 'express';
 import { UserModel } from 'models/user/user.model';
-import { createTokens } from 'util/util';
 import bcrypt from 'bcrypt';
+import { createAccessToken, createRefreshToken } from 'util/util';
+
 
 export const signUp = async (req: Request, res: Response) => {
     try {
@@ -11,7 +12,8 @@ export const signUp = async (req: Request, res: Response) => {
         req.body.password = hash;
         const user =  await UserModel.create(req.body);
 
-        const accessToken = createTokens(user.toJSON());
+        const accessToken = createAccessToken(user.toJSON());
+        const refreshToken = createRefreshToken(user.toJSON());
 
         res.cookie("access-token", accessToken, {
             maxAge: 60 * 60 * 24 * 30 * 1000,
@@ -35,19 +37,24 @@ export const signIn = async (req: Request, res: Response) => {
         const { identifier } =  req.body;
         const matchWith = identifier.includes('@') ? 'email' : 'phone';
 
-        const foundUser = await UserModel.findOne({
+        const user = await UserModel.findOne({
             where: {
                 [matchWith]: identifier
               }
         });
       
-        if(foundUser){
-            const accessToken = createTokens(foundUser);
+        if(user){
+            const accessToken = createAccessToken(user.toJSON());
+            const refreshToken = createRefreshToken(user.toJSON());
+
             res.cookie("access-token", accessToken, {
+                maxAge: 60 * 60 * 24 * 30 * 1000,
+            });
+            res.cookie("refresh-token", refreshToken, {
                 maxAge: 60 * 60 * 24 * 30 * 1000,
                 httpOnly: true,
             });
-            res.status(200).send(foundUser);
+            res.status(200).send(user);
         } else {
             res.status(401).send({error: 'unauthorized'});
         }
@@ -72,7 +79,7 @@ export const getUser = async (req: Request, res: Response) => {
       
 
         if(foundUser){
-            const accessToken = createTokens(foundUser.toJSON());
+            const accessToken = createAccessToken(foundUser.toJSON());
 
             res.cookie("access-token", accessToken, {
                 maxAge: 60 * 60 * 24 * 30 * 1000,
