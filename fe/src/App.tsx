@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./state/store";
 
 function App() {
-  const loggedInUser = false; //useSelector((state: RootState) => state.app.user);
+  const loggedInUser = useSelector((state: RootState) => state.app.user);
 
   return (
     <div className="App">

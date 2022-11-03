@@ -14,7 +14,7 @@ export const validateToken = (
       return res.status(400).json({ error: "User not Authenticated!" });
 
     try {
-      const validToken = verify(accessToken, "jwtsecretplschange");
+      const validToken = verify(accessToken, "123");
       if (validToken) {
         // @ts-ignore
         req.authenticated = true;

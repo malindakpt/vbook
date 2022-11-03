@@ -19,7 +19,7 @@ export const createAccessToken = (user: UserModel) => {
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, "process", { expiresIn: '1m'});
+  const accessToken = sign(obj, "123", { expiresIn: '1m'});
   return accessToken;
 };
 
@@ -30,6 +30,6 @@ export const createRefreshToken = (user: UserModel) => {
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, "colombosecret", { expiresIn: '1h' });
+  const accessToken = sign(obj, "123", { expiresIn: '1h' });
   return accessToken;
 };
