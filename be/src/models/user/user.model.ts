@@ -13,6 +13,7 @@ export class UserModel extends Model<InferAttributes<UserModel>, InferCreationAt
   declare email: string | null;
   declare phone: string | null;;
   declare password: string;
+  declare refreshToken: string;
   declare country: string;
   declare createdAt?: Date
   declare updatedAt?: Date
@@ -46,6 +47,10 @@ export const attributes = {
   country: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  refreshToken: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   createdAt: DataTypes.DATE,
   updatedAt: DataTypes.DATE

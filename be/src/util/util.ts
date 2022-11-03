@@ -14,18 +14,18 @@ export const getFutureTime = (date: number, periodMinutes: number) => {
 
 export const createAccessToken = (user: UserModel) => {
   const obj = {
-    name: user.firstName,
+    firstName: user.firstName,
     country: user.country,
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, "123", { expiresIn: '1m'});
+  const accessToken = sign(obj, "123", { expiresIn: '10m'});
   return accessToken;
 };
 
 export const createRefreshToken = (user: UserModel) => {
   const obj = {
-    name: user.firstName,
+    firstName: user.firstName,
     country: user.country,
     email: user.email,
     phone: user.phone,

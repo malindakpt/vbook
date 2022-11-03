@@ -26,6 +26,17 @@ export const signUp = createAsyncThunk(
   }
 );
 
+export const refreshToken = createAsyncThunk(
+  "users/refreshToken",
+  // if you type your function argument here
+  async (thunkAPI) => {
+    const response = await axios.post(
+      `http://localhost:3600/user/refreshToken`
+    );
+    return response.data;
+  }
+);
+
 export const signIn = createAsyncThunk(
   "users/signIn",
   // if you type your function argument here
