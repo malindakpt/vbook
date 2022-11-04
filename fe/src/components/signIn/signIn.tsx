@@ -26,7 +26,8 @@ interface Props {
   onModeChange: (mode: Mode) => void;
   onCreateUser: (user: User) => void;
   onSignIn: (identifier: string, password: string) => void;
-  onReset: (identifier: string) => void;
+  onSendResetCode: (identifier: string) => void;
+  onValidateResetCode: (identifier: string, password: string) => void;
 }
 
 export const SignIn: FC<Props> = ({
@@ -35,7 +36,8 @@ export const SignIn: FC<Props> = ({
   onModeChange,
   onCreateUser,
   onSignIn,
-  onReset,
+  onSendResetCode,
+  onValidateResetCode
 }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,7 +76,11 @@ export const SignIn: FC<Props> = ({
           alert("Missing identifier");
           break;
         }
-        onReset(identifier);
+        if(isResetCodeSent){
+          password1 && onValidateResetCode(identifier, password1);
+        } else {
+          onSendResetCode(identifier);
+        }
         break;
     }
   };
@@ -120,28 +126,36 @@ export const SignIn: FC<Props> = ({
               />
             )}
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="identifier"
-              label="Email Address/ Phone Number"
-              name="identifier"
-              autoComplete="email"
-              autoFocus
-            />
+            {(mode === Mode.SIGN_IN ||
+              mode === Mode.SIGN_UP ||
+              (mode === Mode.RESET)) && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="identifier"
+                label="Email Address/ Phone Number"
+                name="identifier"
+                autoComplete="email"
+                autoFocus
+                disabled={isResetCodeSent}
+              />
+            )}
 
-            { mode === Mode.RESET && isResetCodeSent && <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="resetCode"
-              label="Enter reset code"
-              name="resetCode"
-              autoFocus
-            /> }
+            {mode === Mode.RESET && isResetCodeSent && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="resetCode"
+                label="Enter reset code"
+                name="resetCode"
+                autoFocus
+                autoComplete='off'
+              />
+            )}
 
-            {(mode === Mode.SIGN_IN || mode === Mode.SIGN_UP) && (
+            {(mode === Mode.SIGN_IN || mode === Mode.SIGN_UP || (mode === Mode.RESET && isResetCodeSent)) && (
               <TextField
                 margin="normal"
                 required
@@ -150,11 +164,11 @@ export const SignIn: FC<Props> = ({
                 label="Enter Password"
                 type="password"
                 id="password1"
-                autoComplete="Enter Password"
+                autoComplete='off'
               />
             )}
 
-            {mode === Mode.SIGN_UP && (
+            {(mode === Mode.SIGN_UP || (mode === Mode.RESET && isResetCodeSent)) && (
               <TextField
                 margin="normal"
                 required
@@ -181,6 +195,8 @@ export const SignIn: FC<Props> = ({
                   ? `primary`
                   : mode === Mode.SIGN_UP
                   ? `warning`
+                  : mode === Mode.RESET && isResetCodeSent
+                  ? `info`
                   : `success`
               }
               sx={{ mt: 3, mb: 2 }}
@@ -190,7 +206,8 @@ export const SignIn: FC<Props> = ({
                 : mode === Mode.SIGN_UP
                 ? `Create Account`
                 : mode === Mode.RESET && isResetCodeSent
-                ? `Update the password` : `Send Reset Password Link`}
+                ? `Save new password`
+                : `Send Reset Password Link`}
             </Button>
             <Grid container>
               <Grid item xs={6} alignItems="center">

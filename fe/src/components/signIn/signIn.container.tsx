@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SignIn } from "./signIn";
 import { User } from "../../types/User";
-import { resetPassword, signIn, signUp } from "../../state/api/userSlice";
+import { changePassword, sendResetCode, signIn, signUp } from "../../state/api/userSlice";
 import { useAppDispatch, useAppSelector } from "../../state/store";
 
 export const enum Mode {
@@ -27,8 +27,12 @@ export const SignInContainer = () => {
     dispatch(signIn({identifier, password}));
   };
 
-  const handleReset = (identifier: string) => {
-    dispatch(resetPassword({identifier}));
+  const handleSendResetCode = (identifier: string) => {
+    dispatch(sendResetCode({identifier}));
+  };
+
+  const handleResetPassword = (identifier: string, password: string) => {
+    dispatch(changePassword({identifier, password}));
   };
 
   return (
@@ -36,7 +40,8 @@ export const SignInContainer = () => {
       onModeChange={handleModeChange}
       onCreateUser={handleCreateUser}
       onSignIn={handleSignIn}
-      onReset={handleReset}
+      onSendResetCode={handleSendResetCode}
+      onValidateResetCode={handleResetPassword}
       mode={mode}
       isResetCodeSent={isResetCodeSent}
     />

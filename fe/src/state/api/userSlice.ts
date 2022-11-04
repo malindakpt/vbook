@@ -3,16 +3,19 @@ import axios from "axios";
 import { User } from "../../types/User";
 import { getCookie } from "typescript-cookie";
 import jwtDecode from "jwt-decode";
+import { config } from "../../config";
 
 export interface InitialState {
   user: User | null;
   isResetCodeSent: boolean;
+  
 }
 const initialState: InitialState = {
   user: null,
   isResetCodeSent: false,
 };
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = config.serverUrl
 
 axios.interceptors.response.use(
   (response) => {
@@ -25,7 +28,7 @@ axios.interceptors.response.use(
 
       try {
         await axios.post(
-          `http://localhost:3600/user/refreshToken`
+          `user/refreshToken`
         );
         return axios(originalRequest);
       } catch (e) {
@@ -36,12 +39,8 @@ axios.interceptors.response.use(
   }
 );
 
-// const axios = axiosA.create({
-//   withCredentials: true
-// })
-
 export const fetchUser = createAsyncThunk(
-  "users/fetchUser",
+  "user/fetchUser",
   // if you type your function argument here
   async (thunkAPI) => {
     const token = getCookie("access-token");
@@ -55,11 +54,11 @@ export const fetchUser = createAsyncThunk(
 );
 
 export const signUp = createAsyncThunk(
-  "users/signUp",
+  "user/signUp",
   // if you type your function argument here
   async (user: User, thunkAPI) => {
     const response = await axios.post(
-      `http://localhost:3600/user/signUp`,
+      `/user/signUp`,
       user
     );
     return response.data;
@@ -67,34 +66,46 @@ export const signUp = createAsyncThunk(
 );
 
 export const refreshToken = createAsyncThunk(
-  "users/refreshToken",
+  "user/refreshToken",
   // if you type your function argument here
   async (thunkAPI) => {
     const response = await axios.post(
-      `http://localhost:3600/user/refreshToken`
+      `/user/refreshToken`
     );
     return response.data;
   }
 );
 
 export const signIn = createAsyncThunk(
-  "users/signIn",
+  "user/signIn",
   // if you type your function argument here
   async (args: { identifier: string; password: string }, thunkAPI) => {
     const response = await axios.post(
-      `http://localhost:3600/user/signIn`,
+      `/user/signIn`,
       args
     );
     return response.data;
   }
 );
 
-export const resetPassword = createAsyncThunk(
-  "users/resetPassword",
+export const sendResetCode = createAsyncThunk(
+  "user/sendResetCode",
   // if you type your function argument here
   async (args: { identifier: string}, thunkAPI) => {
     const response = await axios.post(
-      `http://localhost:3600/user/resetPassword`,
+      `/user/sendResetCode`,
+      args
+    );
+    return response.data;
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/changePassword",
+  // if you type your function argument here
+  async (args: { identifier: string, password: string}, thunkAPI) => {
+    const response = await axios.post(
+      `/user/changePassword`,
       args
     );
     return response.data;
@@ -102,19 +113,19 @@ export const resetPassword = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk(
-  "users/logout",
+  "user/logout",
   // if you type your function argument here
   async (thunkAPI) => {
-    const response = await axios.post(`http://localhost:3600/user/logout`);
+    const response = await axios.post(`/user/logout`);
     return response.data;
   }
 );
 
 export const getAllUsers = createAsyncThunk(
-  "users/signIn",
+  "user/signIn",
   // if you type your function argument here
   async (thunkAPI) => {
-    const response = await axios.post(`http://localhost:3600/user/all`);
+    const response = await axios.post(`/user/all`);
     return response.data;
   }
 );
@@ -153,7 +164,7 @@ export const userSlice = createSlice({
       console.log(action.payload);
       state.user = null;
     });
-    builder.addCase(resetPassword.fulfilled, (state, action) => {
+    builder.addCase(sendResetCode.fulfilled, (state, action) => {
       console.log(action.payload);
       state.isResetCodeSent = action.payload;
     });

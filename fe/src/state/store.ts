@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { userReducer, userReducerPath } from "./api/user.api";
+// import { userReducer, userReducerPath } from "./api/user.api";
 import { userSlice } from "./api/userSlice";
 
 const reducer = {
-  [userReducerPath]: userReducer,
+  // [userReducerPath]: userReducer,
   app: userSlice.reducer
   // two: twoSlice.reducer,
 };

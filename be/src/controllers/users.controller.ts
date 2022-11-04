@@ -142,7 +142,7 @@ export const logout = async (req: Request, res: Response) => {
   }
 };
 
-export const resetPassword = async (req: Request, res: Response) => {
+export const sendResetCode = async (req: Request, res: Response) => {
   try {
     const { identifier } = req.body;
     const randomCode = Math.round(Math.random()*Math.pow(10, 6));
@@ -153,6 +153,30 @@ export const resetPassword = async (req: Request, res: Response) => {
     }, config.resetPasswordTimeout);
 
     await sendEmail(identifier, 'Reset password', `Please use following code as the reset code: <b>${randomCode}</b>`);
+    res.status(200).send(true);
+
+  } catch (e) {
+    res.status(500).send(false);
+  }
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  try {
+    const { identifier, password } = req.body; 
+
+    const matchWith = identifier.includes("@") ? "email" : "phone";
+    const foundUser = await UserModel.findOne({
+      where: {
+        [matchWith]: identifier,
+      },
+    });
+
+    if (!foundUser) {
+      res.status(401).send({ error: "unauthorized" });
+      return;
+    }
+    const newPassword = await bcrypt.hash(password, 10);
+    await foundUser.update({ password: newPassword });
     res.status(200).send(true);
 
   } catch (e) {
