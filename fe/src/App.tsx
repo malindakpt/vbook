@@ -2,10 +2,17 @@ import { SignInContainer } from "./components/signIn/signIn.container";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
-import { RootState } from "./state/store";
+import { RootState, useAppDispatch } from "./state/store";
+import { useEffect } from 'react';
+import { fetchUser } from "./state/api/userSlice";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
+  const dispatch = useAppDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <div className="App">

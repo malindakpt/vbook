@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { User } from "../../types/User";
+import { getCookie } from 'typescript-cookie';
+import jwtDecode from "jwt-decode";
 
 export interface InitialState {
   user: User | null;
@@ -13,6 +15,21 @@ axios.defaults.withCredentials = true;
 // const axios = axiosA.create({
 //   withCredentials: true
 // })
+
+export const fetchUser = createAsyncThunk(
+  "users/fetchUser",
+  // if you type your function argument here
+  async (thunkAPI) => {
+    const token = getCookie('access-token');
+
+    if(!token){
+      return null;
+    }
+    const user = jwtDecode(token);
+    return user as User;
+    
+  }
+);
 
 export const signUp = createAsyncThunk(
   "users/signUp",
@@ -83,6 +100,10 @@ export const userSlice = createSlice({
       state.user = action.payload;
     });
     builder.addCase(signIn.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.user = action.payload;
+    });
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
       console.log(action.payload);
       state.user = action.payload;
     });
