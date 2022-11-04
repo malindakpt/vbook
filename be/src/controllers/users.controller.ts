@@ -4,6 +4,9 @@ import bcrypt from "bcrypt";
 import { createAccessToken, createRefreshToken } from "util/util";
 import { sign, verify } from "jsonwebtoken";
 import { config } from "config";
+import { sendEmail } from  "../services/mail.service";
+
+const resetPasswordCodes: any = {};
 
 export const signUp = async (req: Request, res: Response) => {
   try {
@@ -117,8 +120,8 @@ export const refreshToken = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    const accessToken = req.cookies["access-token"];
-    const decodedUser = verify(accessToken, config.accessTokenSecret) as User;
+    const refreshToken = req.cookies["refresh-token"];
+    const decodedUser = verify(refreshToken, config.accessTokenSecret) as User;
 
     const foundUser = await UserModel.findOne({
       where: { id: decodedUser.id },
@@ -135,13 +138,32 @@ export const logout = async (req: Request, res: Response) => {
     res.end();
 
   } catch (e) {
-    res.status(500).send({ error: e });
+    res.end();
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { identifier } = req.body;
+    const randomCode = Math.round(Math.random()*Math.pow(10, 6));
+    resetPasswordCodes[identifier] = randomCode;
+
+    setTimeout(() => {
+      delete resetPasswordCodes[identifier];
+    }, config.resetPasswordTimeout);
+
+    await sendEmail(identifier, 'Reset password', `Please use following code as the reset code: <b>${randomCode}</b>`);
+    res.status(200).send(true);
+
+  } catch (e) {
+    res.status(500).send(false);
   }
 };
 
 export const getAllUsers = (req: Request, res: Response) => {
   UserModel.findAll().then((result) => {
-    // res.set('Cache-control', 'public, max-age=300');
     res.status(200).send(result);
   });
 };
+ 
+

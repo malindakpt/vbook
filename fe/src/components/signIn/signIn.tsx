@@ -22,6 +22,7 @@ const theme = createTheme();
 
 interface Props {
   mode: Mode;
+  isResetCodeSent: boolean;
   onModeChange: (mode: Mode) => void;
   onCreateUser: (user: User) => void;
   onSignIn: (identifier: string, password: string) => void;
@@ -30,6 +31,7 @@ interface Props {
 
 export const SignIn: FC<Props> = ({
   mode,
+  isResetCodeSent,
   onModeChange,
   onCreateUser,
   onSignIn,
@@ -129,6 +131,16 @@ export const SignIn: FC<Props> = ({
               autoFocus
             />
 
+            { mode === Mode.RESET && isResetCodeSent && <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="resetCode"
+              label="Enter reset code"
+              name="resetCode"
+              autoFocus
+            /> }
+
             {(mode === Mode.SIGN_IN || mode === Mode.SIGN_UP) && (
               <TextField
                 margin="normal"
@@ -177,7 +189,8 @@ export const SignIn: FC<Props> = ({
                 ? `Sign In`
                 : mode === Mode.SIGN_UP
                 ? `Create Account`
-                : `Send Reset Password Link`}
+                : mode === Mode.RESET && isResetCodeSent
+                ? `Update the password` : `Send Reset Password Link`}
             </Button>
             <Grid container>
               <Grid item xs={6} alignItems="center">

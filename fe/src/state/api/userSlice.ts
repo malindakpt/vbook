@@ -6,9 +6,11 @@ import jwtDecode from "jwt-decode";
 
 export interface InitialState {
   user: User | null;
+  isResetCodeSent: boolean;
 }
 const initialState: InitialState = {
   user: null,
+  isResetCodeSent: false,
 };
 axios.defaults.withCredentials = true;
 
@@ -87,6 +89,18 @@ export const signIn = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  "users/resetPassword",
+  // if you type your function argument here
+  async (args: { identifier: string}, thunkAPI) => {
+    const response = await axios.post(
+      `http://localhost:3600/user/resetPassword`,
+      args
+    );
+    return response.data;
+  }
+);
+
 export const logout = createAsyncThunk(
   "users/logout",
   // if you type your function argument here
@@ -138,6 +152,10 @@ export const userSlice = createSlice({
     builder.addCase(logout.fulfilled, (state, action) => {
       console.log(action.payload);
       state.user = null;
+    });
+    builder.addCase(resetPassword.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.isResetCodeSent = action.payload;
     });
     //   .addCase(incrementBy, (state, action) => {
     //     // action is inferred correctly here if using TS

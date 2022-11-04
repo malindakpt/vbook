@@ -15,7 +15,7 @@ export const sendEmail = async (
   });
 
   try {
-    const result = transporter.sendMail({
+    const result = await transporter.sendMail({
       from: config.fromEmail,
       to: toEmail,
       subject: subject,

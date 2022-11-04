@@ -7,7 +7,7 @@ export const validateToken = (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.originalUrl === "/user/signIn" || req.originalUrl === "/user/signUp" || req.originalUrl === "/user/logout" || req.originalUrl === "/user/refreshToken") {
+  if (req.originalUrl === "/user/signIn" || req.originalUrl === "/user/signUp" || req.originalUrl === "/user/logout" || req.originalUrl === "/user/refreshToken" || req.originalUrl === "/user/resetPassword") {
     next();
   } else {
     const accessToken = req.cookies["access-token"];
