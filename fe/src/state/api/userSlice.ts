@@ -103,7 +103,7 @@ export const sendResetCode = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   "user/changePassword",
   // if you type your function argument here
-  async (args: { identifier: string, password: string}, thunkAPI) => {
+  async (args: { resetCode: string, identifier: string, password: string}, thunkAPI) => {
     const response = await axios.post(
       `/user/changePassword`,
       args
@@ -165,6 +165,10 @@ export const userSlice = createSlice({
       state.user = null;
     });
     builder.addCase(sendResetCode.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.isResetCodeSent = action.payload;
+    });
+    builder.addCase(changePassword.fulfilled, (state, action) => {
       console.log(action.payload);
       state.isResetCodeSent = action.payload;
     });

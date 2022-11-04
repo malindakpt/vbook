@@ -8,7 +8,7 @@ export const config = {
     dbPassword: process.env.DB_PASSWORD,
     accessTokenValidity: 60*1,
     refreshTokenValidity: 60*60,
-    resetPasswordTimeout: 30*1000,
+    resetPasswordTimeout: 120*1000,
 
     feUrl: 'http//localhost:3000',
     dbLogger: true,

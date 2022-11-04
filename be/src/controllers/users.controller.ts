@@ -146,7 +146,7 @@ export const sendResetCode = async (req: Request, res: Response) => {
   try {
     const { identifier } = req.body;
     const randomCode = Math.round(Math.random()*Math.pow(10, 6));
-    resetPasswordCodes[identifier] = randomCode;
+    resetPasswordCodes[identifier] = `${randomCode}`;
 
     setTimeout(() => {
       delete resetPasswordCodes[identifier];
@@ -162,8 +162,13 @@ export const sendResetCode = async (req: Request, res: Response) => {
 
 export const changePassword = async (req: Request, res: Response) => {
   try {
-    const { identifier, password } = req.body; 
+    const { resetCode, identifier, password } = req.body; 
 
+    if(resetPasswordCodes[identifier] !== resetCode){
+      res.status(500).send(false);
+      return;
+    }
+    
     const matchWith = identifier.includes("@") ? "email" : "phone";
     const foundUser = await UserModel.findOne({
       where: {

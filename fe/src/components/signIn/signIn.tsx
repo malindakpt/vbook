@@ -27,7 +27,7 @@ interface Props {
   onCreateUser: (user: User) => void;
   onSignIn: (identifier: string, password: string) => void;
   onSendResetCode: (identifier: string) => void;
-  onValidateResetCode: (identifier: string, password: string) => void;
+  onValidateResetCode: (resetCode: string, identifier: string, password: string) => void;
 }
 
 export const SignIn: FC<Props> = ({
@@ -45,6 +45,7 @@ export const SignIn: FC<Props> = ({
 
     const identifier = data.get("identifier")?.toString();
     const name = data.get("name")?.toString();
+    const resetCode = data.get("resetCode")?.toString();
     const password1 = data.get("password1")?.toString();
     const password2 = data.get("password2")?.toString();
 
@@ -76,8 +77,12 @@ export const SignIn: FC<Props> = ({
           alert("Missing identifier");
           break;
         }
+        if (password1 !== password2) {
+          alert("Password mismatch");
+          break;
+        }
         if(isResetCodeSent){
-          password1 && onValidateResetCode(identifier, password1);
+          password1 && resetCode && onValidateResetCode(resetCode, identifier, password1);
         } else {
           onSendResetCode(identifier);
         }
@@ -138,7 +143,7 @@ export const SignIn: FC<Props> = ({
                 name="identifier"
                 autoComplete="email"
                 autoFocus
-                disabled={isResetCodeSent}
+                // disabled={isResetCodeSent}
               />
             )}
 

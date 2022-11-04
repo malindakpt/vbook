@@ -31,8 +31,8 @@ export const SignInContainer = () => {
     dispatch(sendResetCode({identifier}));
   };
 
-  const handleResetPassword = (identifier: string, password: string) => {
-    dispatch(changePassword({identifier, password}));
+  const handleResetPassword = (resetCode: string, identifier: string, password: string) => {
+    dispatch(changePassword({resetCode, identifier, password}));
   };
 
   return (
