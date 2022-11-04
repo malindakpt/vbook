@@ -66,6 +66,17 @@ export const signIn = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  "users/logout",
+  // if you type your function argument here
+  async (thunkAPI) => {
+    const response = await axios.post(
+      `http://localhost:3600/user/logout`
+    );
+    return response.data;
+  }
+);
+
 export const getAllUsers = createAsyncThunk(
   "users/signIn",
   // if you type your function argument here
@@ -106,6 +117,10 @@ export const userSlice = createSlice({
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       console.log(action.payload);
       state.user = action.payload;
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.user = null;
     });
     //   .addCase(incrementBy, (state, action) => {
     //     // action is inferred correctly here if using TS

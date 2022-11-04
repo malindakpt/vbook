@@ -61,13 +61,13 @@ export const signIn = async (req: Request, res: Response) => {
     await foundUser.update({ refreshToken });
 
     res.cookie("access-token", accessToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
+      maxAge: 60 * 10 * 24 * 30 * 1000,
     });
     res.cookie("refresh-token", refreshToken, {
       maxAge: 60 * 60 * 24 * 30 * 1000,
       httpOnly: true,
     });
-    res.status(200).send({ data: foundUser });
+    res.status(200).send(foundUser);
   } catch (e) {
     res.status(500).send({ error: e });
   }
@@ -109,6 +109,30 @@ export const refreshToken = async (req: Request, res: Response) => {
       httpOnly: true,
     });
     res.status(200).send({ data: foundUser });
+  } catch (e) {
+    res.status(500).send({ error: e });
+  }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    const accessToken = req.cookies["access-token"];
+    const decodedUser = verify(accessToken, '123') as User;
+
+    const foundUser = await UserModel.findOne({
+      where: { id: decodedUser.id },
+    });
+
+    if(!foundUser){
+      return res.end();
+    }
+    await foundUser.update({ refreshToken: '' });
+
+    res.clearCookie("access-token");
+    res.clearCookie("refresh-token");
+
+    res.end();
+
   } catch (e) {
     res.status(500).send({ error: e });
   }
