@@ -1,4 +1,13 @@
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
 export const config = {
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET ?? '',
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET ?? '',
+    dbPassword: process.env.DB_PASSWORD,
+    accessTokenValidity: 60*1,
+    refreshTokenValidity: 60*60,
     feUrl: 'http//localhost:3000',
     dbLogger: true,
     fromEmail: "malindakpt@gmail.com",

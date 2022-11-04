@@ -1,6 +1,7 @@
 import { sign } from "jsonwebtoken";
 import { UserModel } from "models/user/user.model";
 import dotenv from "dotenv";
+import { config } from "config";
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ export const createAccessToken = (user: UserModel) => {
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, "123", { expiresIn: '10m'});
+  const accessToken = sign(obj, config.accessTokenSecret, { expiresIn: config.accessTokenValidity});
   return accessToken;
 };
 
@@ -32,6 +33,6 @@ export const createRefreshToken = (user: UserModel) => {
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, "123", { expiresIn: '1h' });
+  const accessToken = sign(obj, config.refreshTokenSecret, { expiresIn: config.refreshTokenValidity });
   return accessToken;
 };

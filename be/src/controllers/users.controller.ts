@@ -3,6 +3,7 @@ import { User, UserModel } from "models/user/user.model";
 import bcrypt from "bcrypt";
 import { createAccessToken, createRefreshToken } from "util/util";
 import { sign, verify } from "jsonwebtoken";
+import { config } from "config";
 
 export const signUp = async (req: Request, res: Response) => {
   try {
@@ -14,10 +15,10 @@ export const signUp = async (req: Request, res: Response) => {
     const refreshToken = createRefreshToken(user.toJSON());
 
     res.cookie("access-token", accessToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
+      maxAge: config.accessTokenValidity * 1000,
     });
     res.cookie("refresh-token", refreshToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
+      maxAge: config.refreshTokenValidity * 1000,
       httpOnly: true,
     });
 
@@ -61,10 +62,10 @@ export const signIn = async (req: Request, res: Response) => {
     await foundUser.update({ refreshToken });
 
     res.cookie("access-token", accessToken, {
-      maxAge: 60 * 10 * 24 * 30 * 1000,
+      maxAge: config.accessTokenValidity * 1000,
     });
     res.cookie("refresh-token", refreshToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
+      maxAge: config.refreshTokenValidity * 1000,
       httpOnly: true,
     });
     res.status(200).send(foundUser);
@@ -88,7 +89,7 @@ export const refreshToken = async (req: Request, res: Response) => {
       return;
     }
    
-    const decodedUser = verify(refreshToken, '123') as User;
+    const decodedUser = verify(refreshToken, config.refreshTokenSecret) as User;
 
     if(decodedUser.firstName !== foundUser.firstName){
         res.status(401).send({ error: "unauthorized" });
@@ -102,10 +103,10 @@ export const refreshToken = async (req: Request, res: Response) => {
     await foundUser.update({ refreshToken });
 
     res.cookie("access-token", accessToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
+      maxAge: config.accessTokenValidity * 1000,
     });
     res.cookie("refresh-token", refreshToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
+      maxAge: config.refreshTokenValidity * 1000,
       httpOnly: true,
     });
     res.status(200).send({ data: foundUser });
@@ -117,7 +118,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     const accessToken = req.cookies["access-token"];
-    const decodedUser = verify(accessToken, '123') as User;
+    const decodedUser = verify(accessToken, config.accessTokenSecret) as User;
 
     const foundUser = await UserModel.findOne({
       where: { id: decodedUser.id },

@@ -1,3 +1,4 @@
+import { config } from "config";
 import { NextFunction, Request, Response } from "express";
 import { sign, verify } from "jsonwebtoken";
 
@@ -14,7 +15,7 @@ export const validateToken = (
       return res.status(400).json({ error: "User not Authenticated!" });
 
     try {
-      const validToken = verify(accessToken, "123");
+      const validToken = verify(accessToken, config.accessTokenSecret);
       if (validToken) {
         // @ts-ignore
         req.authenticated = true;
