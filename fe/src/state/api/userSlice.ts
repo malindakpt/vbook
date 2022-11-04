@@ -1,18 +1,30 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { User } from "../../types/User";
 import { getCookie } from "typescript-cookie";
 import jwtDecode from "jwt-decode";
 import { config } from "../../config";
+import { PopupType } from "../../enum/popup.type";
 
 export interface InitialState {
   user: User | null;
   isResetCodeSent: boolean;
+  popup: {
+    message: string;
+    isOpen: boolean;
+    type: PopupType;
+  }
   
 }
 const initialState: InitialState = {
   user: null,
   isResetCodeSent: false,
+  popup: {
+    message: '',
+    isOpen: false,
+    type: PopupType.info
+
+  }
 };
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = config.serverUrl
@@ -134,6 +146,14 @@ export const userSlice = createSlice({
   name: "blogData",
   initialState,
   reducers: {
+    showPopup: (state, action: PayloadAction<PopupType, string>) => {
+      state.popup.isOpen = true;
+      state.popup.message = action.payload;
+      state.popup.type = action.payload
+    },
+    hidePopup: (state) => {
+      state.popup.isOpen = false;
+    }
     //   receivedAll: {
     //     reducer(
     //       state,
@@ -187,3 +207,5 @@ export const userSlice = createSlice({
     builder.addDefaultCase((state, action) => {});
   },
 });
+
+export const { showPopup, hidePopup } = userSlice.actions;
