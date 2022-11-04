@@ -129,7 +129,7 @@ export const SignIn: FC<Props> = ({
               autoFocus
             />
 
-            {mode !== Mode.RESET && (
+            {(mode === Mode.SIGN_IN || mode === Mode.SIGN_UP) && (
               <TextField
                 margin="normal"
                 required
