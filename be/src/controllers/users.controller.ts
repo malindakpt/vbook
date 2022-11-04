@@ -142,6 +142,6 @@ export const logout = async (req: Request, res: Response) => {
 export const getAllUsers = (req: Request, res: Response) => {
   UserModel.findAll().then((result) => {
     // res.set('Cache-control', 'public, max-age=300');
-    res.status(200).send({ data: result });
+    res.status(200).send(result);
   });
 };

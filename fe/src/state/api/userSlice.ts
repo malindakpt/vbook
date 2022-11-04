@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { User } from "../../types/User";
-import { getCookie } from 'typescript-cookie';
+import { getCookie } from "typescript-cookie";
 import jwtDecode from "jwt-decode";
 
 export interface InitialState {
@@ -12,6 +12,28 @@ const initialState: InitialState = {
 };
 axios.defaults.withCredentials = true;
 
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async function (error) {
+    const originalRequest = error.config;
+    if (error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        await axios.post(
+          `http://localhost:3600/user/refreshToken`
+        );
+        return axios(originalRequest);
+      } catch (e) {
+        console.log(e);
+      } 
+    }
+    return Promise.reject(error);
+  }
+);
+
 // const axios = axiosA.create({
 //   withCredentials: true
 // })
@@ -20,14 +42,13 @@ export const fetchUser = createAsyncThunk(
   "users/fetchUser",
   // if you type your function argument here
   async (thunkAPI) => {
-    const token = getCookie('access-token');
+    const token = getCookie("access-token");
 
-    if(!token){
+    if (!token) {
       return null;
     }
     const user = jwtDecode(token);
     return user as User;
-    
   }
 );
 
@@ -70,9 +91,7 @@ export const logout = createAsyncThunk(
   "users/logout",
   // if you type your function argument here
   async (thunkAPI) => {
-    const response = await axios.post(
-      `http://localhost:3600/user/logout`
-    );
+    const response = await axios.post(`http://localhost:3600/user/logout`);
     return response.data;
   }
 );
@@ -81,9 +100,7 @@ export const getAllUsers = createAsyncThunk(
   "users/signIn",
   // if you type your function argument here
   async (thunkAPI) => {
-    const response = await axios.post(
-      `http://localhost:3600/user/all`
-    );
+    const response = await axios.post(`http://localhost:3600/user/all`);
     return response.data;
   }
 );
@@ -134,6 +151,6 @@ export const userSlice = createSlice({
     //     (state, action) => {}
     //   )
     //   // and provide a default case if no other handlers matched
-    builder.addDefaultCase((state, action) => {})
+    builder.addDefaultCase((state, action) => {});
   },
 });

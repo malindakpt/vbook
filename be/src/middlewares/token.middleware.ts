@@ -7,12 +7,12 @@ export const validateToken = (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.originalUrl === "/user/signIn" || req.originalUrl === "/user/signUp") {
+  if (req.originalUrl === "/user/signIn" || req.originalUrl === "/user/signUp" || req.originalUrl === "/user/logout" || req.originalUrl === "/user/refreshToken") {
     next();
   } else {
     const accessToken = req.cookies["access-token"];
     if (!accessToken)
-      return res.status(400).json({ error: "User not Authenticated!" });
+      return res.status(403).json({ error: "User not Authenticated!" });
 
     try {
       const validToken = verify(accessToken, config.accessTokenSecret);
@@ -22,7 +22,7 @@ export const validateToken = (
         return next();
       }
     } catch (err) {
-      return res.status(400).json({ error: err });
+      return res.status(403).json(err);
     }
   }
 };

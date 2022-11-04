@@ -6,7 +6,7 @@ export const setUserRoutes = (app: Application) => {
     app.post('/user/signIn', [signIn]);
     app.post('/user/refreshToken', [refreshToken]);
     app.post('/user/logout', [logout]);
-    app.get('/user/all', [getAllUsers]);
+    app.post('/user/all', [getAllUsers]);
     // app.post('/user/reset/email', [resetPassordToEmail]);
     // app.get('/users', [
     //     ValidationMiddleware.validJWTNeeded,
