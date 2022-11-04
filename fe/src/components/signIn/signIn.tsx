@@ -92,7 +92,7 @@ export const SignIn: FC<Props> = ({
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h3">
             {mode === Mode.SIGN_IN
               ? `Sign in`
               : mode === Mode.SIGN_UP
@@ -154,10 +154,12 @@ export const SignIn: FC<Props> = ({
                 autoComplete="Enter Password Again"
               />
             )}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {(mode === Mode.SIGN_UP || mode === Mode.SIGN_IN) && (
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+            )}
             <Button
               type="submit"
               fullWidth
@@ -178,15 +180,18 @@ export const SignIn: FC<Props> = ({
                 : `Send Reset Password Link`}
             </Button>
             <Grid container>
-              <Grid item xs={6} alignItems="center" >
-                <Link
-                  href="#"
-                  variant="body2"
-                  onClick={() => onModeChange(Mode.RESET)}
-                >
-                  Reset password?
-                </Link>
+              <Grid item xs={6} alignItems="center">
+                {mode !== Mode.RESET && (
+                  <Link
+                    href="#"
+                    variant="body2"
+                    onClick={() => onModeChange(Mode.RESET)}
+                  >
+                    Reset password?
+                  </Link>
+                )}
               </Grid>
+
               <Grid item xs={6}>
                 <Link
                   href="#"
@@ -198,7 +203,7 @@ export const SignIn: FC<Props> = ({
                     )
                   }
                 >
-                  { mode === Mode.SIGN_IN ? "Create Account" : "Sign In"}
+                  {mode === Mode.SIGN_IN ? "Create Account?" : "Sign In?"}
                 </Link>
               </Grid>
             </Grid>
