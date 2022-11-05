@@ -1,4 +1,4 @@
-import { SignInContainer } from "./components/signIn/signIn.container";
+import { LoginContainer } from "./components/login/login.container";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
@@ -21,7 +21,7 @@ function App() {
           <Route path={"/"} element={<Home />} />
         </Routes>
       ) : (
-        <SignInContainer />
+        <LoginContainer />
       )}
     </div>
   );

@@ -8,7 +8,11 @@ import { PopupType } from "../../enum/popup.type";
 
 export interface InitialState {
   user: User | null;
-  isResetCodeSent: boolean;
+  login: {
+    signUp: {
+      loading: boolean;
+    }
+  }
   popup: {
     message: string;
     isOpen: boolean;
@@ -18,7 +22,11 @@ export interface InitialState {
 }
 const initialState: InitialState = {
   user: null,
-  isResetCodeSent: false,
+  login: {
+    signUp: {
+      loading: false
+    }
+  },
   popup: {
     message: '',
     isOpen: false,
@@ -186,11 +194,11 @@ export const userSlice = createSlice({
     });
     builder.addCase(sendResetCode.fulfilled, (state, action) => {
       console.log(action.payload);
-      state.isResetCodeSent = action.payload;
+      // state.isResetCodeSent = action.payload;
     });
     builder.addCase(changePassword.fulfilled, (state, action) => {
       console.log(action.payload);
-      state.isResetCodeSent = action.payload;
+      // state.isResetCodeSent = action.payload;
     });
     //   .addCase(incrementBy, (state, action) => {
     //     // action is inferred correctly here if using TS
