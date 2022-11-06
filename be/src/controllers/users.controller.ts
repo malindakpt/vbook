@@ -163,7 +163,7 @@ export const changePassword = async (req: Request, res: Response) => {
     const { resetCode, identifier, password } = req.body; 
 
     if(resetPasswordCodes[identifier] !== resetCode){
-      res.status(500).send('Invalid reset code');
+      res.status(500).send('Invalid/Expired reset code');
       return;
     }
 

@@ -22,6 +22,13 @@ export const ForgotPassword: FC<Props> = ({ loading, onSendCode }) => {
     onSendCode(state);
   };
 
+  const isReadyToSubmit = () => {
+    if(Validators.text(state.identifier)){
+      return true;
+    }
+    return false;
+  }
+
   return (
     <>
       <Typography component="h1" variant="h3">
@@ -40,6 +47,7 @@ export const ForgotPassword: FC<Props> = ({ loading, onSendCode }) => {
           autoComplete="email"
           autoFocus
           error={!Validators.text(state.identifier)}
+          disabled={loading}
         />
 
         <Button
@@ -49,7 +57,7 @@ export const ForgotPassword: FC<Props> = ({ loading, onSendCode }) => {
           color={`success`}
           sx={{ mt: 3, mb: 2 }}
           onClick={handleSignIn}
-          disabled={loading}
+          disabled={loading || !isReadyToSubmit()}
         >
           Send Reset Code
         </Button>

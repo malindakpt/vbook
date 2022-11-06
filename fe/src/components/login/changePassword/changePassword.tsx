@@ -29,6 +29,13 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword, identifie
     onChangePassword(state);
   };
 
+  const isReadyToSubmit = () => {
+    if(Validators.text(state.identifier) && Validators.text(state.resetCode)  && Validators.text(state.password) ){
+      return true;
+    }
+    return false;
+  }
+
   return (
     <>
       <Typography component="h1" variant="h3">
@@ -60,6 +67,7 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword, identifie
           label="Rest Code"
           autoFocus
           error={!Validators.text(state.resetCode)}
+          disabled={loading}
         />
 
         <TextField
@@ -72,6 +80,7 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword, identifie
           type="password"
           autoComplete="off"
           error={!Validators.password(state.password)}
+          disabled={loading}
         />
         
         <Button
@@ -81,7 +90,7 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword, identifie
           color={`success`}
           sx={{ mt: 3, mb: 2 }}
           onClick={handleSignIn}
-          disabled={loading}
+          disabled={loading || !isReadyToSubmit()}
         >
           Change Password
         </Button>

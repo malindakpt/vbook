@@ -28,6 +28,13 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
     setState((prev) => ({ ...prev, [prop]: value }));
   };
 
+  const isReadyToSubmit = () => {
+    if(Validators.text(state.name) && Validators.text(state.identifier) && Validators.text(state.password) ){
+      return true;
+    }
+    return false;
+  }
+
   const handleSignUp = () => {
     onSignUp(state);
   };
@@ -48,6 +55,7 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
           autoComplete="name"
           autoFocus
           error={!Validators.text(state.name)}
+          disabled={loading}
         />
 
         <TextField
@@ -56,12 +64,9 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
           margin="normal"
           required
           fullWidth
-          id="identifier"
           label="Email Address/ Phone Number"
-          name="identifier"
-          autoComplete="email"
-          autoFocus
           error={!Validators.text(state.identifier)}
+          disabled={loading}
         />
 
         <TextField
@@ -72,8 +77,8 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
           fullWidth
           label="Enter Password"
           type="password"
-          autoComplete="off"
           error={!Validators.password(state.password)}
+          disabled={loading}
         />
 
         <FormControlLabel
@@ -88,7 +93,7 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
           color={`success`}
           sx={{ mt: 3, mb: 2 }}
           onClick={handleSignUp}
-          disabled={loading}
+          disabled={loading || !isReadyToSubmit()}
         >
           Sign Up
         </Button>

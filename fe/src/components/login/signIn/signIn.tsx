@@ -28,6 +28,13 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
     onSignIn(state);
   };
 
+  const isReadyToSubmit = () => {
+    if(Validators.text(state.identifier) && Validators.text(state.password) ){
+      return true;
+    }
+    return false;
+  }
+
   return (
     <>
       <Typography component="h1" variant="h3">
@@ -41,12 +48,10 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
           margin="normal"
           required
           fullWidth
-          id="identifier"
           label="Email Address/ Phone Number"
-          name="identifier"
-          autoComplete="email"
           autoFocus
           error={!Validators.text(state.identifier)}
+          disabled={loading}
         />
 
         <TextField
@@ -59,6 +64,7 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
           type="password"
           autoComplete="off"
           error={!Validators.password(state.password)}
+          disabled={loading}
         /> 
 
         <FormControlLabel
@@ -73,7 +79,7 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
           color={`success`}
           sx={{ mt: 3, mb: 2 }}
           onClick={handleSignIn}
-          disabled={loading}
+          disabled={loading || !isReadyToSubmit()}
         >
           Sign In
         </Button>
