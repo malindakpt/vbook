@@ -6,12 +6,12 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FC, useState } from "react";
 import { Copyright } from "./copyright";
-import { ResetSendCode } from "./resetSendCode/resetSendCode";
 import { ResetValidateCode } from "./resetValidateCode/resetValidateCode";
 import { SignUpContainer } from "./signUp/signUp.container";
 import { LoginUIMode } from "../../enum/login.ui.mode";
 import { Grid, Link } from "@mui/material";
 import { SignInContainer } from "./signIn/signIn.container";
+import { ForgotPasswordContainer } from "./forgotPassword/forgotPassword.container";
 
 const theme = createTheme();
 
@@ -40,7 +40,7 @@ export const Login: FC<Props> = ({}) => {
       case LoginUIMode.SIGN_UP:
         return <SignUpContainer/>;
       case LoginUIMode.RESET_SEND:
-        return <ResetSendCode />;
+        return <ForgotPasswordContainer />;
       case LoginUIMode.RESET_VALIDATE:
         return <ResetValidateCode />;
       default:

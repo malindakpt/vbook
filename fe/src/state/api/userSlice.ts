@@ -14,6 +14,9 @@ export interface InitialState {
     },
     signIn: {
       loading: boolean;
+    },
+    forgotPassword: {
+      loading: boolean;
     }
   }
   popup: {
@@ -30,6 +33,9 @@ const initialState: InitialState = {
       loading: false
     },
     signIn: {
+      loading: false
+    },
+    forgotPassword: {
       loading: false
     }
   },
