@@ -121,6 +121,7 @@ export const signIn = createAsyncThunk(
       return response.data;
     } catch (e: any) {
       showErrorFromResponse(e, thunkAPI.dispatch);
+      throw new Error();
     }
   }
 );
@@ -133,6 +134,7 @@ export const sendResetCode = createAsyncThunk(
       return response.data;
     } catch (e) {
       showErrorFromResponse(e, thunkAPI.dispatch);
+      throw new Error();
     }
   }
 );
@@ -148,6 +150,7 @@ export const changePassword = createAsyncThunk(
       return response.data;
     } catch (e) {
       showErrorFromResponse(e, thunkAPI.dispatch);
+      throw new Error();
     }
   }
 );
@@ -156,11 +159,12 @@ export const logout = createAsyncThunk(
   "user/logout",
   async (args: void, thunkAPI) => {
     try {
-    const response = await axios.post(`/user/logout`);
-    return response.data;
-  } catch (e) {
-    showErrorFromResponse(e, thunkAPI.dispatch);
-  }
+      const response = await axios.post(`/user/logout`);
+      return response.data;
+    } catch (e) {
+      showErrorFromResponse(e, thunkAPI.dispatch);
+      throw new Error();
+    }
   }
 );
 
@@ -168,11 +172,12 @@ export const getAllUsers = createAsyncThunk(
   "user/signIn",
   async (args: void, thunkAPI) => {
     try {
-    const response = await axios.post(`/user/all`);
-    return response.data;
-  } catch (e) {
-    showErrorFromResponse(e, thunkAPI.dispatch);
-  }
+      const response = await axios.post(`/user/all`);
+      return response.data;
+    } catch (e) {
+      showErrorFromResponse(e, thunkAPI.dispatch);
+      throw new Error();
+    }
   }
 );
 
