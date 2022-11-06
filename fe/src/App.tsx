@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { PopupContainer } from "./components/popup/popup.container";
 import { User } from "./types/User";
 import { setUser } from "./state/api/userSlice";
+import { TopBar } from "./components/topbar/topbar";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
@@ -23,9 +24,12 @@ function App() {
     <div className="App">
       <PopupContainer />
       {loggedInUser ? (
-        <Routes>
-          <Route path={"/"} element={<Home />} />
-        </Routes>
+        <>
+          <TopBar />
+          <Routes>
+            <Route path={"/"} element={<Home />} />
+          </Routes>
+        </>
       ) : (
         <LoginContainer />
       )}
