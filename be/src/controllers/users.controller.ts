@@ -31,9 +31,10 @@ export const signUp = async (req: Request, res: Response) => {
       email: user.email,
       phone: user.phone,
     };
+
     res.status(201).send(responseData);
   } catch (e) {
-    res.status(500).send({ error: e });
+    res.status(500).send(JSON.stringify(e));
   }
 };
 
@@ -45,14 +46,14 @@ export const signIn = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      res.status(401).send({ error: "unauthorized" });
+      res.status(401).send('User not found');
       return;
     }
 
     const passwordMatched = await bcrypt.compare(password, foundUser.password);
 
     if (!passwordMatched) {
-      res.status(401).send({ error: "unauthorized" });
+      res.status(401).send('Invalid password');
       return;
     }
 
@@ -70,7 +71,7 @@ export const signIn = async (req: Request, res: Response) => {
     });
     res.status(200).send(foundUser);
   } catch (e) {
-    res.status(500).send({ error: e });
+    res.status(500).send(JSON.stringify(e));
   }
 };
 
@@ -85,14 +86,14 @@ export const refreshToken = async (req: Request, res: Response) => {
     // refresh-token reuse or hacked
     // TODO: invalidate other sessions
     if (!foundUser) {
-      res.status(401).send({ error: "unauthorized" });
+      res.status(401).send("User not found");
       return;
     }
    
     const decodedUser = verify(refreshToken, config.refreshTokenSecret) as User;
 
     if(decodedUser.name !== foundUser.name){
-        res.status(401).send({ error: "unauthorized" });
+        res.status(401).send('Token ownership validation failed');
         return;
     }
 
@@ -109,9 +110,9 @@ export const refreshToken = async (req: Request, res: Response) => {
       maxAge: config.refreshTokenValidity * 1000,
       httpOnly: true,
     });
-    res.status(200).send({ data: foundUser });
+    res.status(200).send(foundUser);
   } catch (e) {
-    res.status(500).send({ error: e });
+    res.status(500).send(JSON.stringify(e));
   }
 };
 
@@ -124,18 +125,18 @@ export const logout = async (req: Request, res: Response) => {
       where: { id: decodedUser.id },
     });
 
-    if(!foundUser){
-      return res.end();
+    if(!foundUser){;
+      return res.status(500).send('User not found');
     }
     await foundUser.update({ refreshToken: '' });
 
     res.clearCookie("access-token");
     res.clearCookie("refresh-token");
 
-    res.end();
+    res.status(200).send('Successfully logged out');
 
   } catch (e) {
-    res.end();
+    res.status(500).send(JSON.stringify(e));
   }
 };
 
@@ -150,10 +151,10 @@ export const sendResetCode = async (req: Request, res: Response) => {
     }, config.resetPasswordTimeout);
 
     await sendEmail(identifier, 'Reset password', `Please use following code as the reset code: <b>${randomCode}</b>`);
-    res.status(200).send(true);
+    res.status(200).send('Reset code sent');
 
   } catch (e) {
-    res.status(500).send(false);
+    res.status(500).send(JSON.stringify(e));
   }
 };
 
@@ -162,7 +163,7 @@ export const changePassword = async (req: Request, res: Response) => {
     const { resetCode, identifier, password } = req.body; 
 
     if(resetPasswordCodes[identifier] !== resetCode){
-      res.status(500).send(false);
+      res.status(500).send('Invalid reset code');
       return;
     }
 
@@ -171,15 +172,15 @@ export const changePassword = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      res.status(401).send({ error: "unauthorized" });
+      res.status(401).send('User not found');
       return;
     }
     const newPassword = await bcrypt.hash(password, 10);
     await foundUser.update({ password: newPassword });
-    res.status(200).send(true);
+    res.status(200).send('Password changed successfully');
 
   } catch (e) {
-    res.status(500).send(false);
+    res.status(500).send('JSON.stringify(e)');
   }
 };
 

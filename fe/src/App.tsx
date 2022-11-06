@@ -4,6 +4,7 @@ import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./state/store";
 import { useEffect } from 'react';
+import { PopupContainer } from "./components/popup/popup.container";
 // import { fetchUser } from "./state/api/userSlice";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className="App">
+      <PopupContainer />
       {loggedInUser ? (
         <Routes>
           <Route path={"/"} element={<Home />} />

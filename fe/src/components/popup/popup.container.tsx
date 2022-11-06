@@ -10,5 +10,5 @@ export const PopupContainer = () => {
     dispatch(hidePopup());
   }
 
-  return <Popup onClose={handleClose} message={popup.message} isOpen={popup.isOpen} />;
+  return <Popup onClose={handleClose} message={popup.message} isOpen={popup.isOpen} type={popup.type}/>;
 };

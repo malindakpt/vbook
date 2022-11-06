@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { User } from "../../types/User";
 import { getCookie } from "typescript-cookie";
 import jwtDecode from "jwt-decode";
@@ -116,8 +116,12 @@ export const signIn = createAsyncThunk(
   "user/signIn",
   // if you type your function argument here
   async (args: { identifier: string; password: string }, thunkAPI) => {
+    try{
     const response = await axios.post(`/user/signIn`, args);
     return response.data;
+    }catch(e: any){
+      thunkAPI.dispatch(showPopup({type: PopupType.error, message: (e as AxiosError)?.response?.data as string}));
+    }
   }
 );
 
@@ -167,10 +171,10 @@ export const userSlice = createSlice({
     changeLoginMode: (state, action: PayloadAction<LoginUIMode>) => {
       state.login.mode = action.payload;
     },
-    showPopup: (state, action: PayloadAction<PopupType, string>) => {
+    showPopup: (state, action: PayloadAction<{type: PopupType, message: string}>) => {
       state.popup.isOpen = true;
-      state.popup.message = action.payload;
-      state.popup.type = action.payload;
+      state.popup.type = action.payload.type;
+      state.popup.message = action.payload.message;
     },
     hidePopup: (state) => {
       state.popup.isOpen = false;
