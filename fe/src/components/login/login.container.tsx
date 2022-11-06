@@ -1,39 +1,19 @@
+import { LoginUIMode } from "../../enum/login.ui.mode";
+import { changeLoginMode } from "../../state/api/userSlice";
+import { useAppDispatch, useAppSelector } from "../../state/store";
 import { Login } from "./login";
-// import { useAppDispatch, useAppSelector } from "../../state/store";
 
 export const LoginContainer = () => {
-  // const dispatch = useAppDispatch();
-  // const isResetCodeSent = useAppSelector((state) => state.app.login.signUp);
-  // const [mode, setMode] = useState(LoginUIMode.SIGN_UP);
+  const dispatch = useAppDispatch();
+  const loginUIMode = useAppSelector((state) => state.app.login.mode);
   
-  // const handleModeChange = (mode: LoginUIMode) => {
-  //   setMode(mode);
-  // };
-
-  // const handleCreateUser = (user: User) => {
-  //   dispatch(signUp(user));
-  // };
-
-  // const handleSignIn = (identifier: string, password: string) => {
-  //   dispatch(signIn({identifier, password}));
-  // };
-
-  // const handleSendResetCode = (identifier: string) => {
-  //   dispatch(sendResetCode({identifier}));
-  // };
-
-  // const handleResetPassword = (resetCode: string, identifier: string, password: string) => {
-  //   dispatch(changePassword({resetCode, identifier, password}));
-  // };
-
+  const handleModeChange = (mode: LoginUIMode) => {
+    dispatch(changeLoginMode(mode))
+  };
   return (
     <Login
-      // onModeChange={handleModeChange}
-      // onCreateUser={handleCreateUser}
-      // onSignIn={handleSignIn}
-      // onSendResetCode={handleSendResetCode}
-      // onValidateResetCode={handleResetPassword}
-      // mode={mode}
+      onModeChange={handleModeChange}
+      mode={loginUIMode}
     />
   );
 };

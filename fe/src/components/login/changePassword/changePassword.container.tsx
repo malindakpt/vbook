@@ -9,6 +9,7 @@ interface Props {
 export const ChangePasswordContainer: FC<Props> = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.app.login.changePassword.loading);
+  const identifier = useAppSelector((state) => state.app.login.changePassword.identifier);
 
   const handleChangePassword = (args: {
     identifier: string,
@@ -30,5 +31,5 @@ export const ChangePasswordContainer: FC<Props> = () => {
   //   dispatch(changePassword({resetCode, identifier, password}));
   // };
 
-  return <ChangePassword loading={loading} onChangePassword={handleChangePassword}/>;
+  return <ChangePassword identifier={identifier} loading={loading} onChangePassword={handleChangePassword}/>;
 };

@@ -5,55 +5,60 @@ import { getCookie } from "typescript-cookie";
 import jwtDecode from "jwt-decode";
 import { config } from "../../config";
 import { PopupType } from "../../enum/popup.type";
+import { LoginUIMode } from "../../enum/login.ui.mode";
 
 export interface InitialState {
   user: User | null;
   login: {
+    mode: LoginUIMode;
     signUp: {
       loading: boolean;
-    },
+    };
     signIn: {
       loading: boolean;
-    },
+    };
     forgotPassword: {
       loading: boolean;
-    },
+      codeSent: boolean;
+    };
     changePassword: {
       loading: boolean;
-    }
-  }
+      identifier: string;
+    };
+  };
   popup: {
     message: string;
     isOpen: boolean;
     type: PopupType;
-  }
-  
+  };
 }
 const initialState: InitialState = {
   user: null,
   login: {
+    mode: LoginUIMode.SIGN_IN,
     signUp: {
-      loading: false
+      loading: false,
     },
     signIn: {
-      loading: false
+      loading: false,
     },
     forgotPassword: {
-      loading: false
+      loading: false,
+      codeSent: false,
     },
     changePassword: {
-      loading: false
-    }
+      loading: false,
+      identifier: '',
+    },
   },
   popup: {
-    message: '',
+    message: "",
     isOpen: false,
-    type: PopupType.info
-
-  }
+    type: PopupType.info,
+  },
 };
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = config.serverUrl
+axios.defaults.baseURL = config.serverUrl;
 
 axios.interceptors.response.use(
   (response) => {
@@ -65,13 +70,11 @@ axios.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(
-          `user/refreshToken`
-        );
+        await axios.post(`user/refreshToken`);
         return axios(originalRequest);
       } catch (e) {
         console.log(e);
-      } 
+      }
     }
     return Promise.reject(error);
   }
@@ -95,10 +98,7 @@ export const signUp = createAsyncThunk(
   "user/signUp",
   // if you type your function argument here
   async (user: User, thunkAPI) => {
-    const response = await axios.post(
-      `/user/signUp`,
-      user
-    );
+    const response = await axios.post(`/user/signUp`, user);
     return response.data;
   }
 );
@@ -107,9 +107,7 @@ export const refreshToken = createAsyncThunk(
   "user/refreshToken",
   // if you type your function argument here
   async (thunkAPI) => {
-    const response = await axios.post(
-      `/user/refreshToken`
-    );
+    const response = await axios.post(`/user/refreshToken`);
     return response.data;
   }
 );
@@ -118,10 +116,7 @@ export const signIn = createAsyncThunk(
   "user/signIn",
   // if you type your function argument here
   async (args: { identifier: string; password: string }, thunkAPI) => {
-    const response = await axios.post(
-      `/user/signIn`,
-      args
-    );
+    const response = await axios.post(`/user/signIn`, args);
     return response.data;
   }
 );
@@ -129,11 +124,8 @@ export const signIn = createAsyncThunk(
 export const sendResetCode = createAsyncThunk(
   "user/sendResetCode",
   // if you type your function argument here
-  async (args: { identifier: string}, thunkAPI) => {
-    const response = await axios.post(
-      `/user/sendResetCode`,
-      args
-    );
+  async (args: { identifier: string }, thunkAPI) => {
+    const response = await axios.post(`/user/sendResetCode`, args);
     return response.data;
   }
 );
@@ -141,11 +133,11 @@ export const sendResetCode = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   "user/changePassword",
   // if you type your function argument here
-  async (args: { resetCode: string, identifier: string, password: string}, thunkAPI) => {
-    const response = await axios.post(
-      `/user/changePassword`,
-      args
-    );
+  async (
+    args: { resetCode: string; identifier: string; password: string },
+    thunkAPI
+  ) => {
+    const response = await axios.post(`/user/changePassword`, args);
     return response.data;
   }
 );
@@ -172,14 +164,17 @@ export const userSlice = createSlice({
   name: "blogData",
   initialState,
   reducers: {
+    changeLoginMode: (state, action: PayloadAction<LoginUIMode>) => {
+      state.login.mode = action.payload;
+    },
     showPopup: (state, action: PayloadAction<PopupType, string>) => {
       state.popup.isOpen = true;
       state.popup.message = action.payload;
-      state.popup.type = action.payload
+      state.popup.type = action.payload;
     },
     hidePopup: (state) => {
       state.popup.isOpen = false;
-    }
+    },
     //   receivedAll: {
     //     reducer(
     //       state,
@@ -195,29 +190,58 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
-      console.log(action.payload);
+      state.login.signUp.loading = false;
       state.user = action.payload;
     });
+    builder.addCase(signUp.pending, (state, action) => {
+      state.login.signUp.loading = true;
+    });
+    builder.addCase(signUp.rejected, (state, action) => {
+      state.login.signUp.loading = true;
+    });
+
     builder.addCase(signIn.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.user = action.payload;
+      state.login.signIn.loading = false;
     });
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state.user = action.payload;
+    builder.addCase(signIn.pending, (state, action) => {
+      state.login.signIn.loading = true;
     });
+    builder.addCase(signIn.rejected, (state, action) => {
+      state.login.signIn.loading = false;
+    });
+
+    builder.addCase(sendResetCode.fulfilled, (state, action) => {
+      state.login.forgotPassword.loading = false;
+      state.login.changePassword.identifier = action.meta.arg.identifier;
+      state.login.mode = LoginUIMode.CHANGE_PASSWORD;
+    });
+    builder.addCase(sendResetCode.pending, (state, action) => {
+      state.login.forgotPassword.loading = true;
+    });
+    builder.addCase(sendResetCode.rejected, (state, action) => {
+      state.login.forgotPassword.loading = false;
+    });
+
+
+    builder.addCase(changePassword.fulfilled, (state, action) => {
+      state.login.changePassword.loading = false;
+      state.login.mode = LoginUIMode.SIGN_IN;
+    });
+    builder.addCase(changePassword.pending, (state, action) => {
+      state.login.changePassword.loading = true;
+    });
+    builder.addCase(changePassword.rejected, (state, action) => {
+      state.login.changePassword.loading = false;
+    });
+
+
     builder.addCase(logout.fulfilled, (state, action) => {
       console.log(action.payload);
+      // TODO: clear all cookies
       state.user = null;
     });
-    builder.addCase(sendResetCode.fulfilled, (state, action) => {
-      console.log(action.payload);
-      // state.isResetCodeSent = action.payload;
-    });
-    builder.addCase(changePassword.fulfilled, (state, action) => {
-      console.log(action.payload);
-      // state.isResetCodeSent = action.payload;
-    });
+
     //   .addCase(incrementBy, (state, action) => {
     //     // action is inferred correctly here if using TS
     //   })
@@ -234,4 +258,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { showPopup, hidePopup } = userSlice.actions;
+export const { showPopup, hidePopup, changeLoginMode } = userSlice.actions;

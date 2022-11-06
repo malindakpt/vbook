@@ -4,14 +4,14 @@ import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./state/store";
 import { useEffect } from 'react';
-import { fetchUser } from "./state/api/userSlice";
+// import { fetchUser } from "./state/api/userSlice";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
   const dispatch = useAppDispatch();
   
   useEffect(() => {
-    dispatch(fetchUser());
+    // dispatch(fetchUser());
   }, [dispatch]);
 
   return (

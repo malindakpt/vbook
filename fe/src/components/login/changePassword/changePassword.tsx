@@ -7,15 +7,16 @@ import { Validators } from "../../../util/validators";
 
 interface Props {
   loading: boolean;
+  identifier: string;
   onChangePassword: (args: {
     identifier: string;
     resetCode: string;
     password: string;
   }) => void;
 }
-export const ChangePassword: FC<Props> = ({ loading, onChangePassword }) => {
+export const ChangePassword: FC<Props> = ({ loading, onChangePassword, identifier}) => {
   const [state, setState] = useState({
-    identifier: "",
+    identifier,
     resetCode: "",
     password: "",
   });
@@ -47,6 +48,7 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword }) => {
           autoComplete="email"
           autoFocus
           error={!Validators.text(state.identifier)}
+          disabled
         />
 
         <TextField
@@ -55,8 +57,7 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword }) => {
           margin="normal"
           required
           fullWidth
-          label="Email Address/ Phone Number"
-          autoComplete="email"
+          label="Rest Code"
           autoFocus
           error={!Validators.text(state.resetCode)}
         />
@@ -72,19 +73,7 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword }) => {
           autoComplete="off"
           error={!Validators.password(state.password)}
         />
-
-        {/* <TextField
-          value={state.password}
-          onChange={(e) => handleStateChange("password", e.target.value)}
-          margin="normal"
-          required
-          fullWidth
-          label="Enter Password"
-          type="password"
-          autoComplete="off"
-          error={!Validators.password(state.password)}
-        />  */}
-
+        
         <Button
           type="submit"
           fullWidth

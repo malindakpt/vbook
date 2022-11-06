@@ -25,7 +25,6 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
   });
 
   const handleStateChange = (prop: string, value: string | number) => {
-    console.log(prop, value);
     setState((prev) => ({ ...prev, [prop]: value }));
   };
 

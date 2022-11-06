@@ -21,7 +21,6 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
   });
 
   const handleStateChange = (prop: string, value: string | number) => {
-    console.log(prop, value);
     setState((prev) => ({ ...prev, [prop]: value }));
   };
 

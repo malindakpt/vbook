@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Copyright } from "./copyright";
 import { SignUpContainer } from "./signUp/signUp.container";
 import { LoginUIMode } from "../../enum/login.ui.mode";
@@ -15,9 +15,15 @@ import { ChangePasswordContainer } from "./changePassword/changePassword.contain
 
 const theme = createTheme();
 
-export const Login: FC = () => {
+interface Props {
+  mode: LoginUIMode;
+  onModeChange: (mode: LoginUIMode) => void;
+}
+export const Login: FC<Props> = ({onModeChange, mode}) => {
 
-  const [mode, setMode] = useState(LoginUIMode.SIGN_IN);
+  const handleModeChange =(mode: LoginUIMode) => {
+    onModeChange(mode);
+  }
 
   const renderContent = (mode: LoginUIMode) => {
     switch (mode) {
@@ -53,15 +59,15 @@ export const Login: FC = () => {
         </Box>
         <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.FORGOT_PASSWORD)}>
+              <Link href="#" variant="body2" onClick={() => handleModeChange(LoginUIMode.FORGOT_PASSWORD)}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              { mode === LoginUIMode.SIGN_IN ? <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.SIGN_UP)}>
+              { mode === LoginUIMode.SIGN_IN ? <Link href="#" variant="body2" onClick={() => handleModeChange(LoginUIMode.SIGN_UP)}>
                 {"Don't have an account? Sign Up"}
               </Link> :
-              <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.SIGN_IN)}>
+              <Link href="#" variant="body2" onClick={() => handleModeChange(LoginUIMode.SIGN_IN)}>
                 {"Already have an account? Sign In"}
               </Link>}
             </Grid>
