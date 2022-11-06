@@ -54,7 +54,7 @@ export const attributes = {
     allowNull: false
   },
   refreshToken: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true
   },
   createdAt: DataTypes.DATE,

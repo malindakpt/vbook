@@ -81,19 +81,19 @@ axios.interceptors.response.use(
   }
 );
 
-export const fetchUser = createAsyncThunk(
-  "user/fetchUser",
-  // if you type your function argument here
-  async (thunkAPI) => {
-    const token = getCookie("access-token");
+// export const fetchUserFromCookies = createAsyncThunk(
+//   "user/fetchUser",
+//   // if you type your function argument here
+//   async (thunkAPI) => {
+//     const token = getCookie("access-token");
 
-    if (!token) {
-      return null;
-    }
-    const user = jwtDecode(token);
-    return user as User;
-  }
-);
+//     if (!token) {
+//       return null;
+//     }
+//     const user = jwtDecode(token);
+//     return user as User;
+//   }
+// );
 
 export const signUp = createAsyncThunk(
   "user/signUp",
@@ -185,6 +185,9 @@ export const userSlice = createSlice({
   name: "blogData",
   initialState,
   reducers: {
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    },
     changeLoginMode: (state, action: PayloadAction<LoginUIMode>) => {
       state.login.mode = action.payload;
     },
@@ -280,4 +283,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { showPopup, hidePopup, changeLoginMode } = userSlice.actions;
+export const { showPopup, hidePopup, changeLoginMode, setUser } = userSlice.actions;

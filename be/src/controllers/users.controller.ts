@@ -70,8 +70,8 @@ export const signIn = async (req: Request, res: Response) => {
       httpOnly: true,
     });
     res.status(200).send(foundUser);
-  } catch (e) {
-    res.status(500).send(JSON.stringify(e));
+  } catch (e: any) {
+    res.status(500).send(e.message);
   }
 };
 
@@ -111,8 +111,8 @@ export const refreshToken = async (req: Request, res: Response) => {
       httpOnly: true,
     });
     res.status(200).send(foundUser);
-  } catch (e) {
-    res.status(500).send(JSON.stringify(e));
+  } catch (e: any) {
+    res.status(500).send(e.message);
   }
 };
 
@@ -135,8 +135,8 @@ export const logout = async (req: Request, res: Response) => {
 
     res.status(200).send('Successfully logged out');
 
-  } catch (e) {
-    res.status(500).send(JSON.stringify(e));
+  } catch (e: any) {
+    res.status(500).send(e.message);
   }
 };
 
@@ -153,8 +153,8 @@ export const sendResetCode = async (req: Request, res: Response) => {
     await sendEmail(identifier, 'Reset password', `Please use following code as the reset code: <b>${randomCode}</b>`);
     res.status(200).send('Reset code sent');
 
-  } catch (e) {
-    res.status(500).send(JSON.stringify(e));
+  } catch (e: any) {
+    res.status(500).send(e.message);
   }
 };
 
@@ -179,8 +179,8 @@ export const changePassword = async (req: Request, res: Response) => {
     await foundUser.update({ password: newPassword });
     res.status(200).send('Password changed successfully');
 
-  } catch (e) {
-    res.status(500).send('JSON.stringify(e)');
+  } catch (e: any) {
+    res.status(500).send(e.message);
   }
 };
 

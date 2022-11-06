@@ -3,16 +3,20 @@ import { Route, Routes } from "react-router-dom";
 import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./state/store";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { PopupContainer } from "./components/popup/popup.container";
-// import { fetchUser } from "./state/api/userSlice";
+import { User } from "./types/User";
+import { setUser } from "./state/api/userSlice";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
-    // dispatch(fetchUser());
+    const cachedUser = User.getUserFromCookie();
+    if (cachedUser) {
+      dispatch(setUser(cachedUser));
+    }
   }, [dispatch]);
 
   return (

@@ -1,3 +1,6 @@
+import jwtDecode from "jwt-decode";
+import { getCookie } from "typescript-cookie";
+
 export class User {
   id?: number;
   name: string;
@@ -19,5 +22,23 @@ export class User {
 
   public isValid() {
     return this.id && this.name && this.identifier && this.country;
+  }
+
+  public static getUserFromCookie() {
+    const token = getCookie("access-token");
+
+    if (!token) {
+      return null;
+    }
+    try {
+      const user = jwtDecode(token);
+      const userObj = new User(user);
+      if (userObj.isValid()) {
+        return JSON.parse(JSON.stringify(userObj));
+      }
+    } catch (e) {
+      return null;
+    }
+    return null;
   }
 }

@@ -12,8 +12,7 @@ const resetDB = async () => {
 
     // UserModel.hasMany(ResetModel);
     // ResetModel.belongsTo(UserModel);
-    await UserModel.sync();
-    // await ResetModel.sync();
+    // await UserModel.sync();
 
     UserModel.findAll
     console.log('Connection has been established successfully.');
