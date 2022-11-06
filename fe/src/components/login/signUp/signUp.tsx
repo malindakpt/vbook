@@ -6,11 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { FC, useState } from "react";
 import { Validators } from "../../../util/validators";
-import { LoginUIMode } from "../../../enum/login.ui.mode";
 
 interface Props {
   loading: boolean;
-  onModeChange: (mode: LoginUIMode) => void;
   onSignUp: (user: {
     name: string;
     identifier: string;
@@ -18,7 +16,7 @@ interface Props {
     password: string;
   }) => void;
 }
-export const SignUp: FC<Props> = ({ loading, onSignUp, onModeChange }) => {
+export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
   const [state, setState] = useState({
     name: "",
     identifier: "",

@@ -1,29 +1,20 @@
 import { FC } from "react";
-import { LoginUIMode } from "../../../enum/login.ui.mode";
-import { signUp } from "../../../state/api/userSlice";
+import { signIn } from "../../../state/api/userSlice";
 import { useAppDispatch, useAppSelector } from "../../../state/store";
-import { User } from "../../../types/User";
-import { SignUp } from "./signUp";
-
+import { SignIn } from "./signIn";
 interface Props {
   // onModeChange: (mode: LoginUIMode) => void;
 }
-export const SignUpContainer: FC<Props> = () => {
+export const SignInContainer: FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.app.login.signUp.loading);
+  const loading = useAppSelector((state) => state.app.login.signIn.loading);
 
-  const handleSignUp = (data: {
-    name: string;
+  const handleSignIn = (args: {
     identifier: string;
-    country: string;
     password: string;
   }) => {
-    dispatch(signUp(new User(data)));
+    dispatch(signIn(args));
   };
-
-  // const handleModeChange = (mode: LoginUIMode) => {
-  //   onModeChange(mode);
-  // }
 
   // const handleSignIn = (identifier: string, password: string) => {
   //   dispatch(signIn({identifier, password}));
@@ -37,5 +28,5 @@ export const SignUpContainer: FC<Props> = () => {
   //   dispatch(changePassword({resetCode, identifier, password}));
   // };
 
-  return <SignUp loading={loading} onSignUp={handleSignUp} />;
+  return <SignIn loading={loading} onSignIn={handleSignIn}/>;
 };

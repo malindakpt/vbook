@@ -11,6 +11,9 @@ export interface InitialState {
   login: {
     signUp: {
       loading: boolean;
+    },
+    signIn: {
+      loading: boolean;
     }
   }
   popup: {
@@ -24,6 +27,9 @@ const initialState: InitialState = {
   user: null,
   login: {
     signUp: {
+      loading: false
+    },
+    signIn: {
       loading: false
     }
   },

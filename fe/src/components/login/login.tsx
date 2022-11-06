@@ -6,11 +6,12 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FC, useState } from "react";
 import { Copyright } from "./copyright";
-import { SignIn } from "./signIn/signIn";
 import { ResetSendCode } from "./resetSendCode/resetSendCode";
 import { ResetValidateCode } from "./resetValidateCode/resetValidateCode";
 import { SignUpContainer } from "./signUp/signUp.container";
 import { LoginUIMode } from "../../enum/login.ui.mode";
+import { Grid, Link } from "@mui/material";
+import { SignInContainer } from "./signIn/signIn.container";
 
 const theme = createTheme();
 
@@ -30,18 +31,14 @@ interface Props {
 
 export const Login: FC<Props> = ({}) => {
 
-  const [mode, setMode] = useState(LoginUIMode.SIGN_UP);
+  const [mode, setMode] = useState(LoginUIMode.SIGN_IN);
 
-  const handleModeChange = (mode: LoginUIMode) => {
-    setMode(mode);
-  }
-
-   const renderContent = (mode: LoginUIMode) => {
+  const renderContent = (mode: LoginUIMode) => {
     switch (mode) {
       case LoginUIMode.SIGN_IN:
-        return <SignIn  />;
+        return <SignInContainer  />;
       case LoginUIMode.SIGN_UP:
-        return <SignUpContainer onModeChange={handleModeChange} />;
+        return <SignUpContainer/>;
       case LoginUIMode.RESET_SEND:
         return <ResetSendCode />;
       case LoginUIMode.RESET_VALIDATE:
@@ -68,6 +65,21 @@ export const Login: FC<Props> = ({}) => {
           </Avatar>
           {renderContent(mode)}
         </Box>
+        <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.RESET_SEND)}>
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              { mode === LoginUIMode.SIGN_IN ? <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.SIGN_UP)}>
+                {"Don't have an account? Sign Up"}
+              </Link> :
+              <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.SIGN_IN)}>
+                {"Already have an account? Sign In"}
+              </Link>}
+            </Grid>
+          </Grid>
         <Copyright />
       </Container>
     </ThemeProvider>
