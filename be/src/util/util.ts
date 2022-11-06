@@ -16,7 +16,7 @@ export const getFutureTime = (date: number, periodMinutes: number) => {
 export const createAccessToken = (user: UserModel) => {
   const obj = {
     id: user.id,
-    firstName: user.firstName,
+    name: user.name,
     country: user.country,
     email: user.email,
     phone: user.phone,
@@ -28,7 +28,7 @@ export const createAccessToken = (user: UserModel) => {
 export const createRefreshToken = (user: UserModel) => {
   const obj = {
     id: user.id,
-    firstName: user.firstName,
+    name: user.name,
     country: user.country,
     email: user.email,
     phone: user.phone,

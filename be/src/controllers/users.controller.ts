@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { User, UserModel } from "models/user/user.model";
 import bcrypt from "bcrypt";
 import { createAccessToken, createRefreshToken } from "util/util";
-import { sign, verify } from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 import { config } from "config";
 import { sendEmail } from  "../services/mail.service";
 
@@ -26,7 +26,7 @@ export const signUp = async (req: Request, res: Response) => {
     });
 
     const responseData = {
-      name: user.firstName,
+      name: user.name,
       country: user.country,
       email: user.email,
       phone: user.phone,
@@ -40,11 +40,8 @@ export const signUp = async (req: Request, res: Response) => {
 export const signIn = async (req: Request, res: Response) => {
   try {
     const { identifier, password } = req.body;
-    const matchWith = identifier.includes("@") ? "email" : "phone";
     const foundUser = await UserModel.findOne({
-      where: {
-        [matchWith]: identifier,
-      },
+      where: { identifier },
     });
 
     if (!foundUser) {
@@ -94,7 +91,7 @@ export const refreshToken = async (req: Request, res: Response) => {
    
     const decodedUser = verify(refreshToken, config.refreshTokenSecret) as User;
 
-    if(decodedUser.firstName !== foundUser.firstName){
+    if(decodedUser.name !== foundUser.name){
         res.status(401).send({ error: "unauthorized" });
         return;
     }
@@ -168,12 +165,9 @@ export const changePassword = async (req: Request, res: Response) => {
       res.status(500).send(false);
       return;
     }
-    
-    const matchWith = identifier.includes("@") ? "email" : "phone";
+
     const foundUser = await UserModel.findOne({
-      where: {
-        [matchWith]: identifier,
-      },
+      where: { identifier },
     });
 
     if (!foundUser) {

@@ -10,7 +10,7 @@ export class User {
   constructor(usr: any) {
     this.id = usr.id;
     this.identifier = usr.identifier;
-    this.name = usr.firstName;
+    this.name = usr.name;
     this.email = usr.email;
     this.phone = usr.phone;
     this.country = usr.country;

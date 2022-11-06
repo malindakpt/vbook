@@ -9,7 +9,8 @@ export type User = InferAttributes<UserModel>;
 // order of InferAttributes & InferCreationAttributes is important.
 export class UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>>{
   declare id: CreationOptional<number>;
-  declare firstName: string;
+  declare identifier: string;
+  declare name: string;
   declare email: string | null;
   declare phone: string | null;;
   declare password: string;
@@ -25,7 +26,11 @@ export const attributes = {
     autoIncrement: true,
     primaryKey: true
   },
-  firstName: {
+  identifier: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  name: {
     type: DataTypes.STRING,
     allowNull: false
   },
