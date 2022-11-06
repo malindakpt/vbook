@@ -2,6 +2,7 @@ import { sign } from "jsonwebtoken";
 import { UserModel } from "models/user/user.model";
 import dotenv from "dotenv";
 import { config } from "config";
+import { Response } from "express";
 
 dotenv.config();
 
@@ -38,3 +39,22 @@ export const createRefreshToken = (user: UserModel) => {
   const accessToken = sign(obj, config.refreshTokenSecret, { expiresIn: config.refreshTokenValidity });
   return accessToken;
 };
+
+export const setCookies = (foundUser: UserModel, res: Response): string => {
+
+  const accessToken = createAccessToken(foundUser.toJSON());
+  const refreshToken = createRefreshToken(foundUser.toJSON());
+
+  res.cookie("user-token", accessToken, {
+    maxAge: config.refreshTokenValidity * 1000,
+  });
+  res.cookie("access-token", accessToken, {
+    maxAge: config.accessTokenValidity * 1000,
+  });
+  res.cookie("refresh-token", refreshToken, {
+    maxAge: config.refreshTokenValidity * 1000,
+    httpOnly: true,
+  });
+
+  return refreshToken;
+}

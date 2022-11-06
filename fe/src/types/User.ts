@@ -25,7 +25,7 @@ export class User {
   }
 
   public static getUserFromCookie() {
-    const token = getCookie("access-token");
+    const token = getCookie("user-token");
 
     if (!token) {
       return null;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User, UserModel } from "models/user/user.model";
 import bcrypt from "bcrypt";
-import { createAccessToken, createRefreshToken } from "util/util";
+import { createAccessToken, createRefreshToken, setCookies } from "util/util";
 import { verify } from "jsonwebtoken";
 import { config } from "config";
 import { sendEmail } from  "../services/mail.service";
@@ -46,80 +46,54 @@ export const signIn = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      res.status(401).send('User not found');
-      return;
+      return res.status(401).send('User not found');
     }
-
     const passwordMatched = await bcrypt.compare(password, foundUser.password);
 
     if (!passwordMatched) {
-      res.status(401).send('Invalid password');
-      return;
+      return res.status(401).send('Invalid password');
     }
-
-    const accessToken = createAccessToken(foundUser.toJSON());
-    const refreshToken = createRefreshToken(foundUser.toJSON());
-
+    const refreshToken = setCookies(foundUser, res);
     await foundUser.update({ refreshToken });
 
-    res.cookie("access-token", accessToken, {
-      maxAge: config.accessTokenValidity * 1000,
-    });
-    res.cookie("refresh-token", refreshToken, {
-      maxAge: config.refreshTokenValidity * 1000,
-      httpOnly: true,
-    });
-    res.status(200).send(foundUser);
+    return res.status(200).send(foundUser);
   } catch (e: any) {
-    res.status(500).send(e.message);
+    return res.status(500).send(e.message);
   }
 };
 
 export const refreshToken = async (req: Request, res: Response) => {
   try {
-    let refreshToken = req.cookies["refresh-token"];
+    const resRefreshToken = req.cookies["refresh-token"];
  
     const foundUser = await UserModel.findOne({
-      where: { refreshToken },
+      where: { refreshToken: resRefreshToken },
     });
 
     // refresh-token reuse or hacked
     // TODO: invalidate other sessions
     if (!foundUser) {
-      res.status(401).send("User not found");
-      return;
+      return res.status(401).send("User not found");
     }
-   
-    const decodedUser = verify(refreshToken, config.refreshTokenSecret) as User;
+    const decodedUser = verify(resRefreshToken, config.refreshTokenSecret) as User;
 
     if(decodedUser.name !== foundUser.name){
-        res.status(401).send('Token ownership validation failed');
-        return;
+        return res.status(401).send('Token ownership validation failed');
     }
 
-    // has a valid refresh-token 
-    const accessToken = createAccessToken(foundUser.toJSON());
-    refreshToken = createRefreshToken(foundUser.toJSON());
-
+    const refreshToken = setCookies(foundUser, res);
     await foundUser.update({ refreshToken });
+    return res.status(200).send(foundUser);
 
-    res.cookie("access-token", accessToken, {
-      maxAge: config.accessTokenValidity * 1000,
-    });
-    res.cookie("refresh-token", refreshToken, {
-      maxAge: config.refreshTokenValidity * 1000,
-      httpOnly: true,
-    });
-    res.status(200).send(foundUser);
   } catch (e: any) {
-    res.status(500).send(e.message);
+    return res.status(500).send(e.message);
   }
 };
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    const refreshToken = req.cookies["refresh-token"];
-    const decodedUser = verify(refreshToken, config.accessTokenSecret) as User;
+    const resRefreshToken = req.cookies["refresh-token"];
+    const decodedUser = verify(resRefreshToken, config.accessTokenSecret) as User;
 
     const foundUser = await UserModel.findOne({
       where: { id: decodedUser.id },
@@ -132,7 +106,6 @@ export const logout = async (req: Request, res: Response) => {
 
     res.clearCookie("access-token");
     res.clearCookie("refresh-token");
-
     res.status(200).send('Successfully logged out');
 
   } catch (e: any) {
@@ -143,6 +116,15 @@ export const logout = async (req: Request, res: Response) => {
 export const sendResetCode = async (req: Request, res: Response) => {
   try {
     const { identifier } = req.body;
+
+    const foundUser = await UserModel.findOne({
+      where: { identifier },
+    });
+
+    if(!foundUser){;
+      return res.status(500).send('User does not exist');
+    }
+
     const randomCode = Math.round(Math.random()*Math.pow(10, 6));
     resetPasswordCodes[identifier] = `${randomCode}`;
 
@@ -151,7 +133,7 @@ export const sendResetCode = async (req: Request, res: Response) => {
     }, config.resetPasswordTimeout);
 
     await sendEmail(identifier, 'Reset password', `Please use following code as the reset code: <b>${randomCode}</b>`);
-    res.status(200).send('Reset code sent');
+    return res.status(200).send('Reset code sent');
 
   } catch (e: any) {
     res.status(500).send(e.message);
