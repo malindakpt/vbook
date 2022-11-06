@@ -17,6 +17,9 @@ export interface InitialState {
     },
     forgotPassword: {
       loading: boolean;
+    },
+    changePassword: {
+      loading: boolean;
     }
   }
   popup: {
@@ -36,6 +39,9 @@ const initialState: InitialState = {
       loading: false
     },
     forgotPassword: {
+      loading: false
+    },
+    changePassword: {
       loading: false
     }
   },

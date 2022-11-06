@@ -1,7 +1,5 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { FC, useState } from "react";
@@ -9,33 +7,34 @@ import { Validators } from "../../../util/validators";
 
 interface Props {
   loading: boolean;
-  onSignIn: (args: {
+  onChangePassword: (args: {
     identifier: string;
+    resetCode: string;
     password: string;
   }) => void;
 }
-export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
+export const ChangePassword: FC<Props> = ({ loading, onChangePassword }) => {
   const [state, setState] = useState({
     identifier: "",
+    resetCode: "",
     password: "",
   });
 
   const handleStateChange = (prop: string, value: string | number) => {
-    console.log(prop, value);
     setState((prev) => ({ ...prev, [prop]: value }));
   };
 
   const handleSignIn = () => {
-    onSignIn(state);
+    onChangePassword(state);
   };
 
   return (
     <>
       <Typography component="h1" variant="h3">
-        Sign In
+        Change Password
       </Typography>
+      
       <Box component="form" noValidate sx={{ mt: 1 }}>
-
         <TextField
           value={state.identifier}
           onChange={(e) => handleStateChange("identifier", e.target.value)}
@@ -51,6 +50,30 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
         />
 
         <TextField
+          value={state.resetCode}
+          onChange={(e) => handleStateChange("resetCode", e.target.value)}
+          margin="normal"
+          required
+          fullWidth
+          label="Email Address/ Phone Number"
+          autoComplete="email"
+          autoFocus
+          error={!Validators.text(state.resetCode)}
+        />
+
+        <TextField
+          value={state.password}
+          onChange={(e) => handleStateChange("password", e.target.value)}
+          margin="normal"
+          required
+          fullWidth
+          label="Enter New Password"
+          type="password"
+          autoComplete="off"
+          error={!Validators.password(state.password)}
+        />
+
+        {/* <TextField
           value={state.password}
           onChange={(e) => handleStateChange("password", e.target.value)}
           margin="normal"
@@ -60,12 +83,7 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
           type="password"
           autoComplete="off"
           error={!Validators.password(state.password)}
-        /> 
-
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
+        />  */}
 
         <Button
           type="submit"
@@ -76,7 +94,7 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
           onClick={handleSignIn}
           disabled={loading}
         >
-          Sign In
+          Change Password
         </Button>
       </Box>
     </>

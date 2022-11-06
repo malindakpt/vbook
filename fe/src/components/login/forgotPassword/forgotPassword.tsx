@@ -1,7 +1,5 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { FC, useState } from "react";
@@ -9,9 +7,7 @@ import { Validators } from "../../../util/validators";
 
 interface Props {
   loading: boolean;
-  onSendCode: (args: {
-    identifier: string;
-  }) => void;
+  onSendCode: (args: { identifier: string }) => void;
 }
 export const ForgotPassword: FC<Props> = ({ loading, onSendCode }) => {
   const [state, setState] = useState({
@@ -32,7 +28,6 @@ export const ForgotPassword: FC<Props> = ({ loading, onSendCode }) => {
         Forgot Password
       </Typography>
       <Box component="form" noValidate sx={{ mt: 1 }}>
-
         <TextField
           value={state.identifier}
           onChange={(e) => handleStateChange("identifier", e.target.value)}

@@ -21,7 +21,6 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
     name: "",
     identifier: "",
     password: "",
-    password2: "",
     country: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
@@ -76,18 +75,6 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
           type="password"
           autoComplete="off"
           error={!Validators.password(state.password)}
-        />
-
-        <TextField
-          value={state.password2}
-          onChange={(e) => handleStateChange("password2", e.target.value)}
-          margin="normal"
-          required
-          fullWidth
-          label="Enter Password Again"
-          type="password"
-          autoComplete="Enter Password Again"
-          error={!Validators.password(state.password2)}
         />
 
         <FormControlLabel

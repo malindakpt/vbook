@@ -6,30 +6,16 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FC, useState } from "react";
 import { Copyright } from "./copyright";
-import { ResetValidateCode } from "./resetValidateCode/resetValidateCode";
 import { SignUpContainer } from "./signUp/signUp.container";
 import { LoginUIMode } from "../../enum/login.ui.mode";
 import { Grid, Link } from "@mui/material";
 import { SignInContainer } from "./signIn/signIn.container";
 import { ForgotPasswordContainer } from "./forgotPassword/forgotPassword.container";
+import { ChangePasswordContainer } from "./changePassword/changePassword.container";
 
 const theme = createTheme();
 
-interface Props {
-  // mode: Mode;
-  // isResetCodeSent: boolean;
-  // onModeChange: (mode: LoginUIMode) => void;
-  // onSignUp: (user: User) => void;
-  // onSignIn: (identifier: string, password: string) => void;
-  // onSendResetCode: (identifier: string) => void;
-  // onValidateResetCode: (
-  //   resetCode: string,
-  //   identifier: string,
-  //   password: string
-  // ) => void;
-}
-
-export const Login: FC<Props> = ({}) => {
+export const Login: FC = () => {
 
   const [mode, setMode] = useState(LoginUIMode.SIGN_IN);
 
@@ -39,10 +25,10 @@ export const Login: FC<Props> = ({}) => {
         return <SignInContainer  />;
       case LoginUIMode.SIGN_UP:
         return <SignUpContainer/>;
-      case LoginUIMode.RESET_SEND:
+      case LoginUIMode.FORGOT_PASSWORD:
         return <ForgotPasswordContainer />;
-      case LoginUIMode.RESET_VALIDATE:
-        return <ResetValidateCode />;
+      case LoginUIMode.CHANGE_PASSWORD:
+        return <ChangePasswordContainer />;
       default:
         return <></>;
     }
@@ -67,7 +53,7 @@ export const Login: FC<Props> = ({}) => {
         </Box>
         <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.RESET_SEND)}>
+              <Link href="#" variant="body2" onClick={() => setMode(LoginUIMode.FORGOT_PASSWORD)}>
                 Forgot password?
               </Link>
             </Grid>
