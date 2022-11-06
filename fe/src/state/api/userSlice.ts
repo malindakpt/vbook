@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { User } from "../../types/User";
 import { getCookie } from "typescript-cookie";
 import jwtDecode from "jwt-decode";
 import { config } from "../../config";
 import { PopupType } from "../../enum/popup.type";
 import { LoginUIMode } from "../../enum/login.ui.mode";
+import { showErrorFromResponse } from "../../util/helper";
 
 export interface InitialState {
   user: User | null;
@@ -48,7 +49,7 @@ const initialState: InitialState = {
     },
     changePassword: {
       loading: false,
-      identifier: '',
+      identifier: "",
     },
   },
   popup: {
@@ -114,53 +115,64 @@ export const refreshToken = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
   "user/signIn",
-  // if you type your function argument here
   async (args: { identifier: string; password: string }, thunkAPI) => {
-    try{
-    const response = await axios.post(`/user/signIn`, args);
-    return response.data;
-    }catch(e: any){
-      thunkAPI.dispatch(showPopup({type: PopupType.error, message: (e as AxiosError)?.response?.data as string}));
+    try {
+      const response = await axios.post(`/user/signIn`, args);
+      return response.data;
+    } catch (e: any) {
+      showErrorFromResponse(e, thunkAPI.dispatch);
     }
   }
 );
 
 export const sendResetCode = createAsyncThunk(
   "user/sendResetCode",
-  // if you type your function argument here
   async (args: { identifier: string }, thunkAPI) => {
-    const response = await axios.post(`/user/sendResetCode`, args);
-    return response.data;
+    try {
+      const response = await axios.post(`/user/sendResetCode`, args);
+      return response.data;
+    } catch (e) {
+      showErrorFromResponse(e, thunkAPI.dispatch);
+    }
   }
 );
 
 export const changePassword = createAsyncThunk(
   "user/changePassword",
-  // if you type your function argument here
   async (
     args: { resetCode: string; identifier: string; password: string },
     thunkAPI
   ) => {
-    const response = await axios.post(`/user/changePassword`, args);
-    return response.data;
+    try {
+      const response = await axios.post(`/user/changePassword`, args);
+      return response.data;
+    } catch (e) {
+      showErrorFromResponse(e, thunkAPI.dispatch);
+    }
   }
 );
 
 export const logout = createAsyncThunk(
   "user/logout",
-  // if you type your function argument here
-  async (thunkAPI) => {
+  async (args: void, thunkAPI) => {
+    try {
     const response = await axios.post(`/user/logout`);
     return response.data;
+  } catch (e) {
+    showErrorFromResponse(e, thunkAPI.dispatch);
+  }
   }
 );
 
 export const getAllUsers = createAsyncThunk(
   "user/signIn",
-  // if you type your function argument here
-  async (thunkAPI) => {
+  async (args: void, thunkAPI) => {
+    try {
     const response = await axios.post(`/user/all`);
     return response.data;
+  } catch (e) {
+    showErrorFromResponse(e, thunkAPI.dispatch);
+  }
   }
 );
 
@@ -171,7 +183,10 @@ export const userSlice = createSlice({
     changeLoginMode: (state, action: PayloadAction<LoginUIMode>) => {
       state.login.mode = action.payload;
     },
-    showPopup: (state, action: PayloadAction<{type: PopupType, message: string}>) => {
+    showPopup: (
+      state,
+      action: PayloadAction<{ type: PopupType; message: string }>
+    ) => {
       state.popup.isOpen = true;
       state.popup.type = action.payload.type;
       state.popup.message = action.payload.message;
@@ -227,7 +242,6 @@ export const userSlice = createSlice({
       state.login.forgotPassword.loading = false;
     });
 
-
     builder.addCase(changePassword.fulfilled, (state, action) => {
       state.login.changePassword.loading = false;
       state.login.mode = LoginUIMode.SIGN_IN;
@@ -238,7 +252,6 @@ export const userSlice = createSlice({
     builder.addCase(changePassword.rejected, (state, action) => {
       state.login.changePassword.loading = false;
     });
-
 
     builder.addCase(logout.fulfilled, (state, action) => {
       console.log(action.payload);
