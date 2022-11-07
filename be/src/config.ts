@@ -7,7 +7,7 @@ export const config = {
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET ?? '',
     dbPassword: process.env.DB_PASSWORD,
     accessTokenValidity: 60*1,
-    refreshTokenValidity: 60*60,
+    refreshTokenValidity: 60*60*24*2,
     resetPasswordTimeout: 120*1000,
 
     feUrl: 'http//localhost:3000',

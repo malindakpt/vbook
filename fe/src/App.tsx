@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { PopupContainer } from "./components/popup/popup.container";
 import { User } from "./types/User";
 import { setUser } from "./state/api/userSlice";
-import { TopBar } from "./components/topbar/topbar";
+import { TopBarContainer } from "./components/topbar/topbar.container";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
@@ -25,7 +25,7 @@ function App() {
       <PopupContainer />
       {loggedInUser ? (
         <>
-          <TopBar />
+          <TopBarContainer />
           <Routes>
             <Route path={"/"} element={<Home />} />
           </Routes>

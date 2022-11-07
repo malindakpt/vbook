@@ -16,6 +16,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Avatar } from '@mui/material';
+import { FC } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,7 +58,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const TopBar = () => {
+interface Props {
+  userName: string;
+}
+
+export const TopBar: FC<Props> = ({userName}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -212,7 +217,7 @@ export const TopBar = () => {
               color="inherit"
             >
               {/* <AccountCircle /> */}
-              <Avatar>H</Avatar>
+              <Avatar>{userName.charAt(0)}</Avatar>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
