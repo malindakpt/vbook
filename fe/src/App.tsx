@@ -8,6 +8,7 @@ import { PopupContainer } from "./components/popup/popup.container";
 import { User } from "./types/User";
 import { setUser } from "./state/api/userSlice";
 import { TopBarContainer } from "./components/topbar/topbar.container";
+import { AddVehicleContainer } from "./components/vehicle/addVehicle/addVehicle.container";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
@@ -28,6 +29,8 @@ function App() {
           <TopBarContainer />
           <Routes>
             <Route path={"/"} element={<Home />} />
+            <Route path={"/addVehicle"} element={<AddVehicleContainer />} />
+            <Route path={"/addRecord"} element={<AddVehicleContainer />} />
           </Routes>
         </>
       ) : (
