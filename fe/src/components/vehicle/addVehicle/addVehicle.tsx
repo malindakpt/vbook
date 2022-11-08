@@ -1,7 +1,7 @@
 import { Container, Grid, Paper, styled } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
-import { TextInput, NumberInput, AutoInput } from "../../inputs";
+import { TextInput, NumberInput, AutoInput, AutoInputImage} from "../../inputs";
 
 const vehicleBrands = [
   { label: "-Select a brand-", id: 0 },
@@ -38,6 +38,7 @@ export const AddVehicle: FC<Props> = ({ loading, owner }) => {
     fuel: 0,
     owner,
     brand: 0,
+    type: 0,
     manufactureYear: new Date().getFullYear(),
   });
 
@@ -77,6 +78,15 @@ export const AddVehicle: FC<Props> = ({ loading, owner }) => {
             disabled={loading}
             onChange={changeProperty}
             value={state.fuel}
+          />
+
+          <AutoInputImage
+            name="type"
+            label="Vehicle Type"
+            options={fuelTypes}
+            disabled={loading}
+            onChange={changeProperty}
+            value={state.type}
           />
         </Grid>
         <Grid xs={6} md={4} item>
