@@ -23,7 +23,9 @@ export const createAccessToken = (user: UserModel) => {
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, config.accessTokenSecret, { expiresIn: config.accessTokenValidity});
+  const accessToken = sign(obj, config.accessTokenSecret, {
+    expiresIn: config.accessTokenValidity,
+  });
   return accessToken;
 };
 
@@ -36,12 +38,13 @@ export const createRefreshToken = (user: UserModel) => {
     email: user.email,
     phone: user.phone,
   };
-  const accessToken = sign(obj, config.refreshTokenSecret, { expiresIn: config.refreshTokenValidity });
+  const accessToken = sign(obj, config.refreshTokenSecret, {
+    expiresIn: config.refreshTokenValidity,
+  });
   return accessToken;
 };
 
 export const setCookies = (foundUser: UserModel, res: Response): string => {
-
   const accessToken = createAccessToken(foundUser.toJSON());
   const refreshToken = createRefreshToken(foundUser.toJSON());
 
@@ -57,4 +60,10 @@ export const setCookies = (foundUser: UserModel, res: Response): string => {
   });
 
   return refreshToken;
-}
+};
+
+export const clearAllCookies = (res: Response) => {
+  res.clearCookie("user-token");
+  res.clearCookie("access-token");
+  res.clearCookie("refresh-token");
+};

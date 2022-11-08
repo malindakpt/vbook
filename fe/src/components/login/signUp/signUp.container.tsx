@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { signUp } from "../../../state/api/userSlice";
 import { useAppDispatch, useAppSelector } from "../../../state/store";
+import { signUp } from "../../../state/thunks";
 import { User } from "../../../types/User";
 import { SignUp } from "./signUp";
 

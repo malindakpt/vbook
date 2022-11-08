@@ -1,63 +1,13 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { User } from "../../types/User";
-import { getCookie } from "typescript-cookie";
-import jwtDecode from "jwt-decode";
 import { config } from "../../config";
 import { PopupType } from "../../enum/popup.type";
 import { LoginUIMode } from "../../enum/login.ui.mode";
-import { showErrorFromResponse } from "../../util/helper";
+import { initialState } from "../appState";
+import { changePassword, logout, sendResetCode, signIn, signUp } from "../thunks";
 
-export interface InitialState {
-  user: User | null;
-  login: {
-    mode: LoginUIMode;
-    signUp: {
-      loading: boolean;
-    };
-    signIn: {
-      loading: boolean;
-    };
-    forgotPassword: {
-      loading: boolean;
-      codeSent: boolean;
-    };
-    changePassword: {
-      loading: boolean;
-      identifier: string;
-    };
-  };
-  popup: {
-    message: string;
-    isOpen: boolean;
-    type: PopupType;
-  };
-}
-const initialState: InitialState = {
-  user: null,
-  login: {
-    mode: LoginUIMode.SIGN_IN,
-    signUp: {
-      loading: false,
-    },
-    signIn: {
-      loading: false,
-    },
-    forgotPassword: {
-      loading: false,
-      codeSent: false,
-    },
-    changePassword: {
-      loading: false,
-      identifier: "",
-    },
-  },
-  popup: {
-    message: "",
-    isOpen: false,
-    type: PopupType.info,
-  },
-};
+
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = config.serverUrl;
 
@@ -78,106 +28,6 @@ axios.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  }
-);
-
-// export const fetchUserFromCookies = createAsyncThunk(
-//   "user/fetchUser",
-//   // if you type your function argument here
-//   async (thunkAPI) => {
-//     const token = getCookie("access-token");
-
-//     if (!token) {
-//       return null;
-//     }
-//     const user = jwtDecode(token);
-//     return user as User;
-//   }
-// );
-
-export const signUp = createAsyncThunk(
-  "user/signUp",
-  // if you type your function argument here
-  async (user: User, thunkAPI) => {
-    const response = await axios.post(`/user/signUp`, user);
-    return response.data;
-  }
-);
-
-export const refreshToken = createAsyncThunk(
-  "user/refreshToken",
-  // if you type your function argument here
-  async (thunkAPI) => {
-    const response = await axios.post(`/user/refreshToken`);
-    return response.data;
-  }
-);
-
-export const signIn = createAsyncThunk(
-  "user/signIn",
-  async (args: { identifier: string; password: string }, thunkAPI) => {
-    try {
-      const response = await axios.post(`/user/signIn`, args);
-      return response.data;
-    } catch (e: any) {
-      showErrorFromResponse(e, thunkAPI.dispatch);
-      throw new Error();
-    }
-  }
-);
-
-export const sendResetCode = createAsyncThunk(
-  "user/sendResetCode",
-  async (args: { identifier: string }, thunkAPI) => {
-    try {
-      const response = await axios.post(`/user/sendResetCode`, args);
-      return response.data;
-    } catch (e) {
-      showErrorFromResponse(e, thunkAPI.dispatch);
-      throw new Error();
-    }
-  }
-);
-
-export const changePassword = createAsyncThunk(
-  "user/changePassword",
-  async (
-    args: { resetCode: string; identifier: string; password: string },
-    thunkAPI
-  ) => {
-    try {
-      const response = await axios.post(`/user/changePassword`, args);
-      return response.data;
-    } catch (e) {
-      showErrorFromResponse(e, thunkAPI.dispatch);
-      throw new Error();
-    }
-  }
-);
-
-export const logout = createAsyncThunk(
-  "user/logout",
-  async (args: void, thunkAPI) => {
-    try {
-      const response = await axios.post(`/user/logout`);
-      return response.data;
-    } catch (e) {
-      showErrorFromResponse(e, thunkAPI.dispatch);
-      throw new Error();
-    }
-  }
-);
-
-export const getAllUsers = createAsyncThunk(
-  "user/signIn",
-  async (args: void, thunkAPI) => {
-    try {
-      const response = await axios.post(`/user/all`);
-      return response.data;
-    } catch (e) {
-      showErrorFromResponse(e, thunkAPI.dispatch);
-      throw new Error();
-    }
   }
 );
 

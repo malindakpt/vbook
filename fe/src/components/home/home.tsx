@@ -1,5 +1,5 @@
-import { getAllUsers, logout, refreshToken } from "../../state/api/userSlice";
 import { useAppDispatch } from "../../state/store";
+import { getAllUsers, refreshToken, logout } from "../../state/thunks";
 
 export const Home = () => {
   // const dispatch = useDispatch();

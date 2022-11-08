@@ -12,7 +12,6 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import {
@@ -23,11 +22,11 @@ import {
   SpeedDialIcon,
 } from "@mui/material";
 import { FC } from "react";
-import { Add, PlaylistAdd } from "@mui/icons-material";
+import { Add, DirectionsCar, PlaylistAdd } from "@mui/icons-material";
 
 const actions = [
-  { icon: <Add />, name: "Copy" },
-  { icon: <Add />, name: "Save" },
+  { icon: <PlaylistAdd />, name: "Service Record", path: "addVehicle" },
+  { icon: <DirectionsCar />, name: "Add Vehicle", path: "addRecord" },
 ];
 
 const Search = styled("div")(({ theme }) => ({
@@ -72,9 +71,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 interface Props {
   userName: string;
+  onSpeedDial: (path: string) => void;
+  onLogout: () => void;
 }
 
-export const TopBar: FC<Props> = ({ userName }) => {
+export const TopBar: FC<Props> = ({ userName, onSpeedDial, onLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -118,6 +119,7 @@ export const TopBar: FC<Props> = ({ userName }) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={onLogout}>Logout</MenuItem>
     </Menu>
   );
 
@@ -173,6 +175,10 @@ export const TopBar: FC<Props> = ({ userName }) => {
       </MenuItem>
     </Menu>
   );
+
+  const handleClickSpeedDial = (path: string) => {
+    onSpeedDial(path);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -286,12 +292,13 @@ export const TopBar: FC<Props> = ({ userName }) => {
           sx={{ position: "absolute", bottom: 16, right: 16 }}
           icon={<SpeedDialIcon />}
         >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-            />
+          {actions.map((action) => ( 
+              <SpeedDialAction
+                key={action.name}
+                onClick={() => handleClickSpeedDial(action.path)}
+                icon={action.icon}
+                tooltipTitle={action.name}
+              ></SpeedDialAction> 
           ))}
         </SpeedDial>
       </AppBar>

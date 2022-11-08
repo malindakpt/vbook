@@ -1,6 +1,5 @@
-import { FC } from "react";
-import { changePassword } from "../../../state/api/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../state/store";
+import { FC } from "react";import { useAppDispatch, useAppSelector } from "../../../state/store";
+import { changePassword } from "../../../state/thunks";
 import { ChangePassword } from "./changePassword";
 interface Props {
     // loading: boolean;
@@ -18,18 +17,6 @@ export const ChangePasswordContainer: FC<Props> = () => {
   }) => {
     dispatch(changePassword(args));
   };
-
-  // const handleSignIn = (identifier: string, password: string) => {
-  //   dispatch(signIn({identifier, password}));
-  // };
-
-  // const handleSendResetCode = (identifier: string) => {
-  //   dispatch(sendResetCode({identifier}));
-  // };
-
-  // const handleResetPassword = (resetCode: string, identifier: string, password: string) => {
-  //   dispatch(changePassword({resetCode, identifier, password}));
-  // };
 
   return <ChangePassword identifier={identifier} loading={loading} onChangePassword={handleChangePassword}/>;
 };

@@ -1,10 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../state/store";
+import { logout } from "../../state/thunks";
 import { TopBar } from "./topbar"
 
 export const TopBarContainer = () => {
 
-    const dispatch = useAppDispatch();
     const name = useAppSelector((state) => state.app.user?.name) ?? '';
-    
-    return <TopBar userName={name} />
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const handleSpeedDial = (path: string) => {
+        navigate(`/addVehicle`);
+    };
+
+    const handleLogout = () => {
+        dispatch(logout());
+    }
+    return <TopBar userName={name} onSpeedDial={handleSpeedDial} onLogout={handleLogout} />
 }

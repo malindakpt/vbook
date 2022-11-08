@@ -5,6 +5,8 @@ dotenv.config();
 export const config = {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET ?? '',
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET ?? '',
+    userTokenSecret: process.env.USER_TOKEN_SECRET ?? '',
+
     dbPassword: process.env.DB_PASSWORD,
     accessTokenValidity: 60*1,
     refreshTokenValidity: 60*60*24*2,

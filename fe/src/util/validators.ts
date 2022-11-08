@@ -9,4 +9,8 @@ export class Validators {
     public static password = (val: string) => {
         return val !== '';
     }
+
+    public static regNo = (val: string) => {
+        return val !== '';
+    }
 }

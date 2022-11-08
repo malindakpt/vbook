@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { User, UserModel } from "models/user/user.model";
 import bcrypt from "bcrypt";
-import { createAccessToken, createRefreshToken, setCookies } from "util/util";
+import { createAccessToken, createRefreshToken, setCookies } from "util/helper";
 import { verify } from "jsonwebtoken";
 import { config } from "config";
 import { sendEmail } from  "../services/mail.service";
+import { clearAllCookies } from "util/helper";
 
 const resetPasswordCodes: any = {};
 
@@ -93,7 +94,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     const resRefreshToken = req.cookies["refresh-token"];
-    const decodedUser = verify(resRefreshToken, config.accessTokenSecret) as User;
+    const decodedUser = verify(resRefreshToken, config.refreshTokenSecret) as User;
 
     const foundUser = await UserModel.findOne({
       where: { id: decodedUser.id },
@@ -104,13 +105,14 @@ export const logout = async (req: Request, res: Response) => {
     }
     await foundUser.update({ refreshToken: '' });
 
-    res.clearCookie("access-token");
-    res.clearCookie("refresh-token");
-    res.status(200).send('Successfully logged out');
+    clearAllCookies(res);
+    return res.status(200).send('Successfully logged out');
 
   } catch (e: any) {
-    res.status(500).send(e.message);
-  }
+    clearAllCookies(res);
+    return res.status(200).send(e.message);
+  } 
+  
 };
 
 export const sendResetCode = async (req: Request, res: Response) => {
