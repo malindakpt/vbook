@@ -21,4 +21,8 @@ export class Validators {
     public static year = (val: number) => {
         return val >= 1900 && val <= new Date().getFullYear();
     }
+
+    public static autoInput = (val: number) => {
+        return val > 0;
+    }
 }

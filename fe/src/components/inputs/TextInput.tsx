@@ -3,13 +3,19 @@ import { FC } from "react";
 import { Validators } from "../../util/validators";
 
 interface Props {
-    name: string;
-    value: string;
-    label: string;
-    disabled: boolean;
-    onChange: (key: string, value: number | string) => void
+  name: string;
+  value: string;
+  label: string;
+  disabled: boolean;
+  onChange: (key: string, value: number | string) => void;
 }
-export const TextInput: FC<Props> = ({name, value, label, onChange, disabled}) => {
+export const TextInput: FC<Props> = ({
+  name,
+  value,
+  label,
+  onChange,
+  disabled,
+}) => {
   return (
     <TextField
       value={value}

@@ -1,5 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { FC } from "react";
+import { Validators } from "../../util/validators";
 
 interface Props {
   name: string;
@@ -16,7 +17,7 @@ export const AutoInput: FC<Props> = ({
   options,
   onChange,
 }) => {
-  const selectedValue =  options.find((ele) => ele.id === value);
+  const selectedValue = options.find((ele) => ele.id === value);
   return (
     <Autocomplete
       disablePortal
@@ -24,7 +25,13 @@ export const AutoInput: FC<Props> = ({
       value={selectedValue}
       options={options}
       fullWidth
-      renderInput={(params) => <TextField {...params} label={label} />}
+      renderInput={(params) => (
+        <TextField
+          error={!Validators.autoInput(value)}
+          {...params}
+          label={label}
+        />
+      )}
       onChange={(_e, value) => value && onChange(name, value.id)}
     />
   );

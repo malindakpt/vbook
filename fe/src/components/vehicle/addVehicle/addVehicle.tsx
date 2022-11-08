@@ -4,8 +4,8 @@ import { useFormState } from "../../../hooks/useFormState";
 import { TextInput, NumberInput, AutoInput } from "../../inputs";
 
 const vehicleBrands = [
-  { label: "TOYOTA", id: 0 },
-  { label: "BMW", id: 1 },
+  { label: "-Select a brand-", id: 0 },
+  { label: "TOYOTA", id: 1 },
   { label: "NISAAN", id: 2 },
   { label: "MITSUBISHI", id: 3 },
   { label: "ISUZU", id: 4 },
@@ -14,10 +14,11 @@ const vehicleBrands = [
 ];
 
 const fuelTypes = [
-  { label: "PETROL", id: 0 },
-  { label: "DISEL", id: 1 },
-  { label: "HYBRID", id: 2 },
-  { label: "ELECTRIC", id: 3 },
+  { label: "-Select fuel type-", id: 0 },
+  { label: "PETROL", id: 1 },
+  { label: "DISEL", id: 2 },
+  { label: "HYBRID", id: 3 },
+  { label: "ELECTRIC", id: 4 },
 ];
 interface Props {
   owner: string;
