@@ -4,6 +4,7 @@ export const useFormState = <T,>(obj: T) => {
     const [state, setState] = useState(obj);
 
     const changeProperty = (prop: string, value: string | number) => {
+      console.log(prop, value);
         setState((prev: any) => ({ ...prev, [prop]: value }));
       };
 
