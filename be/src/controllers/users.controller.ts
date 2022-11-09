@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { createAccessToken, createRefreshToken, setCookies } from "util/helper";
 import { verify } from "jsonwebtoken";
 import { config } from "config";
-import { sendEmail } from  "../services/mail.service";
+import { sendEmail } from "../services/mail.service";
 import { clearAllCookies } from "util/helper";
 
 const resetPasswordCodes: any = {};
@@ -33,9 +33,9 @@ export const signUp = async (req: Request, res: Response) => {
       phone: user.phone,
     };
 
-    res.status(201).send(responseData);
-  } catch (e) {
-    res.status(500).send(JSON.stringify(e));
+    return res.status(201).send(responseData);
+  } catch (e: any) {
+    return res.status(500).send(e.message);
   }
 };
 
@@ -47,12 +47,12 @@ export const signIn = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      return res.status(401).send('User not found');
+      return res.status(401).send("User not found");
     }
     const passwordMatched = await bcrypt.compare(password, foundUser.password);
 
     if (!passwordMatched) {
-      return res.status(401).send('Invalid password');
+      return res.status(401).send("Invalid password");
     }
     const refreshToken = setCookies(foundUser, res);
     await foundUser.update({ refreshToken });
@@ -66,7 +66,7 @@ export const signIn = async (req: Request, res: Response) => {
 export const refreshToken = async (req: Request, res: Response) => {
   try {
     const resRefreshToken = req.cookies["refresh-token"];
- 
+
     const foundUser = await UserModel.findOne({
       where: { refreshToken: resRefreshToken },
     });
@@ -76,16 +76,18 @@ export const refreshToken = async (req: Request, res: Response) => {
     if (!foundUser) {
       return res.status(401).send("User not found");
     }
-    const decodedUser = verify(resRefreshToken, config.refreshTokenSecret) as User;
+    const decodedUser = verify(
+      resRefreshToken,
+      config.refreshTokenSecret
+    ) as User;
 
-    if(decodedUser.name !== foundUser.name){
-        return res.status(401).send('Token ownership validation failed');
+    if (decodedUser.name !== foundUser.name) {
+      return res.status(401).send("Token ownership validation failed");
     }
 
     const refreshToken = setCookies(foundUser, res);
     await foundUser.update({ refreshToken });
     return res.status(200).send(foundUser);
-
   } catch (e: any) {
     return res.status(500).send(e.message);
   }
@@ -94,25 +96,26 @@ export const refreshToken = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     const resRefreshToken = req.cookies["refresh-token"];
-    const decodedUser = verify(resRefreshToken, config.refreshTokenSecret) as User;
+    const decodedUser = verify(
+      resRefreshToken,
+      config.refreshTokenSecret
+    ) as User;
 
     const foundUser = await UserModel.findOne({
       where: { id: decodedUser.id },
     });
 
-    if(!foundUser){;
-      return res.status(500).send('User not found');
+    if (!foundUser) {
+      return res.status(500).send("User not found");
     }
-    await foundUser.update({ refreshToken: '' });
+    await foundUser.update({ refreshToken: "" });
 
     clearAllCookies(res);
-    return res.status(200).send('Successfully logged out');
-
+    return res.status(200).send("Successfully logged out");
   } catch (e: any) {
     clearAllCookies(res);
     return res.status(200).send(e.message);
-  } 
-  
+  }
 };
 
 export const sendResetCode = async (req: Request, res: Response) => {
@@ -123,31 +126,34 @@ export const sendResetCode = async (req: Request, res: Response) => {
       where: { identifier },
     });
 
-    if(!foundUser){;
-      return res.status(500).send('User does not exist');
+    if (!foundUser) {
+      return res.status(500).send("User does not exist");
     }
 
-    const randomCode = Math.round(Math.random()*Math.pow(10, 6));
+    const randomCode = Math.round(Math.random() * Math.pow(10, 6));
     resetPasswordCodes[identifier] = `${randomCode}`;
 
     setTimeout(() => {
       delete resetPasswordCodes[identifier];
     }, config.resetPasswordTimeout);
 
-    await sendEmail(identifier, 'Reset password', `Please use following code as the reset code: <b>${randomCode}</b>`);
-    return res.status(200).send('Reset code sent');
-
+    await sendEmail(
+      identifier,
+      "Reset password",
+      `Please use following code as the reset code: <b>${randomCode}</b>`
+    );
+    return res.status(200).send("Reset code sent");
   } catch (e: any) {
-    res.status(500).send(e.message);
+    return res.status(500).send(e.message);
   }
 };
 
 export const changePassword = async (req: Request, res: Response) => {
   try {
-    const { resetCode, identifier, password } = req.body; 
+    const { resetCode, identifier, password } = req.body;
 
-    if(resetPasswordCodes[identifier] !== resetCode){
-      res.status(500).send('Invalid/Expired reset code');
+    if (resetPasswordCodes[identifier] !== resetCode) {
+      res.status(500).send("Invalid/Expired reset code");
       return;
     }
 
@@ -156,22 +162,19 @@ export const changePassword = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      res.status(401).send('User not found');
+      res.status(401).send("User not found");
       return;
     }
     const newPassword = await bcrypt.hash(password, 10);
     await foundUser.update({ password: newPassword });
-    res.status(200).send('Password changed successfully');
-
+    return res.status(200).send("Password changed successfully");
   } catch (e: any) {
-    res.status(500).send(e.message);
+    return res.status(500).send(e.message);
   }
 };
 
 export const getAllUsers = (req: Request, res: Response) => {
   UserModel.findAll().then((result) => {
-    res.status(200).send(result);
+    return res.status(200).send(result);
   });
 };
- 
-

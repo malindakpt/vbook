@@ -4,11 +4,11 @@ import type { BEResponse } from '../../../../be/src/types/BEResponse';
 import { User } from '../../types/User';
 
 // Define a service using a base URL and expected endpoints
-export const userApi = createApi({
-  reducerPath: 'userApi',
+export const recordApi = createApi({
+  reducerPath: 'recordApi',
   // reducerPath: ,
   // reducer: store.reducer,
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3600/user/signUp' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3600/record' }),
 
   // extractRehydrationInfo(action, { reducerPath }) {
   //   if (action.type === REHYDRATE) {
@@ -18,7 +18,7 @@ export const userApi = createApi({
 
   endpoints: (build) => ({
     getAllUsers: build.query<User, void>({
-        query: () => `users/all`,
+        query: () => `add`,
         // transformResponse: (response: { data: User }, meta, arg) => response.data,
     }),
 
@@ -148,4 +148,4 @@ export const userApi = createApi({
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useSignUpMutation, useLazySignInQuery, useResetPasswordMutation, reducer: userReducer, reducerPath: userReducerPath } = userApi;
+export const { useGetAllUsersQuery, useSignUpMutation, useLazySignInQuery, useResetPasswordMutation, reducer: userReducer, reducerPath: userReducerPath } = recordApi;
