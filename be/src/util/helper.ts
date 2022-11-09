@@ -1,5 +1,5 @@
 import { sign } from "jsonwebtoken";
-import { UserModel } from "models/user/user.model";
+import { UserModel } from "models/user.model";
 import dotenv from "dotenv";
 import { config } from "config";
 import { Response } from "express";

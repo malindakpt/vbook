@@ -1,5 +1,5 @@
 import { DB } from 'services/db.connection';
-import { UserModel } from 'models/user/user.model';
+import { UserModel } from 'models/user.model';
 import { startApplication } from 'services/app.service';
 import { DataTypes } from 'sequelize';
 // import { User } from 'models/user/user';

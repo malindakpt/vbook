@@ -1,9 +1,5 @@
 import { DB } from 'services/db.connection';
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
-// import { User, UserAttributes } from './user';
-
-// export class UserModel extends Model<InferAttributes<User>, InferCreationAttributes<User>> {};
-
 export type User = InferAttributes<UserModel>;
 
 // order of InferAttributes & InferCreationAttributes is important.
