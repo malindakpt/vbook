@@ -7,14 +7,10 @@ interface Props {
   value: number;
   label: string;
   disabled: boolean;
-  options: Array<{ id: number; label: string }>;
+  options: Array<{ id: number; label: string; src?: string }>;
   onChange: (key: string, value: number | string) => void;
 }
-const vehicleTypes = [
-  { label: "-Select vehicle type-", id: 0 },
-  { label: "Car", id: 1, src: "car.png" },
-  { label: "Bus", id: 2, src: "bus.png" },
-];
+
 
 export const AutoInputImage: FC<Props> = ({
   name,
@@ -23,25 +19,25 @@ export const AutoInputImage: FC<Props> = ({
   options,
   onChange,
 }) => {
-  const selectedValue = vehicleTypes.find((ele) => ele.id === value);
+  const selectedValue = options.find((ele) => ele.id === value);
 
   return (
     <Autocomplete
       disablePortal
       id="combo-box-demo"
       value={selectedValue}
-      options={vehicleTypes}
+      options={options}
       fullWidth
-      renderOption={(_params, option, state) => (
-        <div
-          onClick={() => {
-            console.log(state);
-            return option && onChange("type", option.id);
-          }}
+      renderOption={(props, option) => (
+        <li
+        {...props}
           key={option.id}
         >
+       
+         { option.src && <img  alt="123" src={option.src} />}
+            
           {option.label}
-        </div>
+        </li>
       )}
       renderInput={(params) => (
         <TextField
@@ -50,7 +46,7 @@ export const AutoInputImage: FC<Props> = ({
           label={label}
         />
       )}
-      // onChange={(_e, value) => value && onChange(name, value.id)}
+      onChange={(_e, value) => value && onChange(name, value.id)}
     />
   );
 };

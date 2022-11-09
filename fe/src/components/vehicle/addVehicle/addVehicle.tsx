@@ -2,6 +2,8 @@ import { Container, Grid, Paper, styled } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import { TextInput, NumberInput, AutoInput, AutoInputImage} from "../../inputs";
+import bikeImg from '../../../assets/vType/bike.png';
+import CarImg from '../../../assets/vType/car.png';
 
 const vehicleBrands = [
   { label: "-Select a brand-", id: 0 },
@@ -11,6 +13,12 @@ const vehicleBrands = [
   { label: "ISUZU", id: 4 },
   { label: "MAZDA", id: 5 },
   { label: "SUBARU", id: 6 },
+];
+
+const vehicleTypes = [
+  { label: "-Select vehicle type-", id: 0 },
+  { label: "Car", id: 1, src: CarImg},
+  { label: "Bus", id: 2, src: bikeImg },
 ];
 
 const fuelTypes = [
@@ -83,7 +91,7 @@ export const AddVehicle: FC<Props> = ({ loading, owner }) => {
           <AutoInputImage
             name="type"
             label="Vehicle Type"
-            options={fuelTypes}
+            options={vehicleTypes}
             disabled={loading}
             onChange={changeProperty}
             value={state.type}
