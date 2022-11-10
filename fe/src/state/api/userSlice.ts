@@ -6,6 +6,7 @@ import { PopupType } from "../../enum/popup.type";
 import { LoginUIMode } from "../../enum/login.ui.mode";
 import { initialState } from "../appState";
 import { changePassword, logout, sendResetCode, signIn, signUp } from "../thunks";
+import { clearAllCookies } from "../../util/helper";
 
 
 axios.defaults.withCredentials = true;
@@ -25,6 +26,8 @@ axios.interceptors.response.use(
         return axios(originalRequest);
       } catch (e) {
         console.log(e);
+        clearAllCookies();
+        window.location.reload();
       }
     }
     return Promise.reject(error);
