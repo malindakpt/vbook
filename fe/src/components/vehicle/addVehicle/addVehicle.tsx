@@ -1,9 +1,10 @@
-import { Container, Grid, Paper, styled } from "@mui/material";
+import { Button, Container, Grid, Paper, styled } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import { TextInput, NumberInput, AutoInput, AutoInputImage} from "../../inputs";
 import bikeImg from '../../../assets/vType/bike.png';
 import CarImg from '../../../assets/vType/car.png';
+import { Vehicle } from "../../../types/Vehicle";
 
 const vehicleBrands = [
   { label: "-Select a brand-", id: 0 },
@@ -31,8 +32,9 @@ const fuelTypes = [
 interface Props {
   owner: string;
   loading: boolean;
+  onCreateVehicle: (v: Vehicle) => void;
 }
-export const AddVehicle: FC<Props> = ({ loading, owner }) => {
+export const AddVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) => {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -41,7 +43,7 @@ export const AddVehicle: FC<Props> = ({ loading, owner }) => {
     color: theme.palette.text.secondary,
   }));
 
-  const [state, changeProperty] = useFormState({
+  const [state, changeProperty] = useFormState<Vehicle>({
     regNo: "",
     fuel: 0,
     owner,
@@ -96,6 +98,8 @@ export const AddVehicle: FC<Props> = ({ loading, owner }) => {
             onChange={changeProperty}
             value={state.type}
           />
+
+          <Button onClick={() => onCreateVehicle(state)}>Create</Button>
         </Grid>
         <Grid xs={6} md={4} item>
           <Item>xs=6 md=4</Item>
