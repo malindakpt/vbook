@@ -1,28 +1,27 @@
-import { DB } from 'services/db.connection';
-import { UserModel } from 'models/user.model';
-import { startApplication } from 'services/app.service';
-import { DataTypes } from 'sequelize';
-// import { User } from 'models/user/user';
-// import { User } from '../../shared/src/index';
+import { RecordModel } from "models/record.model";
+import { UserModel } from "models/user.model";
+import { VehicleModel } from "models/vehicle.model";
+import { startApplication } from "services/app.service";
 
-const resetDB = async () => {
+export const syncDatabase = async () => {
   try {
-    // await DB.getInstance().authenticate();
-    // await UserModel.drop();
+    UserModel.hasMany(VehicleModel);
+    VehicleModel.belongsTo(UserModel);
 
-    // UserModel.hasMany(ResetModel);
-    // ResetModel.belongsTo(UserModel);
-    // await UserModel.sync();
+    VehicleModel.hasMany(RecordModel);
+    RecordModel.belongsTo(VehicleModel);
 
-    UserModel.findAll
-    console.log('Connection has been established successfully.');
+    await UserModel.sync();
+    await RecordModel.sync();
+    await VehicleModel.sync();
+
+    console.log(
+      "-------------------------Connection has been established successfully."
+    );
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error("Unable to connect to the database:", error);
   }
 };
 
-
-
-// const db = new DB();
-resetDB();
+syncDatabase();
 startApplication();

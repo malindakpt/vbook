@@ -1,10 +1,10 @@
 import { DB } from 'services/db.connection';
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 
-export type Record = InferAttributes<RecordModel>;
+export type Vehicle = InferAttributes<VehicleModel>;
 
 // order of InferAttributes & InferCreationAttributes is important.
-export class RecordModel extends Model<InferAttributes<RecordModel>, InferCreationAttributes<RecordModel>>{
+export class VehicleModel extends Model<InferAttributes<VehicleModel>, InferCreationAttributes<VehicleModel>>{
   declare id: CreationOptional<number>;
   declare regNo: string;
   declare createdAt?: Date;
@@ -25,7 +25,7 @@ export const attributes = {
   updatedAt: DataTypes.DATE
 };
 
-RecordModel.init(attributes, { // Other model options go here
+VehicleModel.init(attributes, { // Other model options go here
   sequelize: DB.getInstance(), // We need to pass the connection instance
-  modelName: 'Record' // We need to choose the model name
+  modelName: 'Vehicle' // We need to choose the model name
 });
