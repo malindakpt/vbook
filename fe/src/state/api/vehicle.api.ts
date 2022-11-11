@@ -48,7 +48,6 @@ export const vehicleApi = createApi({
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
       ) => {
-
         try {
           const response = await axios.post(`/vehicle/create`, arg);
           return response.data;
@@ -98,17 +97,7 @@ export const vehicleApi = createApi({
         ) => MaybePromise<
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
-      ) => {
-
-        // try {
-          return await axios.post(`/vehicle/${id}`);
-        // } catch (e) {
-        //   // throw new Error();
-        //   return {
-        //     error: {error: '', status: 401, data: {}}
-        //   }
-        // }
-      },
+      ) => await axios.post(`/vehicle/${id}`),
     }),
 
     readVehicles: build.query({
@@ -122,7 +111,6 @@ export const vehicleApi = createApi({
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
       ) => {
-
         try {
           const response = await axios.post(`/vehicles`, arg);
           return response.data;

@@ -2,33 +2,11 @@ import { Button, Container, Grid, Paper, styled } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import { TextInput, NumberInput, AutoInput, AutoInputImage} from "../../inputs";
-import bikeImg from '../../../assets/vType/bike.png';
-import CarImg from '../../../assets/vType/car.png';
+
 import { Vehicle } from "../../../types/Vehicle";
+import { fuelTypes, vehicleBrands, vehicleTypes } from "./selectOptions";
 
-const vehicleBrands = [
-  { label: "-Select a brand-", id: 0 },
-  { label: "TOYOTA", id: 1 },
-  { label: "NISAAN", id: 2 },
-  { label: "MITSUBISHI", id: 3 },
-  { label: "ISUZU", id: 4 },
-  { label: "MAZDA", id: 5 },
-  { label: "SUBARU", id: 6 },
-];
 
-const vehicleTypes = [
-  { label: "-Select vehicle type-", id: 0 },
-  { label: "Car", id: 1, src: CarImg},
-  { label: "Bus", id: 2, src: bikeImg },
-];
-
-const fuelTypes = [
-  { label: "-Select fuel type-", id: 0 },
-  { label: "PETROL", id: 1 },
-  { label: "DISEL", id: 2 },
-  { label: "HYBRID", id: 3 },
-  { label: "ELECTRIC", id: 4 },
-];
 interface Props {
   owner: string;
   loading: boolean;
@@ -44,14 +22,16 @@ export const CreateVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) =>
   }));
 
   const [state, changeProperty] = useFormState<Vehicle>({
+    chassis: '',
+    transmission: 0,
+    model: '',
     regNo: "",
     fuel: 0,
     owner,
     brand: 0,
     type: 0,
-    manufactureYear: new Date().getFullYear(),
+    manufac: new Date().getFullYear(),
   });
-
   return (
     <Container maxWidth="lg">
       <Grid container spacing={2} rowSpacing={4}>
@@ -74,7 +54,7 @@ export const CreateVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) =>
           />
 
           <NumberInput
-            value={state.manufactureYear}
+            value={state.manufac}
             name="manufactureYear"
             label="Year of Manufacture"
             disabled={loading}

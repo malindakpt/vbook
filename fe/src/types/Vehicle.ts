@@ -1,8 +1,16 @@
 export interface Vehicle {
     regNo: string;
-    owner: string;
-    fuel: number;
-    brand: number;
+    manufac: number;
+    brand: number; 
+    chassis: string;
     type: number;
-    manufactureYear: number;
+    fuel: number;
+    transmission: number;
+    model: string;
+    owner: string;
+
+    // Added by server
+    id?: number;
+    createdAt?: string,
+    updatedAt?: string,
 }

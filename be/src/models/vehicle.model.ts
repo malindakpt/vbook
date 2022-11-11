@@ -21,6 +21,34 @@ export const attributes = {
     type: DataTypes.STRING,
     allowNull: false
   },
+  manufac: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  brand: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  chassis: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  type: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  fuel: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  transmission: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  model: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
   createdAt: DataTypes.DATE,
   updatedAt: DataTypes.DATE
 };
