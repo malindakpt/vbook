@@ -7,7 +7,6 @@ export interface Vehicle {
     fuel: number;
     transmission: number;
     model: string;
-    owner: string;
 
     // Added by server
     id?: number;

@@ -1,33 +1,33 @@
 import { Container, Grid } from "@mui/material";
 import { FC } from "react";
-import { Vehicle } from "../../../types/Vehicle";
+import { Record } from "../../../types/Record";
 
 interface Props {
   loading: boolean;
-  vehicles: Vehicle[];
-  onSelect: (vehicle: Vehicle) => void;
+  records: Record[];
+  onSelect: (Record: Record) => void;
 }
-export const ListVehicles: FC<Props> = ({ vehicles, onSelect, loading }) => {
+export const ListRecords: FC<Props> = ({ records, onSelect, loading }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!vehicles) {
-    return <div>No vehicles</div>;
+  if (!records) {
+    return <div>No Records</div>;
   }
 
-  if (vehicles) {
+  if (records) {
     return (
       <Container maxWidth="lg">
         <Grid container spacing={2} rowSpacing={4}>
           <Grid xs={12} sm={8} md={6} item>
-            {vehicles.map((vehicle) => {
+            {records.map((record) => {
               return (
-                <div key={vehicle.id} onClick={() => onSelect(vehicle)}>
-                  <div>{vehicle.regNo}</div>
-                  <div>{vehicle.owner}</div>
-                  <div>{vehicle.fuel}</div>
-                  <div>{vehicle.type}</div>
+                <div key={record.id} onClick={() => onSelect(record)}>
+                  <div>{record.date}</div>
+                  <div>{record.desc}</div>
+                  <div>{record.millage}</div>
+                  <div>{record.type}</div>
                 </div>
               );
             })}
@@ -36,5 +36,5 @@ export const ListVehicles: FC<Props> = ({ vehicles, onSelect, loading }) => {
       </Container>
     );
   }
-  return <div>Vehicle Not found</div>;
+  return <div>Record Not found</div>;
 };

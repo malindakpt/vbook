@@ -6,9 +6,9 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { ReadVehicle } from "./readVehicle";
+import { ReadRecord } from "./readRecord";
 
-export const ReadVehicleContainer = () => {
+export const ReadRecordContainer = () => {
   let { id } = useParams();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
@@ -32,7 +32,7 @@ export const ReadVehicleContainer = () => {
   };
 
   return (
-    <ReadVehicle
+    <ReadRecord
       onEdit={handleOnEdit}
       onDelete={handleOnDelete}
       loading={isLoading}

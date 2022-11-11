@@ -9,7 +9,7 @@ export const CreateVehicleContainer = () => {
   const user = useAppSelector((state) => state.app.user);
   const [createVehicle] = useCreateVehicleMutation();
 
-  if (!user) {
+  if (!user?.id) {
     return <ErrorComponent text="User N/A" />;
   }
 
@@ -21,7 +21,7 @@ export const CreateVehicleContainer = () => {
     <CreateVehicle
       onCreateVehicle={handleCreateVehicle}
       loading={false}
-      owner={user.identifier}
+      userId={user.id}
     />
   );
 };

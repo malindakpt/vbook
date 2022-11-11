@@ -9,10 +9,10 @@ import { ErrorComponent } from "../../error/error";
 import { ReadVehicle } from "./readVehicle";
 
 export const ReadVehicleContainer = () => {
-  let { id } = useParams();
+  let { vid } = useParams();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
-  const { data, error, isLoading } = useReadVehicleQuery(id ?? "");
+  const { data, error, isLoading } = useReadVehicleQuery(vid ?? "");
   const [deleteVehicle] = useDeleteVehicleMutation();
 
   if (!user) {

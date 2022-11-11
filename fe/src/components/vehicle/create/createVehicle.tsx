@@ -17,14 +17,14 @@ import {
 } from "./selectOptions";
 
 interface Props {
-  owner: string;
+  userId: number;
   loading: boolean;
   initialState?: Vehicle;
   onCreateVehicle: (v: Vehicle) => void;
 }
 export const CreateVehicle: FC<Props> = ({
   loading,
-  owner,
+  userId,
   initialState,
   onCreateVehicle,
 }) => {
@@ -42,10 +42,10 @@ export const CreateVehicle: FC<Props> = ({
     model: "",
     regNo: "",
     fuel: 0,
-    owner,
     brand: 0,
     type: 0,
     manufac: new Date().getFullYear(),
+    UserId: userId
   });
   return (
     <Container maxWidth="lg">

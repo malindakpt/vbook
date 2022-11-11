@@ -16,14 +16,14 @@ interface Props {
   vehicleId: number;
   loading: boolean;
   initialState?: Record;
-  onCreateRecord: (r: Record) => void;
+  onSaveRecord: (r: Record) => void;
 }
 export const CreateRecord: FC<Props> = ({
   loading,
   vehicleId,
   userId,
   initialState,
-  onCreateRecord,
+  onSaveRecord,
 }) => {
 
   const [state, changeProperty] = useFormState<Record>(initialState ?? {
@@ -45,9 +45,7 @@ export const CreateRecord: FC<Props> = ({
             disabled={loading}
             onChange={changeProperty}
           />
- 
-
-          <Button onClick={() => onCreateRecord(state)}>Save Record</Button>
+          <Button onClick={() => onSaveRecord(state)}>Save Record</Button>
         </Grid>
         <Grid xs={6} md={4} item> 
         </Grid>

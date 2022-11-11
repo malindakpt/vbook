@@ -1,41 +1,48 @@
 import { useParams } from "react-router-dom";
-import {
-  useReadVehicleQuery,
-  useUpdateVehicleMutation,
-} from "../../../state/api/vehicle.api";
+import { useReadRecordQuery, useUpdateRecordMutation } from "../../../state/api/record.api";
 import { useAppSelector } from "../../../state/store";
-import { Vehicle } from "../../../types/Vehicle";
+import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import { CreateVehicle } from "../create/createVehicle";
+import { CreateRecord } from "../create/createRecord";
 
-export const UpdateVehicleContainer = () => {
-  const { id } = useParams();
+export const UpdateRecordContainer = () => {
+  const { vid, rid } = useParams();
   const user = useAppSelector((state) => state.app.user);
-  const { data: vehicle, error, isLoading } = useReadVehicleQuery(id ?? "");
-  const [updateVehicle, result] = useUpdateVehicleMutation();
+
+
+  const { data: record, error, isLoading } = useReadRecordQuery(rid ?? "");
+  const [updateVehicle, result] = useUpdateRecordMutation();
+
+  const vehicleId = Number(vid);
 
   if (!user) {
     return <ErrorComponent text="User N/A" />;
   }
 
-  const handleUpdateVehicle = (v: Vehicle) => {
-    console.log("vehicle", v);
-    updateVehicle(v);
+  const handleUpdateRecord = (r: Record) => {
+    console.log("record", r);
+    updateVehicle(r);
   };
 
   if(isLoading){
     return <div>Loading.....</div>
   }
 
-  if(!vehicle){
-    return <div>Vehicle Not Found</div>
+  if(!record){
+    return <div>Record Not Found</div>
   }
+
+  if(!user?.id){
+    return <div>User Not Found</div>
+  }
+
   return (
-    <CreateVehicle
-      initialState={vehicle}
-      onCreateVehicle={handleUpdateVehicle}
+    <CreateRecord
+      initialState={record}
+      vehicleId={vehicleId}
+      onSaveRecord={handleUpdateRecord}
       loading={false}
-      owner={user.identifier}
+      userId={user.id}
     />
   );
 };

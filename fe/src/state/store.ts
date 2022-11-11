@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { vehicleApi} from "./api/vehicle.api";
+import { vehicleApi } from "./api/vehicle.api";
 import { userSlice } from "./api/userSlice";
 import axios from "axios";
 import { config } from "../config";
 import { clearAllCookies } from "../util/helper";
+import { recordApi } from "./api/query.api";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = config.serverUrl;
@@ -41,9 +42,9 @@ axios.interceptors.response.use(
   }
 );
 
-
 const reducer = {
   [vehicleApi.reducerPath]: vehicleApi.reducer,
+  [recordApi.reducerPath]: recordApi.reducer,
   app: userSlice.reducer,
   // two: twoSlice.reducer,
 };
@@ -52,7 +53,9 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(vehicleApi.middleware),
+    getDefaultMiddleware()
+      .concat(vehicleApi.middleware)
+      .concat(recordApi.middleware),
 });
 
 // // Infer the `RootState` and `AppDispatch` types from the store itself

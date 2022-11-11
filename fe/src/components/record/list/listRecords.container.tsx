@@ -1,31 +1,29 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useReadVehiclesQuery,
-} from "../../../state/api/vehicle.api";
+import { useReadRecordsQuery } from "../../../state/api/record.api";
 import { useAppSelector } from "../../../state/store";
-import { Vehicle } from "../../../types/Vehicle";
+import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import { ListVehicles } from "./listVehicles";
+import { ListRecords } from "./listRecords";
 
-export const ListVehiclesContainer = () => {
-  let { id } = useParams();
+export const ListRecordsContainer = () => {
+  let { id } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
-  const { data, error, isLoading } = useReadVehiclesQuery({UserId: Number(id)});
+  const { data, error, isLoading } = useReadRecordsQuery({UserId: Number(id)});
 
   if (!user) {
     return <ErrorComponent text="User N/A" />;
   }
 
-  const handleSelect = (v: Vehicle) => {
-    navigate(`/vehicle/${v.id}`);
+  const handleSelect = (v: Record) => {
+    navigate(`/Record/${v.id}`);
   };
 
   return (
-    <ListVehicles
+    <ListRecords
       onSelect={handleSelect}
       loading={isLoading}
-      vehicles={data}
+      records={data}
     />
   );
 };
