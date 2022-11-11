@@ -1,12 +1,13 @@
-import { Container, Grid } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import { FC } from "react";
 import { Vehicle } from "../../../types/Vehicle";
 
 interface Props {
   vehicle: Vehicle;
   loading: boolean;
+  onEdit: (vehicle: Vehicle) => void;
 }
-export const ReadVehicle: FC<Props> = ({ loading, vehicle }) => {
+export const ReadVehicle: FC<Props> = ({ loading, vehicle, onEdit }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -20,6 +21,7 @@ export const ReadVehicle: FC<Props> = ({ loading, vehicle }) => {
             <div>{vehicle.owner}</div>
             <div>{vehicle.fuel}</div>
             <div>{vehicle.type}</div>
+            <Button onClick={() => onEdit(vehicle)}>Edit</Button>
           </Grid>
         </Grid>
       </Container>

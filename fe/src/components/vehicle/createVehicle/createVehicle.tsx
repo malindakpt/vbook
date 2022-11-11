@@ -19,11 +19,13 @@ import {
 interface Props {
   owner: string;
   loading: boolean;
+  initialState?: Vehicle;
   onCreateVehicle: (v: Vehicle) => void;
 }
 export const CreateVehicle: FC<Props> = ({
   loading,
   owner,
+  initialState,
   onCreateVehicle,
 }) => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -34,7 +36,7 @@ export const CreateVehicle: FC<Props> = ({
     color: theme.palette.text.secondary,
   }));
 
-  const [state, changeProperty] = useFormState<Vehicle>({
+  const [state, changeProperty] = useFormState<Vehicle>(initialState ?? {
     chassis: "",
     transmission: 0,
     model: "",

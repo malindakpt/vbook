@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { vehicleReducer, vehicleReducerPath } from "./api/vehicle.api";
+import { vehicleApi} from "./api/vehicle.api";
 import { userSlice } from "./api/userSlice";
 import axios from "axios";
 import { config } from "../config";
@@ -30,8 +30,6 @@ axios.interceptors.response.use(
 
       try {
         await axios.post(`user/refreshToken`);
-        console.log(originalRequest);
-        // originalRequest.headers["Content-Type"] = "application/json; charset=utf-8";
         return axios(originalRequest);
       } catch (e) {
         console.log(e);
@@ -45,7 +43,7 @@ axios.interceptors.response.use(
 
 
 const reducer = {
-  [vehicleReducerPath]: vehicleReducer,
+  [vehicleApi.reducerPath]: vehicleApi.reducer,
   app: userSlice.reducer,
   // two: twoSlice.reducer,
 };
@@ -53,8 +51,8 @@ export const store = configureStore({
   reducer,
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(userApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(vehicleApi.middleware),
 });
 
 // // Infer the `RootState` and `AppDispatch` types from the store itself

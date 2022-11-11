@@ -31,6 +31,8 @@ export const vehicleApi = createApi({
   //   }
   // },
 
+  keepUnusedDataFor: 0,
+
   endpoints: (build) => ({
     getAllUsers: build.query<User, void>({
       query: () => `add`,
@@ -85,6 +87,19 @@ export const vehicleApi = createApi({
       ) {
         console.log("fullState", getState());
       },
+    }),
+
+    updateVehicle: build.mutation({
+      queryFn: async (
+        args: Partial<Vehicle>,
+        queryApi: BaseQueryApi,
+        extraOptions: {},
+        baseQuery: (
+          arg: string | FetchArgs
+        ) => MaybePromise<
+          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
+        >
+      ) => await axios.post(`/vehicle/update`, args),
     }),
 
     readVehicle: build.query({
@@ -199,12 +214,13 @@ export const vehicleApi = createApi({
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useUpdateVehicleMutation,
   useReadVehiclesQuery,
   useReadVehicleQuery,
   useGetAllUsersQuery,
   useSignUpMutation,
   useCreateVehicleMutation,
   useResetPasswordMutation,
-  reducer: vehicleReducer,
-  reducerPath: vehicleReducerPath,
+  // reducer: vehicleReducer,
+  // reducerPath: vehicleReducerPath,
 } = vehicleApi;
