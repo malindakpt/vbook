@@ -21,6 +21,7 @@ import { Vehicle } from "../../types/Vehicle";
 // Define a service using a base URL and expected endpoints
 export const vehicleApi = createApi({
   reducerPath: "vehicleApi",
+  tagTypes: ['Vehicle'],
   // reducerPath: ,
   // reducer: store.reducer,
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3600/vehicle" }),
@@ -31,7 +32,7 @@ export const vehicleApi = createApi({
   //   }
   // },
 
-  keepUnusedDataFor: 0,
+  // keepUnusedDataFor: 0,
 
   endpoints: (build) => ({
     getAllUsers: build.query<User, void>({
@@ -100,6 +101,7 @@ export const vehicleApi = createApi({
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
       ) => await axios.post(`/vehicle/update`, args),
+      invalidatesTags: ['Vehicle'],
     }),
 
     readVehicle: build.query({
@@ -113,6 +115,7 @@ export const vehicleApi = createApi({
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
       ) => await axios.post(`/vehicle/${id}`),
+      providesTags: ['Vehicle']
     }),
 
     readVehicles: build.query({

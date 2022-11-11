@@ -15,7 +15,7 @@ export const validateToken = (
     req.originalUrl === "/user/sendResetCode" ||
     req.originalUrl === "/user/changePassword"
   ) {
-    next();
+    return next();
   } else {
     const accessToken = req.cookies["access-token"];
     if (!accessToken)
