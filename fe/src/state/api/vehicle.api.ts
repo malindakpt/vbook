@@ -38,7 +38,7 @@ export const vehicleApi = createApi({
     }),
 
     createVehicle: build.mutation({
-      queryFn: (
+      queryFn: async (
         arg: any,
         queryApi: BaseQueryApi,
         extraOptions: {},
@@ -48,24 +48,26 @@ export const vehicleApi = createApi({
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
       ) => {
-        // return {
+
+        try {
+          const response = await axios.post(`/vehicle/create`, arg);
+          return response.data;
+        } catch (e) {
+          throw new Error();
+        }
+        // return Promise.resolve({
         //   status: 12,
         //   data: '123'
-        // };
-
-        return Promise.resolve({
-          status: 12,
-          data: '123'
-        })
+        // })
       },
 
       // Pick out data and prevent nested properties in a hook or selector
-      transformResponse: (response: { data: Vehicle }, meta, arg) => {
-        console.log("transform");
-        const vehicle = response.data;
+      // transformResponse: (response: { data: Vehicle }, meta, arg) => {
+      //   console.log("transform");
+      //   const vehicle = response.data;
 
-        return vehicle;
-      },
+      //   return vehicle;
+      // },
       // providesTags: (result, error, id) => [{ type: 'Post', id }],
       // The 2nd parameter is the destructured `QueryLifecycleApi`
       async onQueryStarted(

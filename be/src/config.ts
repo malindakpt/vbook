@@ -8,7 +8,7 @@ export const config = {
     userTokenSecret: process.env.USER_TOKEN_SECRET ?? '',
 
     dbPassword: process.env.DB_PASSWORD,
-    accessTokenValidity: 60*1,
+    accessTokenValidity: 60*2,
     refreshTokenValidity: 60*60*24*2,
     resetPasswordTimeout: 120*1000,
 

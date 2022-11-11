@@ -1,38 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 import { User } from "../../types/User";
-import { config } from "../../config";
 import { PopupType } from "../../enum/popup.type";
 import { LoginUIMode } from "../../enum/login.ui.mode";
 import { initialState } from "../appState";
-import { changePassword, logout, sendResetCode, signIn, signUp } from "../thunks";
-import { clearAllCookies } from "../../util/helper";
+import {
+  changePassword,
+  logout,
+  sendResetCode,
+  signIn,
+  signUp,
+} from "../thunks";
 
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = config.serverUrl;
-
-axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async function (error) {
-    const originalRequest = error.config;
-    if (error.response.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        await axios.post(`user/refreshToken`);
-        return axios(originalRequest);
-      } catch (e) {
-        console.log(e);
-        clearAllCookies();
-        window.location.reload();
-      }
-    }
-    return Promise.reject(error);
-  }
-);
 
 export const userSlice = createSlice({
   name: "blogData",
@@ -55,18 +33,6 @@ export const userSlice = createSlice({
     hidePopup: (state) => {
       state.popup.isOpen = false;
     },
-    //   receivedAll: {
-    //     reducer(
-    //       state,
-    //       action: PayloadAction<Page[], string, { currentPage: number }>
-    //     ) {
-    //       state.all = action.payload
-    //       state.meta = action.meta
-    //     },
-    //     prepare(payload: Page[], currentPage: number) {
-    //       return { payload, meta: { currentPage } }
-    //     },
-    //   },
   },
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
@@ -119,21 +85,9 @@ export const userSlice = createSlice({
       // TODO: clear all cookies
       state.user = null;
     });
-
-    //   .addCase(incrementBy, (state, action) => {
-    //     // action is inferred correctly here if using TS
-    //   })
-    //   // You can chain calls, or have separate `builder.addCase()` lines each time
-    //   .addCase(decrement, (state, action) => {})
-    //   // You can match a range of action types
-    //   .addMatcher(
-    //     isRejectedAction,
-    //     // `action` will be inferred as a RejectedAction due to isRejectedAction being defined as a type guard
-    //     (state, action) => {}
-    //   )
-    //   // and provide a default case if no other handlers matched
     builder.addDefaultCase((state, action) => {});
   },
 });
 
-export const { showPopup, hidePopup, changeLoginMode, setUser } = userSlice.actions;
+export const { showPopup, hidePopup, changeLoginMode, setUser } =
+  userSlice.actions;

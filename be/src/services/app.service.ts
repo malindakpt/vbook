@@ -7,6 +7,7 @@ import { logger } from "middlewares/logger.middleware";
 import { validateToken } from "middlewares/token.middleware";
 import cookies from 'cookie-parser';
 import { setRecordRoutes } from "routes/record.routes";
+import { setVehicleRoutes } from "routes/vehicle.routes";
 const app = express();
 
 app.use(cors({
@@ -23,6 +24,7 @@ app.use(validateToken);
 
 setUserRoutes(app);
 setRecordRoutes(app)
+setVehicleRoutes(app)
 
 app.get('/', (req, res) => {
   res.status(200).send('<h1>App is working</h1>')

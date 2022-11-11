@@ -1,8 +1,48 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-// import { userReducer, userReducerPath } from "./api/user.api";
 import { vehicleReducer, vehicleReducerPath } from "./api/vehicle.api";
 import { userSlice } from "./api/userSlice";
+import axios from "axios";
+import { config } from "../config";
+import { clearAllCookies } from "../util/helper";
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = config.serverUrl;
+
+axios.interceptors.request.use(
+  (request: any) => {
+    request.headers["Content-Type"] = "application/json";
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        await axios.post(`user/refreshToken`);
+        console.log(originalRequest);
+        // originalRequest.headers["Content-Type"] = "application/json; charset=utf-8";
+        return axios(originalRequest);
+      } catch (e) {
+        console.log(e);
+        clearAllCookies();
+        window.location.reload();
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 
 const reducer = {
   [vehicleReducerPath]: vehicleReducer,
