@@ -1,9 +1,10 @@
-import { createRecord, deleteRecord, readRecords, updateRecord } from "controllers/record.controller";
+import { createRecord, deleteRecord, readRecords, updateRecord, readRecord } from "controllers/record.controller";
 import { Application } from "express";
 
 export const setRecordRoutes = (app: Application) => {
-    app.post('/record/create', [createRecord]);
-    app.post('/record/read', [readRecords]);
+    app.post('/record/delete/:id', [deleteRecord]);
     app.post('/record/update', [updateRecord]);
-    app.post('/record/delete', [deleteRecord]);
+    app.post('/record/create', [createRecord]);
+    app.post('/record/:id', [readRecord]);
+    app.post('/records', [readRecords]);
 }
