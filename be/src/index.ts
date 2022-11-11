@@ -5,16 +5,14 @@ import { startApplication } from "services/app.service";
 
 export const syncDatabase = async () => {
   try {
-    UserModel.hasMany(VehicleModel);
     VehicleModel.belongsTo(UserModel);
-
-    VehicleModel.hasMany(RecordModel);
+    RecordModel.belongsTo(UserModel);
     RecordModel.belongsTo(VehicleModel);
 
     await UserModel.sync();
-    await RecordModel.sync();
     await VehicleModel.sync();
-
+    await RecordModel.sync();
+    
     console.log(
       "-------------------------Connection has been established successfully."
     );

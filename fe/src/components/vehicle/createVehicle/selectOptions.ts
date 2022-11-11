@@ -24,3 +24,9 @@ export const fuelTypes = [
   { label: "HYBRID", id: 3 },
   { label: "ELECTRIC", id: 4 },
 ];
+
+export const transmissionTypes = [
+  { label: "-Select transmission type-", id: 0 },
+  { label: "AUTOMATIC", id: 1 },
+  { label: "MANUAL", id: 2 },
+];

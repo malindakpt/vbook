@@ -1,18 +1,31 @@
 import { Button, Container, Grid, Paper, styled } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
-import { TextInput, NumberInput, AutoInput, AutoInputImage} from "../../inputs";
+import {
+  TextInput,
+  NumberInput,
+  AutoInput,
+  AutoInputImage,
+} from "../../inputs";
 
 import { Vehicle } from "../../../types/Vehicle";
-import { fuelTypes, vehicleBrands, vehicleTypes } from "./selectOptions";
-
+import {
+  fuelTypes,
+  transmissionTypes,
+  vehicleBrands,
+  vehicleTypes,
+} from "./selectOptions";
 
 interface Props {
   owner: string;
   loading: boolean;
   onCreateVehicle: (v: Vehicle) => void;
 }
-export const CreateVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) => {
+export const CreateVehicle: FC<Props> = ({
+  loading,
+  owner,
+  onCreateVehicle,
+}) => {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -22,9 +35,9 @@ export const CreateVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) =>
   }));
 
   const [state, changeProperty] = useFormState<Vehicle>({
-    chassis: '',
+    chassis: "",
     transmission: 0,
-    model: '',
+    model: "",
     regNo: "",
     fuel: 0,
     owner,
@@ -44,13 +57,30 @@ export const CreateVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) =>
             onChange={changeProperty}
           />
 
+          <AutoInputImage
+            name="type"
+            label="Vehicle Type"
+            options={vehicleTypes}
+            disabled={loading}
+            onChange={changeProperty}
+            value={state.type}
+          />
+
           <AutoInput
+            value={state.brand}
             name="brand"
             label="Brand Name"
             options={vehicleBrands}
             disabled={loading}
             onChange={changeProperty}
-            value={state.brand}
+          />
+
+          <TextInput
+            value={state.model}
+            name="model"
+            label="Model"
+            disabled={loading}
+            onChange={changeProperty}
           />
 
           <NumberInput
@@ -62,21 +92,29 @@ export const CreateVehicle: FC<Props> = ({ loading, owner, onCreateVehicle }) =>
           />
 
           <AutoInput
+            value={state.fuel}
             name="fuel"
             label="Fuel Type"
             options={fuelTypes}
             disabled={loading}
             onChange={changeProperty}
-            value={state.fuel}
           />
 
-          <AutoInputImage
-            name="type"
-            label="Vehicle Type"
-            options={vehicleTypes}
+          <AutoInput
+            value={state.transmission}
+            name="transmission"
+            label="Transmission"
+            options={transmissionTypes}
             disabled={loading}
             onChange={changeProperty}
-            value={state.type}
+          />
+
+          <TextInput
+            value={state.chassis}
+            name="chassis"
+            label="Chassis Number"
+            disabled={loading}
+            onChange={changeProperty}
           />
 
           <Button onClick={() => onCreateVehicle(state)}>Create</Button>

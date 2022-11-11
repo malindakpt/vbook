@@ -22,11 +22,11 @@ export const attributes = {
     allowNull: false
   },
   manufac: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   brand: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   chassis: {
@@ -34,19 +34,19 @@ export const attributes = {
     allowNull: true
   },
   type: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   fuel: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   transmission: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   model: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   createdAt: DataTypes.DATE,

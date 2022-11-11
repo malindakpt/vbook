@@ -10,7 +10,7 @@ export const TopBarContainer = () => {
     const navigate = useNavigate();
 
     const handleSpeedDial = (path: string) => {
-        navigate(`/createVehicle`);
+        navigate(`/vehicle/create`);
     };
 
     const handleLogout = () => {
