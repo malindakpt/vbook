@@ -1,33 +1,35 @@
 import { config } from "config";
 import express from "express";
 import { setUserRoutes } from "../routes/user.routes";
-import bodyParser from 'body-parser';
-import cors from 'cors';
+import bodyParser from "body-parser";
+import cors from "cors";
 import { logger } from "middlewares/logger.middleware";
 import { validateToken } from "middlewares/token.middleware";
-import cookies from 'cookie-parser';
+import cookies from "cookie-parser";
 import { setRecordRoutes } from "routes/record.routes";
 import { setVehicleRoutes } from "routes/vehicle.routes";
 const app = express();
 
-app.use(cors({
-  credentials: true,
-  origin: "http://localhost:3000"
-}));
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(cookies());
-app.use(logger)
+app.use(logger);
 app.use(validateToken);
 
 setUserRoutes(app);
-setRecordRoutes(app)
-setVehicleRoutes(app)
+setRecordRoutes(app);
+setVehicleRoutes(app);
 
-app.get('/', (req, res) => {
-  res.status(200).send('<h1>App is working</h1>')
+app.get("/", (req, res) => {
+  res.status(200).send("<h3>App is working</h3>");
 });
 
 // app.use(function (req, res, next) {
@@ -44,7 +46,7 @@ app.get('/', (req, res) => {
 // });
 
 export const startApplication = () => {
-  app.listen(config.port, function () {
-    console.log("app listening at port %s", config.port);
+  app.listen(config.port, () => {
+    console.log("------------- App Started -------------", config.port);
   });
 };
