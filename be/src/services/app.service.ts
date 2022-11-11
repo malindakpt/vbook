@@ -47,6 +47,6 @@ app.get("/", (req, res) => {
 
 export const startApplication = () => {
   app.listen(config.port, () => {
-    console.log("------------- App Started -------------", config.port);
+    console.log("------------- Server Started -------------", config.port);
   });
 };
