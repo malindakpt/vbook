@@ -19,7 +19,6 @@ export const ReadVehicle: FC<Props> = ({ loading, vehicle, onEdit, onDelete }) =
         <Grid container spacing={2} rowSpacing={4}>
           <Grid xs={12} sm={8} md={6} item>
             <div>{vehicle.regNo}</div>
-            <div>{vehicle.owner}</div>
             <div>{vehicle.fuel}</div>
             <div>{vehicle.type}</div>
             <Button onClick={() => onEdit(vehicle)}>Edit</Button>

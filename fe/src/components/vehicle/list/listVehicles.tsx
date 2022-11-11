@@ -25,7 +25,6 @@ export const ListVehicles: FC<Props> = ({ vehicles, onSelect, loading }) => {
               return (
                 <div key={vehicle.id} onClick={() => onSelect(vehicle)}>
                   <div>{vehicle.regNo}</div>
-                  <div>{vehicle.owner}</div>
                   <div>{vehicle.fuel}</div>
                   <div>{vehicle.type}</div>
                 </div>

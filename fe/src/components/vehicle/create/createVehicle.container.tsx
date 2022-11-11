@@ -5,7 +5,6 @@ import { ErrorComponent } from "../../error/error";
 import { CreateVehicle } from "./createVehicle";
 
 export const CreateVehicleContainer = () => {
-  // const loading = useAppSelector((state) => state.app.addVehicle.loading);
   const user = useAppSelector((state) => state.app.user);
   const [createVehicle] = useCreateVehicleMutation();
 

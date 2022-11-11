@@ -1,10 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useDeleteVehicleMutation,
-  useReadVehicleQuery,
-} from "../../../state/api/vehicle.api";
+import { useReadVehicleQuery, useDeleteVehicleMutation } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
-import { Vehicle } from "../../../types/Vehicle";
+import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
 import { ReadRecord } from "./readRecord";
 
@@ -19,24 +16,24 @@ export const ReadRecordContainer = () => {
     return <ErrorComponent text="User N/A" />;
   }
 
-  const handleOnEdit = (v: Vehicle) => {
-    navigate(`/vehicle/update/${v.id}`);
+  const handleEdit = (r: Record) => {
+    navigate(`/record/update/${r.id}`);
   };
 
-  const handleOnDelete = (v: Vehicle) => {
-    if (v.id) {
-      deleteVehicle(v.id);
+  const handleDelete = (r: Record) => {
+    if (r.id) {
+      deleteVehicle(r.id);
     } else {
-      alert("Vehicle Id does not exist");
+      alert("Record Id does not exist");
     }
   };
 
   return (
     <ReadRecord
-      onEdit={handleOnEdit}
-      onDelete={handleOnDelete}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
       loading={isLoading}
-      vehicle={data}
+      record={data}
     />
   );
 };

@@ -9,20 +9,22 @@ import { ErrorComponent } from "../../error/error";
 import { CreateVehicle } from "../create/createVehicle";
 
 export const UpdateVehicleContainer = () => {
-  const { id } = useParams();
+  const { vid } = useParams();
   const user = useAppSelector((state) => state.app.user);
-  const { data: vehicle, error, isLoading } = useReadVehicleQuery(id ?? "");
+  const { data: vehicle, error, isLoading } = useReadVehicleQuery(vid ?? "");
   const [updateVehicle, result] = useUpdateVehicleMutation();
 
-  if (!user) {
-    return <ErrorComponent text="User N/A" />;
-  }
+
 
   const handleUpdateVehicle = (v: Vehicle) => {
     console.log("vehicle", v);
     updateVehicle(v);
   };
 
+  if (!user?.id) {
+    return <ErrorComponent text="User N/A" />;
+  }
+  
   if(isLoading){
     return <div>Loading.....</div>
   }
@@ -35,7 +37,7 @@ export const UpdateVehicleContainer = () => {
       initialState={vehicle}
       onCreateVehicle={handleUpdateVehicle}
       loading={false}
-      owner={user.identifier}
+      userId={user.id}
     />
   );
 };
