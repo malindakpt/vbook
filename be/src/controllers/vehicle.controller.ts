@@ -48,13 +48,15 @@ export const updateVehicle = async (req: Request, res: Response) => {
 };
 
 export const deleteVehicle = async (req: Request, res: Response) => {
-  const { id } = req.body;
   try {
+    const { id } = req.params;
     await VehicleModel.destroy({
-      where: { id },
+      where: {
+        id,
+      },
     });
+    return res.status(201).send();
   } catch (e: any) {
     return res.status(500).send(e.message);
   }
 };
-

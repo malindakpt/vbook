@@ -104,6 +104,20 @@ export const vehicleApi = createApi({
       invalidatesTags: ['Vehicle'],
     }),
 
+    deleteVehicle: build.mutation({
+      queryFn: async (
+        id: number,
+        queryApi: BaseQueryApi,
+        extraOptions: {},
+        baseQuery: (
+          arg: string | FetchArgs
+        ) => MaybePromise<
+          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
+        >
+      ) => await axios.post(`/vehicle/delete/${id}`),
+      invalidatesTags: ['Vehicle'],
+    }),
+
     readVehicle: build.query({
       queryFn: async (
         id: string,
@@ -128,14 +142,7 @@ export const vehicleApi = createApi({
         ) => MaybePromise<
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
-      ) => {
-        try {
-          const response = await axios.post(`/vehicles`, arg);
-          return response.data;
-        } catch (e) {
-          throw new Error();
-        }
-      },
+      ) =>  await axios.post(`/vehicles`, arg) 
     }),
 
     signUp: build.mutation<User, Partial<User> & Pick<User, "id">>({
@@ -224,6 +231,5 @@ export const {
   useSignUpMutation,
   useCreateVehicleMutation,
   useResetPasswordMutation,
-  // reducer: vehicleReducer,
-  // reducerPath: vehicleReducerPath,
+ useDeleteVehicleMutation
 } = vehicleApi;

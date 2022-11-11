@@ -6,8 +6,9 @@ interface Props {
   vehicle: Vehicle;
   loading: boolean;
   onEdit: (vehicle: Vehicle) => void;
+  onDelete: (vehicle: Vehicle) => void;
 }
-export const ReadVehicle: FC<Props> = ({ loading, vehicle, onEdit }) => {
+export const ReadVehicle: FC<Props> = ({ loading, vehicle, onEdit, onDelete }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -22,6 +23,7 @@ export const ReadVehicle: FC<Props> = ({ loading, vehicle, onEdit }) => {
             <div>{vehicle.fuel}</div>
             <div>{vehicle.type}</div>
             <Button onClick={() => onEdit(vehicle)}>Edit</Button>
+            <Button onClick={() => onDelete(vehicle)}>Delete</Button>
           </Grid>
         </Grid>
       </Container>
