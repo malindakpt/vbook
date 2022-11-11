@@ -11,6 +11,7 @@ export interface Vehicle {
 
     // Added by server
     id?: number;
-    createdAt?: string,
-    updatedAt?: string,
+    createdAt?: string;
+    updatedAt?: string;
+    UserId?: number;
 }

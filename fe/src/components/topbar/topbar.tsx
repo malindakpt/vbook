@@ -22,7 +22,8 @@ import {
   SpeedDialIcon,
 } from "@mui/material";
 import { FC } from "react";
-import { Add, DirectionsCar, PlaylistAdd } from "@mui/icons-material";
+import { Add, DirectionsCar, PlaylistAdd, TimeToLeave  } from "@mui/icons-material";
+import { User } from "../../types/User";
 
 const actions = [
   { icon: <PlaylistAdd />, name: "Service Record", path: "addVehicle" },
@@ -70,12 +71,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface Props {
-  userName: string;
-  onSpeedDial: (path: string) => void;
+  user: User;
+  onNavigate: (path: string) => void;
   onLogout: () => void;
 }
 
-export const TopBar: FC<Props> = ({ userName, onSpeedDial, onLogout }) => {
+export const TopBar: FC<Props> = ({ user, onNavigate, onLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -140,14 +141,14 @@ export const TopBar: FC<Props> = ({ userName, onSpeedDial, onLogout }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={() => onNavigate(`vehicle/list/${user.id}`)}>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
             {/* <MailIcon /> */}
-            <Add />
+            <TimeToLeave />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>My Vehicles</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -175,10 +176,6 @@ export const TopBar: FC<Props> = ({ userName, onSpeedDial, onLogout }) => {
       </MenuItem>
     </Menu>
   );
-
-  const handleClickSpeedDial = (path: string) => {
-    onSpeedDial(path);
-  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -261,7 +258,7 @@ export const TopBar: FC<Props> = ({ userName, onSpeedDial, onLogout }) => {
               color="inherit"
             >
               {/* <AccountCircle /> */}
-              <Avatar>{userName.charAt(0)}</Avatar>
+              <Avatar>{user.name.charAt(0)}</Avatar>
             </IconButton>
             <IconButton
               size="large"
@@ -295,7 +292,7 @@ export const TopBar: FC<Props> = ({ userName, onSpeedDial, onLogout }) => {
           {actions.map((action) => ( 
               <SpeedDialAction
                 key={action.name}
-                onClick={() => handleClickSpeedDial(action.path)}
+                onClick={() => onNavigate(action.path)}
                 icon={action.icon}
                 tooltipTitle={action.name}
               ></SpeedDialAction> 

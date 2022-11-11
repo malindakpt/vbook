@@ -9,6 +9,7 @@ export class VehicleModel extends Model<InferAttributes<VehicleModel>, InferCrea
   declare regNo: string;
   declare createdAt?: Date;
   declare updatedAt?: Date;
+  declare UserId?: number;
 }
 
 export const attributes = {
@@ -49,6 +50,7 @@ export const attributes = {
     type: DataTypes.STRING,
     allowNull: false
   },
+  UserId: DataTypes.INTEGER.UNSIGNED,
   createdAt: DataTypes.DATE,
   updatedAt: DataTypes.DATE
 };

@@ -5,16 +5,21 @@ import { TopBar } from "./topbar"
 
 export const TopBarContainer = () => {
 
-    const name = useAppSelector((state) => state.app.user?.name) ?? '';
+    const user = useAppSelector((state) => state.app.user);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const handleSpeedDial = (path: string) => {
-        navigate(`/vehicle/create`);
+    const handleNavigate = (path: string) => {
+        navigate(path);
     };
 
     const handleLogout = () => {
         dispatch(logout());
     }
-    return <TopBar userName={name} onSpeedDial={handleSpeedDial} onLogout={handleLogout} />
+
+    if(!user){
+        return <></>;
+    }
+
+    return <TopBar user={user} onNavigate={handleNavigate} onLogout={handleLogout} />
 }
