@@ -1,7 +1,7 @@
 import { Home } from "@mui/icons-material";
 import { Route, Routes } from "react-router-dom";
-import { CreateVehicleContainer } from "./components/vehicle/createVehicle/createVehicle.container";
-import { ReadVehicleContainer } from "./components/vehicle/readVehicle/readVehicle.container";
+import { CreateVehicleContainer } from "./components/vehicle/create/createVehicle.container";
+import { ReadVehicleContainer } from "./components/vehicle/read/readVehicle.container";
 import { UpdateVehicleContainer } from "./components/vehicle/update/updateVehicle.container";
 
 export const Router = () => (
