@@ -55,21 +55,7 @@ export const vehicleApi = createApi({
         } catch (e) {
           throw new Error();
         }
-        // return Promise.resolve({
-        //   status: 12,
-        //   data: '123'
-        // })
       },
-
-      // Pick out data and prevent nested properties in a hook or selector
-      // transformResponse: (response: { data: Vehicle }, meta, arg) => {
-      //   console.log("transform");
-      //   const vehicle = response.data;
-
-      //   return vehicle;
-      // },
-      // providesTags: (result, error, id) => [{ type: 'Post', id }],
-      // The 2nd parameter is the destructured `QueryLifecycleApi`
       async onQueryStarted(
         arg,
         {
@@ -99,6 +85,50 @@ export const vehicleApi = createApi({
         }
       ) {
         console.log("fullState", getState());
+      },
+    }),
+
+    readVehicle: build.query({
+      queryFn: async (
+        id: string,
+        queryApi: BaseQueryApi,
+        extraOptions: {},
+        baseQuery: (
+          arg: string | FetchArgs
+        ) => MaybePromise<
+          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
+        >
+      ) => {
+
+        // try {
+          return await axios.post(`/vehicle/${id}`);
+        // } catch (e) {
+        //   // throw new Error();
+        //   return {
+        //     error: {error: '', status: 401, data: {}}
+        //   }
+        // }
+      },
+    }),
+
+    readVehicles: build.query({
+      queryFn: async (
+        arg: any,
+        queryApi: BaseQueryApi,
+        extraOptions: {},
+        baseQuery: (
+          arg: string | FetchArgs
+        ) => MaybePromise<
+          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
+        >
+      ) => {
+
+        try {
+          const response = await axios.post(`/vehicles`, arg);
+          return response.data;
+        } catch (e) {
+          throw new Error();
+        }
       },
     }),
 
@@ -181,6 +211,8 @@ export const vehicleApi = createApi({
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useReadVehiclesQuery,
+  useReadVehicleQuery,
   useGetAllUsersQuery,
   useSignUpMutation,
   useCreateVehicleMutation,

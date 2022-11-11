@@ -1,6 +1,4 @@
 import { LoginContainer } from "./components/login/login.container";
-import { Route, Routes } from "react-router-dom";
-import { Home } from "./components/home/home";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./state/store";
 import { useEffect } from "react";
@@ -8,7 +6,7 @@ import { PopupContainer } from "./components/popup/popup.container";
 import { User } from "./types/User";
 import { setUser } from "./state/api/userSlice";
 import { TopBarContainer } from "./components/topbar/topbar.container";
-import { CreateVehicleContainer } from "./components/vehicle/createVehicle/createVehicle.container";
+import { Router } from "./Router";
 
 function App() {
   const loggedInUser = useSelector((state: RootState) => state.app.user);
@@ -27,11 +25,7 @@ function App() {
       {loggedInUser ? (
         <>
           <TopBarContainer />
-          <Routes>
-            <Route path={"/"} element={<Home />} />
-            <Route path={"/addVehicle"} element={<CreateVehicleContainer />} />
-            <Route path={"/addRecord"} element={<CreateVehicleContainer />} />
-          </Routes>
+          <Router />
         </>
       ) : (
         <LoginContainer />

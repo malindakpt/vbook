@@ -10,6 +10,15 @@ export const createVehicle = async (req: Request, res: Response) => {
   }
 };
 
+export const readVehicle = async (req: Request, res: Response) => {
+  try {
+    const foundVehicles = await VehicleModel.findByPk(req.params.id);
+    return res.status(201).send(foundVehicles);
+  } catch (e: any) {
+    return res.status(500).send(e.message);
+  }
+};
+
 export const readVehicles = async (req: Request, res: Response) => {
   try {
     const foundVehicles = await VehicleModel.findAll({
