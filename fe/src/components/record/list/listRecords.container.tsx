@@ -15,6 +15,7 @@ export const ListRecordsContainer = () => {
   const { data, error, isLoading } = useReadRecordsQuery({
     VehicleId: Number(vid),
   });
+  
   const [deleteRecord, result] = useDeleteRecordMutation();
 
   const handleSelect = (v: Record) => {

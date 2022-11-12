@@ -1,15 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useReadVehicleQuery, useDeleteVehicleMutation } from "../../../state/api/vehicle.api";
+import { useReadRecordQuery } from "../../../state/api/record.api";
+import { useDeleteVehicleMutation } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
 import { ReadRecord } from "./readRecord";
 
 export const ReadRecordContainer = () => {
-  let { id } = useParams();
+  let { rid } = useParams();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
-  const { data, error, isLoading } = useReadVehicleQuery(id ?? "");
+  const { data, error, isLoading } = useReadRecordQuery(rid ?? "");
   const [deleteVehicle] = useDeleteVehicleMutation();
 
   const handleEdit = (r: Record) => {
