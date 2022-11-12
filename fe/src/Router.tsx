@@ -1,5 +1,5 @@
-import { Home } from "@mui/icons-material";
 import { Route, Routes } from "react-router-dom";
+import { Home } from "./components/home/home";
 import { CreateRecordContainer } from "./components/record/create/createRecord.container";
 import { ListRecordsContainer } from "./components/record/list/listRecords.container";
 import { ReadRecordContainer } from "./components/record/read/readRecord.container";
@@ -20,7 +20,6 @@ export const Router = () => (
     <Route path={"/record/list/:vid"} element={<ListRecordsContainer />} />
     <Route path={"/record/create"} element={<CreateRecordContainer />} />
     <Route path={"/record/:rid"} element={<ReadRecordContainer />} />
-
     <Route path={"/"} element={<Home />} />
   </Routes>
 );

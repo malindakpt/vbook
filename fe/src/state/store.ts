@@ -5,7 +5,7 @@ import { userSlice } from "./api/userSlice";
 import axios from "axios";
 import { config } from "../config";
 import { clearAllCookies } from "../util/helper";
-import { recordApi } from "./api/query.api";
+import { recordApi } from "./api/record.api";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = config.serverUrl;
@@ -54,8 +54,9 @@ export const store = configureStore({
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(vehicleApi.middleware)
-      .concat(recordApi.middleware),
+    .concat(recordApi.middleware)
+    .concat(vehicleApi.middleware),
+     
 });
 
 // // Infer the `RootState` and `AppDispatch` types from the store itself
