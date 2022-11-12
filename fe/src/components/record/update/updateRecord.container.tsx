@@ -26,7 +26,7 @@ export const UpdateRecordContainer = () => {
     updateVehicle(r);
   };
 
-  if(isLoading){
+  if(isLoading || !vehicleList){
     return <div>Loading.....</div>
   }
 

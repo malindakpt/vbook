@@ -14,7 +14,7 @@ import {
   transmissionTypes,
   vehicleBrands,
   vehicleTypes,
-} from "./selectOptions";
+} from "../../../util/selectOptions";
 
 interface Props {
   userId: number;

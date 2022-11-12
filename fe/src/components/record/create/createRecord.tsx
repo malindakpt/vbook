@@ -1,4 +1,4 @@
-import { Button, Container, Grid} from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import {
@@ -10,6 +10,7 @@ import {
 
 import { Record } from "../../../types/Record";
 import { SelectOption } from "../../../types/SelectOption";
+import { serviceTypes } from "../../../util/selectOptions";
 
 interface Props {
   userId: number;
@@ -27,29 +28,47 @@ export const CreateRecord: FC<Props> = ({
   vehicleList,
   onSaveRecord,
 }) => {
-
-  const [state, changeProperty] = useFormState<Record>(initialState ?? {
-    date: new Date().getTime(),
-    type: 0,
-    millage: 0,
-    desc: '',
-    VehicleId: 22, // vehicleId ?? 0,
-    UserId: userId,
-  });
+  const [state, changeProperty] = useFormState<Record>(
+    initialState ?? {
+      date: new Date().getTime(),
+      type: 0,
+      millage: 0,
+      desc: "",
+      VehicleId: 0, // vehicleId ?? 0,
+      UserId: userId,
+    }
+  );
 
   return (
     <Container maxWidth="lg">
       <Grid container spacing={2} rowSpacing={4}>
         <Grid xs={12} sm={8} md={6} item>
-        <AutoInput
+          <AutoInput
             value={state.VehicleId ?? 0}
-            name="brand"
+            name="VehicleId"
             label="Select Vehicle"
             options={vehicleList}
             disabled={loading}
             onChange={changeProperty}
           />
-          {/* <SelectVehiclesContainer onSelect={changeProperty} /> */}
+
+          <AutoInput
+            value={state.type}
+            name="type"
+            label="Service Type"
+            options={serviceTypes}
+            disabled={loading}
+            onChange={changeProperty}
+          />
+
+          <NumberInput
+            value={state.millage}
+            name="millage"
+            label="Millage"
+            disabled={loading}
+            onChange={changeProperty}
+          />
+
           {/* <DateInput
             value={state.date}
             name="regNo"
@@ -59,8 +78,7 @@ export const CreateRecord: FC<Props> = ({
           /> */}
           <Button onClick={() => onSaveRecord(state)}>Save Record</Button>
         </Grid>
-        <Grid xs={6} md={4} item> 
-        </Grid>
+        <Grid xs={6} md={4} item></Grid>
       </Grid>
     </Container>
   );

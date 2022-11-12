@@ -12,14 +12,18 @@ export const CreateRecordContainer = () => {
 
   const [createRecord] = useCreateRecordMutation();
 
+  const handleSaveRecord = (r: Record) => {
+    createRecord(r);
+  };
+
   if (!user?.id) {
     return <ErrorComponent text="User N/A" />;
   }
 
-  const handleSaveRecord = (r: Record) => {
-    console.log("Record", r);
-    createRecord(r);
-  };
+  if(!vehicleList) {
+    return <div>Loading...</div>
+  }
+
   return (
     <CreateRecord
       vehicleList={vehicleList}
