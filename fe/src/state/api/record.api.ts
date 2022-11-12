@@ -22,56 +22,28 @@ export const recordApi = createApi({
   endpoints: (build) => ({
     createRecord: build.mutation({
       queryFn: async (
-        arg: any,
-        queryApi: BaseQueryApi,
-        extraOptions: {},
-        baseQuery: (
-          arg: string | FetchArgs
-        ) => MaybePromise<
-          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-        >
+        arg: Record
       ) => await axios.post(`/record/create`, arg),
       invalidatesTags: ["Record"],
     }),
 
     updateRecord: build.mutation({
       queryFn: async (
-        args: Partial<Record>,
-        queryApi: BaseQueryApi,
-        extraOptions: {},
-        baseQuery: (
-          arg: string | FetchArgs
-        ) => MaybePromise<
-          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-        >
+        args: Partial<Record>
       ) => await axios.post(`/record/update`, args),
       invalidatesTags: ["Record"],
     }),
 
     deleteRecord: build.mutation({
       queryFn: async (
-        id: number,
-        queryApi: BaseQueryApi,
-        extraOptions: {},
-        baseQuery: (
-          arg: string | FetchArgs
-        ) => MaybePromise<
-          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-        >
+        id: number
       ) => await axios.post(`/record/delete/${id}`),
       invalidatesTags: ["Record"],
     }),
 
     readRecord: build.query({
       queryFn: async (
-        id: string,
-        queryApi: BaseQueryApi,
-        extraOptions: {},
-        baseQuery: (
-          arg: string | FetchArgs
-        ) => MaybePromise<
-          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-        >
+        id: string
       ) => {
         const result = await axios.post(`/record/${id}`);
         return result;
@@ -81,14 +53,7 @@ export const recordApi = createApi({
 
     readRecords: build.query({
       queryFn: async (
-        args: any,
-        queryApi: BaseQueryApi,
-        extraOptions: {},
-        baseQuery: (
-          arg: string | FetchArgs
-        ) => MaybePromise<
-          QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-        >
+        args: Partial<Record>
       ) => {
         const result = await axios.post(`/record/list`, args);
         return result;
