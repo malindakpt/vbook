@@ -9,13 +9,11 @@ import { ErrorComponent } from "../../error/error";
 import { ListRecords } from "./listRecords";
 
 export const ListRecordsContainer = () => {
-  let { vid } = useParams(); // incase if we need to view Records of other owner
+  // let { vid } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
-  const { data, error, isLoading } = useReadRecordsQuery({
-    VehicleId: Number(vid),
-  });
-  
+  const { data, error, isLoading } = useReadRecordsQuery({UserId: user?.id});
+
   const [deleteRecord, result] = useDeleteRecordMutation();
 
   const handleSelect = (v: Record) => {
