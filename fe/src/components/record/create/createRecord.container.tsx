@@ -4,8 +4,10 @@ import { ErrorComponent } from "../../error/error";
 import { Record } from "../../../types/Record";
 import { CreateRecord } from "./createRecord";
 import { useVehicleList } from "../../../hooks/useVehicleList";
+import { useParams } from "react-router-dom";
 
 export const CreateRecordContainer = () => {
+  let { vid } = useParams();
 
   const user = useAppSelector((state) => state.app.user);
   const vehicleList = useVehicleList(user?.id);
@@ -16,12 +18,14 @@ export const CreateRecordContainer = () => {
     createRecord(r);
   };
 
+  const initialState: Partial<Record> = vid ? { VehicleId: Number(vid) } : {};
+
   if (!user?.id) {
     return <ErrorComponent text="User N/A" />;
   }
 
-  if(!vehicleList) {
-    return <div>Loading...</div>
+  if (!vehicleList) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -30,6 +34,7 @@ export const CreateRecordContainer = () => {
       onSaveRecord={handleSaveRecord}
       loading={false}
       userId={user.id}
+      initialState={initialState}
     />
   );
 };

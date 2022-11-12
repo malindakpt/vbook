@@ -19,6 +19,10 @@ export const ReadVehicleContainer = () => {
     return <ErrorComponent text="User N/A" />;
   }
 
+  const handleOnAddRecord = (v: Vehicle) => {
+    navigate(`/record/create/${v.id}`);
+  };
+
   const handleOnEdit = (v: Vehicle) => {
     navigate(`/vehicle/update/${v.id}`);
   };
@@ -33,6 +37,7 @@ export const ReadVehicleContainer = () => {
 
   return (
     <ReadVehicle
+      onAddRecord={handleOnAddRecord}
       onEdit={handleOnEdit}
       onDelete={handleOnDelete}
       loading={isLoading}

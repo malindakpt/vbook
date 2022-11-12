@@ -1,11 +1,7 @@
 import { Button, Container, Grid } from "@mui/material";
 import { FC } from "react";
 import { useFormState } from "../../../hooks/useFormState";
-import {
-  TextInput,
-  NumberInput,
-  AutoInput,
-} from "../../inputs";
+import { TextInput, NumberInput, AutoInput } from "../../inputs";
 
 import { Record } from "../../../types/Record";
 import { SelectOption } from "../../../types/SelectOption";
@@ -14,7 +10,7 @@ import { serviceTypes } from "../../../util/selectOptions";
 interface Props {
   userId: number;
   loading: boolean;
-  initialState?: Record;
+  initialState?: Partial<Record>;
   vehicleList: SelectOption[];
   onSaveRecord: (r: Record) => void;
 }
@@ -25,16 +21,16 @@ export const CreateRecord: FC<Props> = ({
   vehicleList,
   onSaveRecord,
 }) => {
-  const [state, changeProperty] = useFormState<Record>(
-    initialState ?? {
-      date: new Date().toISOString(),
-      type: 0,
-      millage: 0,
-      desc: "",
-      VehicleId: 0, // vehicleId ?? 0,
-      UserId: userId,
-    }
-  );
+  const [state, changeProperty] = useFormState<Record>({
+    date: new Date().toISOString(),
+    type: 0,
+    millage: 0,
+    desc: "",
+    VehicleId: 0, // vehicleId ?? 0,
+    UserId: userId,
+
+    ...initialState,
+  });
 
   return (
     <Container maxWidth="lg">
