@@ -71,13 +71,16 @@ export const recordApi = createApi({
         ) => MaybePromise<
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
-      ) => await axios.post(`/record/${id}`),
+      ) => {
+        const result = await axios.post(`/record/${id}`);
+        return result;
+      },
       providesTags: ["Record"],
     }),
 
     readRecords: build.query({
       queryFn: async (
-        arg: any,
+        args: any,
         queryApi: BaseQueryApi,
         extraOptions: {},
         baseQuery: (
@@ -85,8 +88,11 @@ export const recordApi = createApi({
         ) => MaybePromise<
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
-      ) => await axios.post(`/records`, arg),
-      providesTags: ["Record"],
+      ) => {
+        const result = await axios.post(`/record/list`, args);
+        return result;
+      },
+      // providesTags: ["Record"],
     }),
   }),
 });
