@@ -30,7 +30,7 @@ export const CreateRecord: FC<Props> = ({
 }) => {
   const [state, changeProperty] = useFormState<Record>(
     initialState ?? {
-      date: new Date().getTime(),
+      date: new Date().toISOString(),
       type: 0,
       millage: 0,
       desc: "",

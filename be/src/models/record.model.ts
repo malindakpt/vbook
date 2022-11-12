@@ -15,7 +15,7 @@ export class RecordModel extends Model<
   InferCreationAttributes<RecordModel>
 > {
   declare id: CreationOptional<number>;
-  declare date: number;
+  declare date: string;
   declare type: number;
   declare millage: number;
   declare desc: string;
@@ -30,7 +30,7 @@ export const attributes = {
     primaryKey: true,
   },
   date: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DATE,
     allowNull: false,
   },
   type: {

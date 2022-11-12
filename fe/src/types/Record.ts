@@ -1,5 +1,5 @@
 export interface Record {
-    date: number;
+    date: string;
     type: number;
     millage: number; 
     desc: string;
