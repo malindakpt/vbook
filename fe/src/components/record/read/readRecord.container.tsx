@@ -12,10 +12,6 @@ export const ReadRecordContainer = () => {
   const { data, error, isLoading } = useReadVehicleQuery(id ?? "");
   const [deleteVehicle] = useDeleteVehicleMutation();
 
-  if (!user) {
-    return <ErrorComponent text="User N/A" />;
-  }
-
   const handleEdit = (r: Record) => {
     navigate(`/record/update/${r.id}`);
   };
@@ -27,6 +23,10 @@ export const ReadRecordContainer = () => {
       alert("Record Id does not exist");
     }
   };
+
+  if (!user) {
+    return <ErrorComponent text="User N/A" />;
+  }
 
   return (
     <ReadRecord

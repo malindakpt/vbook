@@ -15,14 +15,13 @@ export const UpdateRecordContainer = () => {
   const { data: record, error, isLoading } = useReadRecordQuery(rid ?? "");
   const [updateVehicle, result] = useUpdateRecordMutation();
 
+  const handleUpdateRecord = (r: Record) => {
+    updateVehicle(r);
+  };
 
   if (!user) {
     return <ErrorComponent text="User N/A" />;
   }
-
-  const handleUpdateRecord = (r: Record) => {
-    updateVehicle(r);
-  };
 
   if(isLoading || !vehicleList){
     return <div>Loading.....</div>

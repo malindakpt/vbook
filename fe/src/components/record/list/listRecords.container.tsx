@@ -11,10 +11,6 @@ export const ListRecordsContainer = () => {
   const user = useAppSelector((state) => state.app.user);
   const { data, error, isLoading } = useReadRecordsQuery({VehicleId: Number(vid)});
 
-  if (!user) {
-    return <ErrorComponent text="User N/A" />;
-  }
-
   const handleSelect = (v: Record) => {
     navigate(`/record/${v.id}`);
   };
@@ -23,6 +19,10 @@ export const ListRecordsContainer = () => {
     navigate(`/record/update/${r.id}`);
   };
 
+  if (!user) {
+    return <ErrorComponent text="User N/A" />;
+  }
+  
   return (
     <ListRecords
       onSelect={handleSelect}
