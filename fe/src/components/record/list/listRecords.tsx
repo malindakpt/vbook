@@ -7,13 +7,14 @@ interface Props {
   records: Record[];
   onSelect: (Record: Record) => void;
   onEdit: (Record: Record) => void;
+  onDelete: (Record: Record) => void;
 }
-export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit }) => {
+export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit, onDelete }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!records) {
+  if (!records || records.length === 0) {
     return <div>No Records</div>;
   }
 
@@ -30,6 +31,7 @@ export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit }) =
                   <div>{record.millage}</div>
                   <div>{record.type}</div>
                   <Button onClick={() => onEdit(record)}>Edit</Button>
+                  <Button onClick={() => onDelete(record)}>Delete</Button>
                 </div>
               );
             })}

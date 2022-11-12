@@ -141,7 +141,7 @@ export const TopBar: FC<Props> = ({ user, onNavigate, onLogout }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={() => onNavigate(`vehicle/list/${user.id}`)}>
+      <MenuItem onClick={() => onNavigate(`vehicle/list`)}>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
             {/* <MailIcon /> */}

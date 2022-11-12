@@ -41,7 +41,7 @@ export const vehicleApi = createApi({
     readVehicles: build.query({
       queryFn: async (
         arg: Partial<Vehicle>,
-      ) =>  await axios.post(`/vehicles/list`, arg),
+      ) =>  await axios.post(`/vehicle/list`, arg),
       providesTags: ['Vehicle']
     })
   }),
