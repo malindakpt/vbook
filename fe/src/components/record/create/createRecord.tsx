@@ -69,6 +69,15 @@ export const CreateRecord: FC<Props> = ({
             onChange={changeProperty}
           />
 
+          <TextInput
+            value={state.desc}
+            name="desc"
+            label="Decription"
+            disabled={loading}
+            multiline
+            onChange={changeProperty}
+          />
+
           {/* <DateInput
             value={state.date}
             name="regNo"
