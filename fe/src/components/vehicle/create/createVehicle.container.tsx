@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCreateVehicleMutation } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
@@ -7,15 +8,19 @@ import { CreateVehicle } from "./createVehicle";
 export const CreateVehicleContainer = () => {
   const user = useAppSelector((state) => state.app.user);
   const [createVehicle] = useCreateVehicleMutation();
+  const navigate = useNavigate();
 
   if (!user?.id) {
     return <ErrorComponent text="User N/A" />;
   }
 
-  const handleCreateVehicle = (v: Vehicle) => {
-    console.log("vehicle", v);
-    createVehicle(v);
+  const handleCreateVehicle = async (v: Vehicle) => {
+    const result: any = await createVehicle(v);
+    if(!result.error){
+      navigate(`/vehicle/${result.data.id}`);
+    }
   };
+  
   return (
     <CreateVehicle
       onCreateVehicle={handleCreateVehicle}

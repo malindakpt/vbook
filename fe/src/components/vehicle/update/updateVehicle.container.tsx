@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useReadVehicleQuery,
   useUpdateVehicleMutation,
@@ -11,14 +11,17 @@ import { CreateVehicle } from "../create/createVehicle";
 export const UpdateVehicleContainer = () => {
   const { vid } = useParams();
   const user = useAppSelector((state) => state.app.user);
+  const navigate = useNavigate();
   const { data: vehicle, error, isLoading } = useReadVehicleQuery(vid ?? "");
   const [updateVehicle, result] = useUpdateVehicleMutation();
 
 
 
-  const handleUpdateVehicle = (v: Vehicle) => {
-    console.log("vehicle", v);
-    updateVehicle(v);
+  const handleUpdateVehicle = async (v: Vehicle) => {
+    const result: any = await updateVehicle(v);
+    if(!result.error){
+      navigate(`/vehicle/${v.id}`);
+    }
   };
 
   if (!user?.id) {
