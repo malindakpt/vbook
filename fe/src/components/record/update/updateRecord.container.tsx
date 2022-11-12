@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useVehicleList } from "../../../hooks/useVehicleList";
 import { useReadRecordQuery, useUpdateRecordMutation } from "../../../state/api/record.api";
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
@@ -9,7 +10,8 @@ export const UpdateRecordContainer = () => {
   const { vid, rid } = useParams();
   const user = useAppSelector((state) => state.app.user);
 
-
+  const vehicleList = useVehicleList(user?.id);
+  
   const { data: record, error, isLoading } = useReadRecordQuery(rid ?? "");
   const [updateVehicle, result] = useUpdateRecordMutation();
 
@@ -38,6 +40,7 @@ export const UpdateRecordContainer = () => {
 
   return (
     <CreateRecord
+      vehicleList={vehicleList}
       initialState={record}
       vehicleId={vehicleId}
       onSaveRecord={handleUpdateRecord}

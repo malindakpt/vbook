@@ -26,8 +26,8 @@ import { Add, DirectionsCar, PlaylistAdd, TimeToLeave  } from "@mui/icons-materi
 import { User } from "../../types/User";
 
 const actions = [
-  { icon: <PlaylistAdd />, name: "Service Record", path: "addVehicle" },
-  { icon: <DirectionsCar />, name: "Add Vehicle", path: "addRecord" },
+  { icon: <PlaylistAdd />, name: "Service Record", path: "record/create" },
+  { icon: <DirectionsCar />, name: "Add Vehicle", path: "vehicle/create" },
 ];
 
 const Search = styled("div")(({ theme }) => ({
