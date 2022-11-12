@@ -5,7 +5,6 @@ export const setVehicleRoutes = (app: Application) => {
     app.post('/vehicle/delete/:id', [deleteVehicle]);
     app.post('/vehicle/update', [updateVehicle]);
     app.post('/vehicle/create', [createVehicle]);
+    app.post('/vehicle/list', [readVehicles]);
     app.post('/vehicle/:id', [readVehicle]);
-    app.post('/vehicles', [readVehicles]);
-
 }

@@ -12,7 +12,6 @@ import {
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
-import { User } from "../../types/User";
 import { Vehicle } from "../../types/Vehicle";
 
 // Define a service using a base URL and expected endpoints
@@ -21,11 +20,6 @@ export const vehicleApi = createApi({
   tagTypes: ['Vehicle'],
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3600/vehicle" }),
   endpoints: (build) => ({
-    getAllUsers: build.query<User, void>({
-      query: () => `add`,
-      // transformResponse: (response: { data: User }, meta, arg) => response.data,
-    }),
-
     createVehicle: build.mutation({
       queryFn: async (
         arg: any,
@@ -128,7 +122,7 @@ export const vehicleApi = createApi({
         ) => MaybePromise<
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
-      ) =>  await axios.post(`/vehicles`, arg),
+      ) =>  await axios.post(`/vehicles/list`, arg),
       providesTags: ['Vehicle']
     })
   }),
@@ -140,7 +134,6 @@ export const {
   useUpdateVehicleMutation,
   useReadVehiclesQuery,
   useReadVehicleQuery,
-  useGetAllUsersQuery,
   useCreateVehicleMutation,
  useDeleteVehicleMutation
 } = vehicleApi;

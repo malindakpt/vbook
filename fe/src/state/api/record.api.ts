@@ -31,6 +31,7 @@ export const recordApi = createApi({
           QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
         >
       ) => await axios.post(`/record/create`, arg),
+      invalidatesTags: ["Record"],
     }),
 
     updateRecord: build.mutation({
@@ -92,7 +93,7 @@ export const recordApi = createApi({
         const result = await axios.post(`/record/list`, args);
         return result;
       },
-      // providesTags: ["Record"],
+      providesTags: ["Record"],
     }),
   }),
 });
