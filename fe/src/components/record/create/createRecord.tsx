@@ -5,7 +5,6 @@ import {
   TextInput,
   NumberInput,
   AutoInput,
-  AutoInputImage,
 } from "../../inputs";
 
 import { Record } from "../../../types/Record";
@@ -14,7 +13,6 @@ import { serviceTypes } from "../../../util/selectOptions";
 
 interface Props {
   userId: number;
-  vehicleId?: number;
   loading: boolean;
   initialState?: Record;
   vehicleList: SelectOption[];
@@ -22,7 +20,6 @@ interface Props {
 }
 export const CreateRecord: FC<Props> = ({
   loading,
-  vehicleId,
   userId,
   initialState,
   vehicleList,

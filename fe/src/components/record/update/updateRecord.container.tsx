@@ -7,7 +7,7 @@ import { ErrorComponent } from "../../error/error";
 import { CreateRecord } from "../create/createRecord";
 
 export const UpdateRecordContainer = () => {
-  const { vid, rid } = useParams();
+  const { rid } = useParams();
   const user = useAppSelector((state) => state.app.user);
 
   const vehicleList = useVehicleList(user?.id);
@@ -15,14 +15,12 @@ export const UpdateRecordContainer = () => {
   const { data: record, error, isLoading } = useReadRecordQuery(rid ?? "");
   const [updateVehicle, result] = useUpdateRecordMutation();
 
-  const vehicleId = Number(vid);
 
   if (!user) {
     return <ErrorComponent text="User N/A" />;
   }
 
   const handleUpdateRecord = (r: Record) => {
-    console.log("record", r);
     updateVehicle(r);
   };
 
@@ -42,7 +40,6 @@ export const UpdateRecordContainer = () => {
     <CreateRecord
       vehicleList={vehicleList}
       initialState={record}
-      vehicleId={vehicleId}
       onSaveRecord={handleUpdateRecord}
       loading={false}
       userId={user.id}

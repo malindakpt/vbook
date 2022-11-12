@@ -16,12 +16,17 @@ export const ListRecordsContainer = () => {
   }
 
   const handleSelect = (v: Record) => {
-    navigate(`/Record/${v.id}`);
+    navigate(`/record/${v.id}`);
+  };
+
+  const handleEdit = (r: Record) => {
+    navigate(`/record/update/${r.id}`);
   };
 
   return (
     <ListRecords
       onSelect={handleSelect}
+      onEdit={handleEdit}
       loading={isLoading}
       records={data}
     />
