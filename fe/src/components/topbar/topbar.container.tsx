@@ -21,5 +21,5 @@ export const TopBarContainer = () => {
         return <></>;
     }
 
-    return <TopBar user={user} onNavigate={handleNavigate} onLogout={handleLogout} />
+    return <TopBar />
 }
