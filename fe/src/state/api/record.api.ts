@@ -1,8 +1,5 @@
 import { BlobServiceClient } from "@azure/storage-blob";
-import {
-  createApi,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import { config } from "../../config";
 import { Record } from "../../types/Record";
@@ -19,17 +16,15 @@ export const recordApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3600/record" }),
   endpoints: (build) => ({
     createRecord: build.mutation({
-      queryFn: async (
-        arg: { rec: Record, img: Blob | undefined }
-      ) => {
+      queryFn: async (arg: { rec: Record; img: Blob | undefined }) => {
         const record = await axios.post(`/record/create`, arg.rec);
 
-        if(arg.img){
-        const imageName = `${record.data.id}-0.jpg`;
-        const file = dataURLtoFile(arg.img, imageName);
+        if (arg.img) {
+          const imageName = `${record.data.id}-0.jpg`;
+          const file = dataURLtoFile(arg.img, imageName);
 
-        const blockBlobClient = containerClient.getBlockBlobClient(imageName);
-        await blockBlobClient.uploadBrowserData(file);
+          const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+          await blockBlobClient.uploadBrowserData(file);
         }
         return record;
       },
@@ -37,34 +32,28 @@ export const recordApi = createApi({
     }),
 
     updateRecord: build.mutation({
-      queryFn: async (
-        arg: { rec: Partial<Record>, img: Blob | undefined }
-      ) => {
-       const record = await axios.post(`/record/update`, arg.rec);
+      queryFn: async (arg: { rec: Partial<Record>; img: Blob | undefined }) => {
+        const record = await axios.post(`/record/update`, arg.rec);
 
-       if(arg.img){
-        const imageName = `${record.data.id}-0.jpg`;
-        const file = dataURLtoFile(arg.img, imageName);
+        if (arg.img) {
+          const imageName = `${record.data.id}-0.jpg`;
+          const file = dataURLtoFile(arg.img, imageName);
 
-        const blockBlobClient = containerClient.getBlockBlobClient(imageName);
-        await blockBlobClient.uploadBrowserData(file);
+          const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+          await blockBlobClient.uploadBrowserData(file);
         }
-       return record;
+        return record;
       },
       invalidatesTags: ["Record"],
     }),
 
     deleteRecord: build.mutation({
-      queryFn: async (
-        id: number
-      ) => await axios.post(`/record/delete/${id}`),
+      queryFn: async (id: number) => await axios.post(`/record/delete/${id}`),
       invalidatesTags: ["Record"],
     }),
 
     readRecord: build.query({
-      queryFn: async (
-        id: string
-      ) => {
+      queryFn: async (id: string) => {
         const result = await axios.post(`/record/${id}`);
         return result;
       },
@@ -72,9 +61,7 @@ export const recordApi = createApi({
     }),
 
     readRecords: build.query({
-      queryFn: async (
-        args: Partial<Record>
-      ) => {
+      queryFn: async (args: Partial<Record>) => {
         const result = await axios.post(`/record/list`, args);
         return result;
       },
