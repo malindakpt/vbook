@@ -4,14 +4,12 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
+import { config } from "../../config";
 import { Record } from "../../types/Record";
 import { dataURLtoFile } from "../../util/helper";
 
-
-const blobSasUrl =
-"https://vbookimages.blob.core.windows.net/?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2022-12-09T21:14:33Z&st=2022-11-13T13:14:33Z&spr=https,http&sig=NLukG2RjVFLRgVTnXNA8%2ByM%2B9fxdA9xQWJ66scgs%2B7I%3D";
-const blobServiceClient = new BlobServiceClient(blobSasUrl);
-const containerName = "newcontainer";
+const blobServiceClient = new BlobServiceClient(config.azureSAS);
+const containerName = config.azureImageContainer;
 const containerClient = blobServiceClient.getContainerClient(containerName);
 
 // Define a service using a base URL and expected endpoints
