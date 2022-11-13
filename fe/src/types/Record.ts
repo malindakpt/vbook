@@ -3,6 +3,7 @@ export interface Record {
     type: number;
     millage: number; 
     desc: string;
+    imageCount: number;
 
     // Added by server
     id?: number;

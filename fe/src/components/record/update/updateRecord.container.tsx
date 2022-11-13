@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useVehicleList } from "../../../hooks/useVehicleList";
 import { useReadRecordQuery, useUpdateRecordMutation } from "../../../state/api/record.api";
 import { useAppSelector } from "../../../state/store";
@@ -9,14 +9,17 @@ import { CreateRecord } from "../create/createRecord";
 export const UpdateRecordContainer = () => {
   const { rid } = useParams();
   const user = useAppSelector((state) => state.app.user);
-
+  const navigate = useNavigate();
   const vehicleList = useVehicleList(user?.id);
   
   const { data: record, error, isLoading } = useReadRecordQuery(rid ?? "");
   const [updateVehicle, result] = useUpdateRecordMutation();
 
-  const handleUpdateRecord = (r: Record) => {
-    updateVehicle(r);
+  const handleUpdateRecord = async (r: Record, image?: Blob) => {
+    const result: any = await updateVehicle({rec: r,  img: image});
+    if(!result.error){
+      navigate('/record/list');
+    }
   };
 
   if (!user) {

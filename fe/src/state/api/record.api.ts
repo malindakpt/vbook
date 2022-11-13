@@ -1,9 +1,18 @@
+import { BlobServiceClient } from "@azure/storage-blob";
 import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import { Record } from "../../types/Record";
+import { dataURLtoFile } from "../../util/helper";
+
+
+const blobSasUrl =
+"https://vbookimages.blob.core.windows.net/?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2022-12-09T21:14:33Z&st=2022-11-13T13:14:33Z&spr=https,http&sig=NLukG2RjVFLRgVTnXNA8%2ByM%2B9fxdA9xQWJ66scgs%2B7I%3D";
+const blobServiceClient = new BlobServiceClient(blobSasUrl);
+const containerName = "newcontainer";
+const containerClient = blobServiceClient.getContainerClient(containerName);
 
 // Define a service using a base URL and expected endpoints
 export const recordApi = createApi({
@@ -13,15 +22,37 @@ export const recordApi = createApi({
   endpoints: (build) => ({
     createRecord: build.mutation({
       queryFn: async (
-        arg: Record
-      ) => await axios.post(`/record/create`, arg),
+        arg: { rec: Record, img: Blob | undefined }
+      ) => {
+        const record = await axios.post(`/record/create`, arg.rec);
+
+        if(arg.img){
+        const imageName = `${record.data.id}-0.jpg`;
+        const file = dataURLtoFile(arg.img, imageName);
+
+        const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+        await blockBlobClient.uploadBrowserData(file);
+        }
+        return record;
+      },
       invalidatesTags: ["Record"],
     }),
 
     updateRecord: build.mutation({
       queryFn: async (
-        args: Partial<Record>
-      ) => await axios.post(`/record/update`, args),
+        arg: { rec: Partial<Record>, img: Blob | undefined }
+      ) => {
+       const record = await axios.post(`/record/update`, arg.rec);
+
+       if(arg.img){
+        const imageName = `${record.data.id}-0.jpg`;
+        const file = dataURLtoFile(arg.img, imageName);
+
+        const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+        await blockBlobClient.uploadBrowserData(file);
+        }
+       return record;
+      },
       invalidatesTags: ["Record"],
     }),
 

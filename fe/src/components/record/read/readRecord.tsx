@@ -1,5 +1,6 @@
 import { Button, Container, Grid } from "@mui/material";
 import { FC } from "react";
+import { config } from "../../../config";
 import { Record } from "../../../types/Record";
 
 interface Props {
@@ -20,6 +21,7 @@ export const ReadRecord: FC<Props> = ({ loading, record, onEdit, onDelete }) => 
           <Grid xs={12} sm={8} md={6} item>
             <div>{record.desc}</div>
             <div>{record.millage}</div>
+            <img src={`${config.imageUrlPrefix}${record.id}-0.jpg`} alt="record"/>
             <Button onClick={() => onEdit(record)}>Edit</Button>
             <Button onClick={() => onDelete(record)}>Delete</Button>
           </Grid>

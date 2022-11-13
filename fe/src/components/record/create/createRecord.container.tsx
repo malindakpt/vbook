@@ -15,13 +15,11 @@ export const CreateRecordContainer = () => {
 
   const [createRecord] = useCreateRecordMutation();
 
-  const handleSaveRecord = async (r: Record) => {
- 
-      const result: any = await createRecord(r);
+  const handleSaveRecord = async (r: Record, image?: Blob) => {
+      const result: any = await createRecord({rec: r,  img: image});
       if(!result.error){
         navigate('/record/list');
       }
- 
   };
 
   const initialState: Partial<Record> = vid ? { VehicleId: Number(vid) } : {};
