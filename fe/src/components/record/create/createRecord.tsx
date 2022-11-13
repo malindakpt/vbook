@@ -1,18 +1,19 @@
 import { Button, Container, Grid } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import { TextInput, NumberInput, AutoInput } from "../../inputs";
 
 import { Record } from "../../../types/Record";
 import { SelectOption } from "../../../types/SelectOption";
 import { serviceTypes } from "../../../util/selectOptions";
+import { ImageInput } from "../../inputs/ImageInput";
 
 interface Props {
   userId: number;
   loading: boolean;
   initialState?: Partial<Record>;
   vehicleList: SelectOption[];
-  onSaveRecord: (r: Record) => void;
+  onSaveRecord: (r: Record, image: Blob | undefined) => void;
 }
 export const CreateRecord: FC<Props> = ({
   loading,
@@ -21,6 +22,9 @@ export const CreateRecord: FC<Props> = ({
   vehicleList,
   onSaveRecord,
 }) => {
+
+  const [image, setImage] = useState<Blob>();
+
   const [state, changeProperty] = useFormState<Record>({
     date: new Date().toISOString(),
     type: 0,
@@ -28,9 +32,15 @@ export const CreateRecord: FC<Props> = ({
     desc: "",
     VehicleId: 0, // vehicleId ?? 0,
     UserId: userId,
+    imageCount: 0,
 
     ...initialState,
   });
+
+  const beforeSave = () => {
+    changeProperty('imageCount', image ? 1 : 0)
+    onSaveRecord(state, image)
+  }
 
   return (
     <Container maxWidth="lg">
@@ -78,7 +88,9 @@ export const CreateRecord: FC<Props> = ({
             disabled={loading}
             onChange={changeProperty}
           /> */}
-          <Button onClick={() => onSaveRecord(state)}>Save Record</Button>
+
+          <ImageInput onImageSelected={setImage} />
+          <Button onClick={beforeSave}>Save Record</Button>
         </Grid>
         <Grid xs={6} md={4} item></Grid>
       </Grid>

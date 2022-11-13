@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/storage-blob": "^12.12.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/roboto": "^4.5.8",
@@ -13,6 +14,7 @@
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-image-file-resizer": "^0.4.8",
     "react-redux": "^8.0.4",
     "react-router-dom": "6",
     "react-scripts": "5.0.1",

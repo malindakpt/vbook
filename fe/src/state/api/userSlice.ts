@@ -34,6 +34,7 @@ export const userSlice = createSlice({
       state.popup.isOpen = false;
     },
   },
+ 
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.login.signUp.loading = false;
