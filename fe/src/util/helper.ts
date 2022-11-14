@@ -14,10 +14,10 @@ export const showErrorFromResponse = (e: unknown, dispatch: Dispatch) => {
 };
 
 export const clearAllCookies = () => {
-  removeCookie('user-token');
-  removeCookie('access-token');
-  removeCookie('refresh-token');
-}
+  removeCookie("user-token");
+  removeCookie("access-token");
+  removeCookie("refresh-token");
+};
 
 export const dataURLtoFile = (dataurl: any, filename: string) => {
   const arr = dataurl.split(",");
@@ -34,4 +34,8 @@ export const dataURLtoFile = (dataurl: any, filename: string) => {
 
   const file = new File([u8arr], filename, { type: mime });
   return file;
+};
+
+export const getFormattedDate = (d: Date) => {
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 };

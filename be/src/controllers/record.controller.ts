@@ -23,6 +23,7 @@ export const readRecords = async (req: Request, res: Response) => {
   try {
     const foundRecords = await RecordModel.findAll({
       where: req.body,
+      order: [['date', 'DESC']]
     });
     return res.status(201).send(foundRecords);
   } catch (e: any) {

@@ -3,7 +3,7 @@ import { FC } from "react";
 
 interface Props {
   name: string;
-  value: number;
+  value: string;
   label: string;
   disabled: boolean;
   onChange: (key: string, value: number | string) => void;
@@ -15,14 +15,16 @@ export const DateInput: FC<Props> = ({
   onChange,
   disabled,
 }) => {
+
+  const parsedDate = value.split('T')[0];
   return (
     <TextField
-      value={value}
+      value={parsedDate}
       onChange={(e) => onChange(name, e.target.value)}
       id="date"
       label={label}
+      fullWidth
       type="date"
-      defaultValue="2017-05-24"
       InputLabelProps={{
         shrink: true,
       }}

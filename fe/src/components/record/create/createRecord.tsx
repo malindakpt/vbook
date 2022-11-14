@@ -7,6 +7,8 @@ import { Record } from "../../../types/Record";
 import { SelectOption } from "../../../types/SelectOption";
 import { serviceTypes } from "../../../util/selectOptions";
 import { ImageInput } from "../../inputs/ImageInput";
+import { DateInput } from "../../inputs/DateInput";
+import { getFormattedDate } from "../../../util/helper";
 
 interface Props {
   userId: number;
@@ -31,7 +33,7 @@ export const CreateRecord: FC<Props> = ({
   }
 
   const [state, changeProperty] = useFormState<Record>({
-    date: new Date().toISOString(),
+    date: getFormattedDate(new Date()),
     type: 0,
     millage: 0,
     desc: "",
@@ -82,13 +84,13 @@ export const CreateRecord: FC<Props> = ({
             onChange={changeProperty}
           />
 
-          {/* <DateInput
+          <DateInput
             value={state.date}
-            name="regNo"
+            name="date"
             label="Date"
             disabled={loading}
             onChange={changeProperty}
-          /> */}
+          />
 
           <ImageInput onImageSelected={onImageChange} />
           <Button onClick={() => onSaveRecord(state, image)}>Save Record</Button>

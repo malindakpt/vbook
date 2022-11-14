@@ -23,6 +23,7 @@ export const readVehicles = async (req: Request, res: Response) => {
   try {
     const foundVehicles = await VehicleModel.findAll({
       where: req.body,
+      order: [['updatedAt', 'DESC']]
     });
     return res.status(201).send(foundVehicles);
   } catch (e: any) {
