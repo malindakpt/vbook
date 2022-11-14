@@ -18,6 +18,7 @@ export const Router = () => (
    
     <Route path={"/record/update/:rid"} element={<UpdateRecordContainer />} />
     <Route path={"/record/create/:vid"} element={<CreateRecordContainer />} />
+    <Route path={"/record/list/:vid"} element={<ListRecordsContainer />} />
     <Route path={"/record/list"} element={<ListRecordsContainer />} />
     <Route path={"/record/create"} element={<CreateRecordContainer />} />
     <Route path={"/record/:rid"} element={<ReadRecordContainer />} />

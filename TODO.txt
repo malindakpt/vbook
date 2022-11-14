@@ -9,6 +9,8 @@ how does salt value works
 headless package
 validate email in helper FE
 delete image from record
+pagination for records
+implement a image preview for Imge input
 
 
 Trade vehicles

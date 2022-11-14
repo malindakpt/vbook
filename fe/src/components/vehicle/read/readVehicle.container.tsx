@@ -27,6 +27,10 @@ export const ReadVehicleContainer = () => {
     navigate(`/vehicle/update/${v.id}`);
   };
 
+  const handleViewRecord = (v: Vehicle) => {
+    navigate(`/record/list/${v.id}`);
+  };
+
   const handleOnDelete = (v: Vehicle) => {
     if (v.id) {
       deleteVehicle(v.id);
@@ -40,6 +44,7 @@ export const ReadVehicleContainer = () => {
       onAddRecord={handleOnAddRecord}
       onEdit={handleOnEdit}
       onDelete={handleOnDelete}
+      onViewRecord={handleViewRecord}
       loading={isLoading}
       vehicle={data}
     />

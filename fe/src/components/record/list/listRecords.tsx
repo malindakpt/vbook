@@ -31,7 +31,8 @@ export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit, onD
                   <div>{record.desc}</div>
                   <div>{record.millage}</div>
                   <div>{record.type}</div>
-                  <img src={`${config.imageUrlPrefix}${record.id}-0.jpg`} alt="record"/>
+                  <div>Img count: {record.imageCount}</div>
+                  { record.imageCount > 0 && <img src={`${config.imageUrlPrefix}${record.id}-0.jpg`} alt="record"/>}
                   <Button onClick={() => onEdit(record)}>Edit</Button>
                   <Button onClick={() => onDelete(record)}>Delete</Button>
                 </div>

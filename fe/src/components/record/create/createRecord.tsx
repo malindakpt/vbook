@@ -25,6 +25,11 @@ export const CreateRecord: FC<Props> = ({
 
   const [image, setImage] = useState<Blob>();
 
+  const onImageChange = (img: Blob) => {
+    setImage(img);
+    changeProperty('imageCount', img ? 1 : 0);
+  }
+
   const [state, changeProperty] = useFormState<Record>({
     date: new Date().toISOString(),
     type: 0,
@@ -37,10 +42,6 @@ export const CreateRecord: FC<Props> = ({
     ...initialState,
   });
 
-  const beforeSave = () => {
-    changeProperty('imageCount', image ? 1 : 0)
-    onSaveRecord(state, image)
-  }
 
   return (
     <Container maxWidth="lg">
@@ -89,8 +90,8 @@ export const CreateRecord: FC<Props> = ({
             onChange={changeProperty}
           /> */}
 
-          <ImageInput onImageSelected={setImage} />
-          <Button onClick={beforeSave}>Save Record</Button>
+          <ImageInput onImageSelected={onImageChange} />
+          <Button onClick={() => onSaveRecord(state, image)}>Save Record</Button>
         </Grid>
         <Grid xs={6} md={4} item></Grid>
       </Grid>
