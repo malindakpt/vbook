@@ -1,16 +1,18 @@
 import { Button, Container, Grid } from "@mui/material";
+import { withScroller } from '../../../hoc/withScroller';
 import { FC } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
 
-interface Props {
+export interface ListRecordsProps {
   loading: boolean;
   records: Record[];
   onSelect: (Record: Record) => void;
   onEdit: (Record: Record) => void;
   onDelete: (Record: Record) => void;
+  onLoadMore: (nextLimit: number) => void;
 }
-export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit, onDelete }) => {
+const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, loading, onEdit, onDelete }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -45,3 +47,5 @@ export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit, onD
   }
   return <div>Record Not found</div>;
 };
+
+export default withScroller(ListRecords);

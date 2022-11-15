@@ -21,9 +21,17 @@ export const readRecord = async (req: Request, res: Response) => {
 
 export const readRecords = async (req: Request, res: Response) => {
   try {
+    const { offset, limit } = req.body;
+    const where = { ...req.body };
+
+    delete where.offset;
+    delete where.limit;
+
     const foundRecords = await RecordModel.findAll({
-      where: req.body,
-      order: [['date', 'DESC']]
+      where,
+      order: [["date", "DESC"]],
+      offset,
+      limit,
     });
     return res.status(201).send(foundRecords);
   } catch (e: any) {

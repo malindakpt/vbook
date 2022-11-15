@@ -78,4 +78,5 @@ export const {
   useDeleteRecordMutation,
   useReadRecordQuery,
   useReadRecordsQuery,
+  useLazyReadRecordsQuery,
 } = recordApi;
