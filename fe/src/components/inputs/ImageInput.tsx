@@ -4,10 +4,11 @@ import Resizer from "react-image-file-resizer";
 import { config } from "../../config";
 
 interface Props {
+  defaultImageUrl: string | null;
   onImageSelected: (base64: Blob) => void;
 }
-export const ImageInput: FC<Props> = ({ onImageSelected }) => {
-  const [img, setImg] = useState<string>();
+export const ImageInput: FC<Props> = ({ defaultImageUrl, onImageSelected }) => {
+  const [img, setImg] = useState<string | null>(defaultImageUrl);
 
   const fileChangedHandler = (event: any) => {
     var fileInput = false;

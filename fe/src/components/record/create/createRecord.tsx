@@ -9,6 +9,7 @@ import { serviceTypes } from "../../../util/selectOptions";
 import { ImageInput } from "../../inputs/ImageInput";
 import { DateInput } from "../../inputs/DateInput";
 import { getFormattedDate } from "../../../util/helper";
+import { config } from "../../../config";
 
 interface Props {
   userId: number;
@@ -92,7 +93,7 @@ export const CreateRecord: FC<Props> = ({
             onChange={changeProperty}
           />
 
-          <ImageInput onImageSelected={onImageChange} />
+          <ImageInput defaultImageUrl={state.imageCount > 0 ? `${config.imageUrlPrefix}${state.id}-0.jpg` : null} onImageSelected={onImageChange} />
           <Button onClick={() => onSaveRecord(state, image)}>Save Record</Button>
         </Grid>
         <Grid xs={6} md={4} item></Grid>
