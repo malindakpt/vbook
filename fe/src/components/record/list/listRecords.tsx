@@ -1,6 +1,6 @@
 import { Button, Container, Grid } from "@mui/material";
 import { withScroller } from '../../../hoc/withScroller';
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
 
@@ -13,9 +13,17 @@ export interface ListRecordsProps {
   onLoadMore: (nextLimit: number) => void;
 }
 const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, loading, onEdit, onDelete }) => {
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
+  useEffect(() => {
+    console.log('mkpt mounted');
+    return () => {
+      console.log('mkpt unmounted');
+    }
+  }, [])
+  console.log('-------------', records);
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (!records || records.length === 0) {
     return <div>No Records</div>;

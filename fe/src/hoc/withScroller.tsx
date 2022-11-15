@@ -24,7 +24,7 @@ export const withScroller = (Component: any) => {
         loadMore={loadFunc}
         hasMore={true || false}
         loader={
-          <div className="loader" key={0}>
+          <div  key={0}>
             Loading ...
           </div>
         }
