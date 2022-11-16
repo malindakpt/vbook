@@ -8,6 +8,7 @@ import { validateToken } from "middlewares/token.middleware";
 import cookies from "cookie-parser";
 import { setRecordRoutes } from "routes/record.routes";
 import { setVehicleRoutes } from "routes/vehicle.routes";
+import path from 'path';
 const app = express();
 
 app.use(
@@ -28,9 +29,16 @@ setUserRoutes(app);
 setRecordRoutes(app);
 setVehicleRoutes(app);
 
-app.get("/", (req, res) => {
-  res.status(200).send("<h3>App is working</h3>");
-});
+// app.get("/", (req, res) => {
+//   res.status(200).send("<h3>App is working</h3>");
+// });
+
+app.use('/', express.static('build'))
+// app.use('/static/js/', express.static('build/static/js'))
+
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../build/index.html'));
+// });
 
 // app.use(function (req, res, next) {
 //   res.header('Access-Control-Allow-Origin', '*');
