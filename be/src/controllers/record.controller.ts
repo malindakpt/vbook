@@ -21,6 +21,7 @@ export const readRecord = async (req: Request, res: Response) => {
 
 export const readRecords = async (req: Request, res: Response) => {
   try {
+    // TODO handle errors
     const { offset, limit } = req.body;
     const where = { ...req.body };
 
