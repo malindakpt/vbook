@@ -1,36 +1,37 @@
-import Avatar from "@mui/material/Avatar";
-import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FC } from "react";
 import { Copyright } from "./copyright";
 import { SignUpContainer } from "./signUp/signUp.container";
 import { LoginUIMode } from "../../enum/login.ui.mode";
-import { Grid, Link } from "@mui/material";
+import { colors, Grid, Link } from "@mui/material";
 import { SignInContainer } from "./signIn/signIn.container";
 import { ForgotPasswordContainer } from "./forgotPassword/forgotPassword.container";
 import { ChangePasswordContainer } from "./changePassword/changePassword.container";
 
-const theme = createTheme();
+const theme = createTheme({
+  palette:{
+    primary: {
+      main: colors.deepPurple[500],
+    }
+  }
+});
 
 interface Props {
   mode: LoginUIMode;
   onModeChange: (mode: LoginUIMode) => void;
 }
-export const Login: FC<Props> = ({onModeChange, mode}) => {
-
-  const handleModeChange =(mode: LoginUIMode) => {
+export const Login: FC<Props> = ({ onModeChange, mode }) => {
+  const handleModeChange = (mode: LoginUIMode) => {
     onModeChange(mode);
-  }
+  };
 
   const renderContent = (mode: LoginUIMode) => {
     switch (mode) {
       case LoginUIMode.SIGN_IN:
-        return <SignInContainer  />;
+        return <SignInContainer />;
       case LoginUIMode.SIGN_UP:
-        return <SignUpContainer/>;
+        return <SignUpContainer />;
       case LoginUIMode.FORGOT_PASSWORD:
         return <ForgotPasswordContainer />;
       case LoginUIMode.CHANGE_PASSWORD:
@@ -42,38 +43,52 @@ export const Login: FC<Props> = ({onModeChange, mode}) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          {renderContent(mode)}
-        </Box>
-        <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2" onClick={() => handleModeChange(LoginUIMode.FORGOT_PASSWORD)}>
-                Forgot password?
-              </Link>
+      <Grid container>
+        <Grid item xs={12} sm={5}>
+          <Box 
+            sx={{
+              margin: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {renderContent(mode)}
+
+            <Grid>
+              <Grid item xs>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => handleModeChange(LoginUIMode.FORGOT_PASSWORD)}
+                >
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                {mode === LoginUIMode.SIGN_IN ? (
+                  <Link
+                    href="#"
+                    variant="body2"
+                    onClick={() => handleModeChange(LoginUIMode.SIGN_UP)}
+                  >
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                ) : (
+                  <Link
+                    href="#"
+                    variant="body2"
+                    onClick={() => handleModeChange(LoginUIMode.SIGN_IN)}
+                  >
+                    {"Already have an account? Sign In"}
+                  </Link>
+                )}
+              </Grid>
             </Grid>
-            <Grid item>
-              { mode === LoginUIMode.SIGN_IN ? <Link href="#" variant="body2" onClick={() => handleModeChange(LoginUIMode.SIGN_UP)}>
-                {"Don't have an account? Sign Up"}
-              </Link> :
-              <Link href="#" variant="body2" onClick={() => handleModeChange(LoginUIMode.SIGN_IN)}>
-                {"Already have an account? Sign In"}
-              </Link>}
-            </Grid>
-          </Grid>
-        <Copyright />
-      </Container>
+            <Copyright />
+          </Box>
+        </Grid>
+      </Grid>
     </ThemeProvider>
   );
 };

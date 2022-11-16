@@ -37,7 +37,7 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
 
   return (
     <>
-      <Typography component="h1" variant="h3">
+      <Typography component="h1" variant="h3" color="primary">
         Sign In
       </Typography>
       <Box component="form" noValidate sx={{ mt: 1 }}>
@@ -76,7 +76,7 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
           type="submit"
           fullWidth
           variant="contained"
-          color={`success`}
+          color="primary"
           sx={{ mt: 3, mb: 2 }}
           onClick={handleSignIn}
           disabled={loading || !isReadyToSubmit()}
