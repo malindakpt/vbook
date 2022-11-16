@@ -1,19 +1,29 @@
 import { Button, Container, Grid } from "@mui/material";
-import { FC } from "react";
+import { withScroller } from '../../../hoc/withScroller';
+import { FC, useEffect } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
 
-interface Props {
+export interface ListRecordsProps {
   loading: boolean;
   records: Record[];
   onSelect: (Record: Record) => void;
   onEdit: (Record: Record) => void;
   onDelete: (Record: Record) => void;
+  onLoadMore: (nextLimit: number) => void;
 }
-export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit, onDelete }) => {
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, loading, onEdit, onDelete }) => {
+
+  useEffect(() => {
+    console.log('mkpt mounted');
+    return () => {
+      console.log('mkpt unmounted');
+    }
+  }, [])
+  console.log('-------------', records);
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (!records || records.length === 0) {
     return <div>No Records</div>;
@@ -45,3 +55,5 @@ export const ListRecords: FC<Props> = ({ records, onSelect, loading, onEdit, onD
   }
   return <div>Record Not found</div>;
 };
+
+export default withScroller(ListRecords);

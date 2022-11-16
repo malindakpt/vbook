@@ -1,5 +1,6 @@
 export const config = {
     serverUrl: 'http://localhost:3600',
+    pageSize: 2,
     popupShowDuration: 6000,
     imageUrlPrefix: 'https://vbookimages.blob.core.windows.net/newcontainer/',
     maxDimentionsForImageUpload: 700,

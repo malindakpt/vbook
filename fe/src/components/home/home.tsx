@@ -1,5 +1,6 @@
 import { useAppDispatch } from "../../state/store";
 import { getAllUsers, refreshToken, logout } from "../../state/thunks";
+// import { Scroller } from "../scroller/scroller";
 
 export const Home = () => {
   // const dispatch = useDispatch();
@@ -23,6 +24,8 @@ export const Home = () => {
       <button onClick={click}>Get All Users</button>
       <button onClick={handleRefreshToken}>Refresh</button>
       <button onClick={handleLogout}>Logout</button>
+
+      {/* <Scroller /> */}
     </div>
   );
 };
