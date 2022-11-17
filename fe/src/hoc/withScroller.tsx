@@ -10,6 +10,7 @@ export const withScroller = (Component: FC<any>) => {
   return (props: any) => {
     const [lastIndex, setLastIndex] = useState(0);
 
+    console.log('records', props.records)
     const loadFunc = () => {
       if (!props.loading) {
         const newLastIndex = lastIndex + config.pageSize;
@@ -24,7 +25,7 @@ export const withScroller = (Component: FC<any>) => {
       <InfiniteScroll
         pageStart={0}
         loadMore={loadFunc}
-        hasMore={props.hasMore}
+        hasMore={props.records?.length > 0}
         loader={
           <div  key={0}>
             Loading ...

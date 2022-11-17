@@ -14,7 +14,7 @@ export const ListRecordsContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
-  const [hasMore, setHasMore] = useState(true);
+
 
   const handleLoadMore = (nextLimit: number) => {
     setQuery(prev => {
@@ -30,18 +30,8 @@ export const ListRecordsContainer = () => {
 
   const { data, error, isFetching, isLoading } = useReadRecordsQuery(query);
 
-  const [mergedData, setMergedData] = useState<Record[]>([]);
-  const [prevData, setPrevData] = useState<Record[]>([]);
+ 
 
-  if(data && data.length>0 && (prevData.length === 0 ? true :  prevData[0].id !== data[0].id)){
-    const allData = [...mergedData, ...data];
-    setMergedData(allData);
-    setPrevData(data);
-  }
-
-  if(hasMore && data && data.length === 0) {
-    setHasMore(false);
-  }
 
   const [deleteRecord, result] = useDeleteRecordMutation();
 
@@ -65,12 +55,11 @@ export const ListRecordsContainer = () => {
 
   return (
     <ListRecords
-      hasMore={hasMore}
       onSelect={handleSelect}
       onEdit={handleEdit}
       onDelete={handleDelete}
       loading={isFetching}
-      records={mergedData}
+      records={data}
       onLoadMore={handleLoadMore}
     />
   );
