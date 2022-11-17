@@ -30,9 +30,6 @@ export const ListRecordsContainer = () => {
 
   const { data, error, isFetching, isLoading } = useReadRecordsQuery(query);
 
- 
-
-
   const [deleteRecord, result] = useDeleteRecordMutation();
 
   const handleSelect = (v: Record) => {

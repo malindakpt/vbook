@@ -10,14 +10,11 @@ export const withScroller = (Component: FC<any>) => {
   return (props: any) => {
     const [lastIndex, setLastIndex] = useState(0);
 
-    console.log('records', props.records)
     const loadFunc = () => {
       if (!props.loading) {
         const newLastIndex = lastIndex + config.pageSize;
         setLastIndex(newLastIndex);
-
         props.onLoadMore(newLastIndex);
-        console.log("reqesting....", newLastIndex);
       }
     };
 
