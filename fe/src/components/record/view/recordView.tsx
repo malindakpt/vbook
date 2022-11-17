@@ -1,5 +1,6 @@
-import { Card } from '@mui/material';
+import { Card, Typography, CardMedia  } from '@mui/material';
 import {FC} from 'react';
+import { config } from '../../../config';
 import { Record } from '../../../types/Record';
 
 // <div key={record.id}>
@@ -16,5 +17,14 @@ interface Props{
     r: Record
 }
 export const RecordView: FC<Props> = ({r}) => {
-    return <Card>{r.id}</Card>
+    return <Card raised sx={{margin: 1}}>
+        <Typography variant='h5' >
+            {r.date}
+        </Typography>
+        <Typography variant='subtitle1' >
+            {r.date}
+        </Typography>
+        <CardMedia image={`${config.imageUrlPrefix}${r.id}-0.jpg`}/>
+        {r.id}
+        </Card>
 }
