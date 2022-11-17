@@ -3,6 +3,7 @@ import { withScroller } from '../../../hoc/withScroller';
 import { FC, useEffect, useState } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
+import { RecordView } from "../view/recordView";
 
 export interface ListRecordsProps {
   loading: boolean;
@@ -45,20 +46,7 @@ const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, onEdit, onDelete
       <Container maxWidth="lg">
         <Grid container spacing={2} rowSpacing={4}>
           <Grid xs={12} sm={8} md={6} item>
-            {mergedData.map((record) => {
-              return (
-                <div key={record.id}>
-                  <div  onClick={() => onSelect(record)}>{record.date}</div>
-                  <div>{record.desc}</div>
-                  <div>{record.millage}</div>
-                  <div>{record.type}</div>
-                  <div>Img count: {record.imageCount}</div>
-                  { record.imageCount > 0 && <img src={`${config.imageUrlPrefix}${record.id}-0.jpg`} alt="record"/>}
-                  <Button onClick={() => onEdit(record)}>Edit</Button>
-                  <Button onClick={() => onDelete(record)}>Delete</Button>
-                </div>
-              );
-            })}
+            {mergedData.map((record) => <RecordView key={record.id} r={record}/>)}
           </Grid>
         </Grid>
       </Container>

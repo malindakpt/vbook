@@ -1,6 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import { FC } from "react";
 import { Vehicle } from "../../../types/Vehicle";
+import { VehicleView } from "../view/vehicleView";
 
 interface Props {
   loading: boolean;
@@ -21,15 +22,7 @@ export const ListVehicles: FC<Props> = ({ vehicles, onSelect, loading }) => {
       <Container maxWidth="lg">
         <Grid container spacing={2} rowSpacing={4}>
           <Grid xs={12} sm={8} md={6} item>
-            {vehicles.map((vehicle) => {
-              return (
-                <div key={vehicle.id} onClick={() => onSelect(vehicle)}>
-                  <div>{vehicle.regNo}</div>
-                  <div>{vehicle.fuel}</div>
-                  <div>{vehicle.type}</div>
-                </div>
-              );
-            })}
+            {vehicles.map((vehicle) => <VehicleView key={vehicle.id} v={vehicle} />)}
           </Grid>
         </Grid>
       </Container>
