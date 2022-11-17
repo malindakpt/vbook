@@ -5,6 +5,7 @@ import { config } from "../../../config";
 import { Record } from "../../../types/Record";
 
 export interface ListRecordsProps {
+  hasMore: boolean;
   loading: boolean;
   records: Record[];
   onSelect: (Record: Record) => void;
@@ -12,14 +13,15 @@ export interface ListRecordsProps {
   onDelete: (Record: Record) => void;
   onLoadMore: (nextLimit: number) => void;
 }
-const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, loading, onEdit, onDelete }) => {
+const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, onEdit, onDelete }) => {
 
   useEffect(() => {
     console.log('mkpt mounted');
     return () => {
       console.log('mkpt unmounted');
     }
-  }, [])
+  }, []);
+
   console.log('-------------', records);
   // if (loading) {
   //   return <div>Loading...</div>;

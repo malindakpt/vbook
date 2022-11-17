@@ -24,7 +24,7 @@ export const withScroller = (Component: FC<any>) => {
       <InfiniteScroll
         pageStart={0}
         loadMore={loadFunc}
-        hasMore={true || false}
+        hasMore={props.hasMore}
         loader={
           <div  key={0}>
             Loading ...

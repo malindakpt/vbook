@@ -14,6 +14,7 @@ export const ListRecordsContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
+  const [hasMore, setHasMore] = useState(true);
 
   const handleLoadMore = (nextLimit: number) => {
     setQuery(prev => {
@@ -38,10 +39,11 @@ export const ListRecordsContainer = () => {
     setPrevData(data);
   }
 
-  const [deleteRecord, result] = useDeleteRecordMutation();
+  if(hasMore && data && data.length === 0) {
+    setHasMore(false);
+  }
 
-  console.log('isfetching', isFetching);
-  console.log('isLoading', isLoading);
+  const [deleteRecord, result] = useDeleteRecordMutation();
 
   const handleSelect = (v: Record) => {
     navigate(`/record/${v.id}`);
@@ -63,6 +65,7 @@ export const ListRecordsContainer = () => {
 
   return (
     <ListRecords
+      hasMore={hasMore}
       onSelect={handleSelect}
       onEdit={handleEdit}
       onDelete={handleDelete}
