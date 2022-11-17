@@ -2,6 +2,8 @@ import {
   Card,
   Typography,
   CardMedia,
+  CardHeader,
+  CardContent,
   CardActionArea,
   CardActions,
   IconButton,
@@ -10,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { FC } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
+import { getServiceTypeLabel } from "../../../util/helper";
 
 // <div key={record.id}>
 //                   <div  onClick={() => onSelect(record)}>{record.date}</div>
@@ -30,24 +33,19 @@ interface Props {
 export const RecordView: FC<Props> = ({ r, onSelect }) => {
   return (
     <Card raised sx={{ margin: 1 }} onClick={() => onSelect(r)}>
-      <Typography variant="h5">{r.date}</Typography>
-      <Typography variant="subtitle1">{r.date}</Typography>
+      <CardHeader title={getServiceTypeLabel(r.type)} subheader={r.date} />
       {r.imageCount > 0 && (
         <CardMedia
           sx={{
-            height: "150px",
+            height: "200px",
           }}
           image={`${config.imageUrlPrefix}${r.id}-0.jpg`}
         />
       )}
-      <Typography variant="caption">ODO Meter: {r.millage}</Typography>
-      {/* <CardActionArea>
-        <CardActions disableSpacing>
-          <IconButton aria-label="View">
-            <EditIcon />
-          </IconButton>
-        </CardActions>
-      </CardActionArea> */}
+      <CardContent>
+        <Typography variant="body2">{`ODO Meter: ${r.millage}`}</Typography>
+        <Typography variant="body2">ODO Meter: {r.millage}</Typography>
+      </CardContent>
     </Card>
   );
 };
