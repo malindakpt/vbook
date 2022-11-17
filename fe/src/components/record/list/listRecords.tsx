@@ -46,7 +46,7 @@ const ListRecords: FC<ListRecordsProps> = ({ records, onSelect, onEdit, onDelete
       <Container maxWidth="lg">
         <Grid container spacing={2} rowSpacing={4}>
           <Grid xs={12} sm={8} md={6} item>
-            {mergedData.map((record) => <RecordView key={record.id} r={record}/>)}
+            {mergedData.map((record) => <RecordView key={record.id} r={record} onEdit={onEdit} onDelete={onDelete} onSelect={onSelect}  />)}
           </Grid>
         </Grid>
       </Container>
