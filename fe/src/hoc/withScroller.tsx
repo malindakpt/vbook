@@ -1,17 +1,19 @@
 import { FC, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { ListRecordsProps } from "../components/record/list/listRecords";
 import { config } from "../config";
 
-export const withScroller = (Component: any) => {
-  return (props: ListRecordsProps) => {
+interface Props {
+  loading: boolean,
+  onLoadMore: (newLastIndex: number) => void;
+}
+export const withScroller = (Component: FC<any>) => {
+  return (props: any) => {
     const [lastIndex, setLastIndex] = useState(0);
 
     const loadFunc = () => {
       if (!props.loading) {
         const newLastIndex = lastIndex + config.pageSize;
         setLastIndex(newLastIndex);
-        // fetchDataAction(newLastIndex);
 
         props.onLoadMore(newLastIndex);
         console.log("reqesting....", newLastIndex);
