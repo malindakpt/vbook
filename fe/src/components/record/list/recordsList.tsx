@@ -3,7 +3,7 @@ import { withScroller } from "../../../hoc/withScroller";
 import { FC, useEffect, useState } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
-import { RecordView } from "./recordGridView";
+import { RecordView } from "../view/recordGridView";
 
 export interface ListRecordsProps {
   loading: boolean;

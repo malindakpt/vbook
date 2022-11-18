@@ -6,7 +6,7 @@ import { ReadRecordContainer } from "./components/record/view/recordView.contain
 import { UpdateRecordContainer } from "./components/record/update/recordUpdate.container";
 import { CreateVehicleContainer } from "./components/vehicle/create/createVehicle.container";
 import { ListVehiclesContainer } from "./components/vehicle/list/listVehicles.container";
-import { ReadVehicleContainer } from "./components/vehicle/read/readVehicle.container";
+import { ReadVehicleContainer } from "./components/vehicle/view/readVehicle.container";
 import { UpdateVehicleContainer } from "./components/vehicle/update/updateVehicle.container";
 
 export const Router = () => (

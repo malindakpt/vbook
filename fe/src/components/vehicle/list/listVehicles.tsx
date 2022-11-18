@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import { FC } from "react";
 import { Vehicle } from "../../../types/Vehicle";
-import { VehicleGridView } from "./vehicleGridView";
+import { VehicleGridView } from "../view/vehicleGridView";
 
 interface Props {
   loading: boolean;
