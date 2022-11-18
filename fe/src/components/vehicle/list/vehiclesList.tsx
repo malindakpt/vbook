@@ -20,10 +20,12 @@ export const VehiclesList: FC<Props> = ({ vehicles, onSelect, loading }) => {
   if (vehicles) {
     return (
       <Container maxWidth="lg">
-        <Grid container spacing={2} rowSpacing={4}>
-          <Grid xs={12} sm={8} md={6} item>
-            {vehicles.map((vehicle) => <VehicleGridView onSelect={onSelect} key={vehicle.id} v={vehicle} />)}
-          </Grid>
+        <Grid container>
+          {vehicles.map((vehicle) => (
+            <Grid xs={12} md={6} item key={vehicle.id}>
+              <VehicleGridView onSelect={onSelect} v={vehicle} />
+            </Grid>
+          ))}
         </Grid>
       </Container>
     );
