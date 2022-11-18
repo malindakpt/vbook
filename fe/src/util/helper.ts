@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { removeCookie } from "typescript-cookie";
 import { PopupType } from "../enum/popup.type";
 import { showPopup } from "../state/api/userSlice";
-import { serviceTypes } from "./selectOptions";
+import { fuelTypes, serviceTypes, transmissionTypes, vehicleBrands, vehicleTypes } from "./selectOptions";
 
 export const showErrorFromResponse = (e: unknown, dispatch: Dispatch) => {
   dispatch(
@@ -41,7 +41,28 @@ export const getFormattedDate = (d: Date) => {
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 };
 
+
+export const getVehicleTypeLabel = (id: number) => {
+  const type = vehicleTypes.find(s=> s.id === id);
+  return type ? type.label : 'N/A';
+}
+
 export const getServiceTypeLabel = (id: number) => {
-  const type = serviceTypes.find(s=> s.id == id);
+  const type = serviceTypes.find(s=> s.id === id);
+  return type ? type.label : 'N/A';
+}
+
+export const getFuelTypeLabel = (id: number) => {
+  const type = fuelTypes.find(s=> s.id === id);
+  return type ? type.label : 'N/A';
+}
+
+export const getTransmissionTypeLabel = (id: number) => {
+  const type = transmissionTypes.find(s=> s.id === id);
+  return type ? type.label : 'N/A';
+}
+
+export const getVehicleBrandLabel = (id: number) => {
+  const type = vehicleBrands.find(s=> s.id === id);
   return type ? type.label : 'N/A';
 }

@@ -5,9 +5,9 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { ListVehicles } from "./listVehicles";
+import { VehiclesList } from "./vehiclesList";
 
-export const ListVehiclesContainer = () => {
+export const VehiclesListContainer = () => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
   const { data, error, isLoading } = useReadVehiclesQuery({UserId: Number(user?.id) ?? 0});
@@ -21,7 +21,7 @@ export const ListVehiclesContainer = () => {
   }
   
   return (
-    <ListVehicles
+    <VehiclesList
       onSelect={handleSelect}
       loading={isLoading}
       vehicles={data}

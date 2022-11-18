@@ -4,15 +4,15 @@ import { CreateRecordContainer } from "./components/record/create/recordCreate.c
 import { ListRecordsContainer } from "./components/record/list/recordsList.container";
 import { ReadRecordContainer } from "./components/record/view/recordView.container";
 import { UpdateRecordContainer } from "./components/record/update/recordUpdate.container";
-import { CreateVehicleContainer } from "./components/vehicle/create/createVehicle.container";
-import { ListVehiclesContainer } from "./components/vehicle/list/listVehicles.container";
-import { ReadVehicleContainer } from "./components/vehicle/view/readVehicle.container";
-import { UpdateVehicleContainer } from "./components/vehicle/update/updateVehicle.container";
+import { CreateVehicleContainer } from "./components/vehicle/create/vehicleCreate.container";
+import { VehiclesListContainer } from "./components/vehicle/list/vehiclesList.container";
+import { ReadVehicleContainer } from "./components/vehicle/view/vehicleView.container";
+import { UpdateVehicleContainer } from "./components/vehicle/update/vehicleUpdate.container";
 
 export const Router = () => (
   <Routes>
     <Route path={"/vehicle/update/:vid"} element={<UpdateVehicleContainer />} />
-    <Route path={"/vehicle/list"} element={<ListVehiclesContainer />} />
+    <Route path={"/vehicle/list"} element={<VehiclesListContainer />} />
     <Route path={"/vehicle/create"} element={<CreateVehicleContainer />} />
     <Route path={"/vehicle/:vid"} element={<ReadVehicleContainer />} />
    

@@ -6,7 +6,7 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { CreateVehicle } from "../create/createVehicle";
+import { CreateVehicle } from "../create/vehicleCreate";
 
 export const UpdateVehicleContainer = () => {
   const { vid } = useParams();

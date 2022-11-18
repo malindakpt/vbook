@@ -3,7 +3,7 @@ import { useCreateVehicleMutation } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { CreateVehicle } from "./createVehicle";
+import { CreateVehicle } from "./vehicleCreate";
 
 export const CreateVehicleContainer = () => {
   const user = useAppSelector((state) => state.app.user);

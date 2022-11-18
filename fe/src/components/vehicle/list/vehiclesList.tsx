@@ -1,14 +1,14 @@
 import { Container, Grid } from "@mui/material";
 import { FC } from "react";
 import { Vehicle } from "../../../types/Vehicle";
-import { VehicleGridView } from "../view/vehicleGridView";
+import { VehicleGridView } from "./vehicleGridView";
 
 interface Props {
   loading: boolean;
   vehicles: Vehicle[];
   onSelect: (vehicle: Vehicle) => void;
 }
-export const ListVehicles: FC<Props> = ({ vehicles, onSelect, loading }) => {
+export const VehiclesList: FC<Props> = ({ vehicles, onSelect, loading }) => {
   if (loading) {
     return <div>Loading...</div>;
   }

@@ -6,7 +6,7 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { ReadVehicle } from "./readVehicle";
+import { VehicleDetailedView } from "./vehicleDetailedView";
 
 export const ReadVehicleContainer = () => {
   let { vid } = useParams();
@@ -40,7 +40,7 @@ export const ReadVehicleContainer = () => {
   };
 
   return (
-    <ReadVehicle
+    <VehicleDetailedView
       onAddRecord={handleOnAddRecord}
       onEdit={handleOnEdit}
       onDelete={handleOnDelete}
