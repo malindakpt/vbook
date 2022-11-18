@@ -6,7 +6,7 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import { RecordDetailedView } from "../view/recordDetaledView";
+import { RecordDetailedView } from "./recordView";
 
 export const ReadRecordContainer = () => {
   let { rid } = useParams();

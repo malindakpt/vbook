@@ -2,7 +2,7 @@ import { useCreateRecordMutation } from "../../../state/api/record.api";
 import { useAppSelector } from "../../../state/store";
 import { ErrorComponent } from "../../error/error";
 import { Record } from "../../../types/Record";
-import { CreateRecord } from "./createRecord";
+import { CreateRecord } from "./recordCreate";
 import { useVehicleList } from "../../../hooks/useVehicleList";
 import { useNavigate, useParams } from "react-router-dom";
 

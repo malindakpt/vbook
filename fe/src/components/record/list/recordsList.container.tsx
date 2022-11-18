@@ -8,7 +8,7 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import ListRecords from "./listRecords";
+import ListRecords from "./recordsList";
 
 export const ListRecordsContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner

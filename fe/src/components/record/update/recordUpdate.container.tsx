@@ -4,7 +4,7 @@ import { useReadRecordQuery, useUpdateRecordMutation } from "../../../state/api/
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import { CreateRecord } from "../create/createRecord";
+import { CreateRecord } from "../create/recordCreate";
 
 export const UpdateRecordContainer = () => {
   const { rid } = useParams();

@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./components/home/home";
-import { CreateRecordContainer } from "./components/record/create/createRecord.container";
-import { ListRecordsContainer } from "./components/record/list/listRecords.container";
-import { ReadRecordContainer } from "./components/record/read/readRecord.container";
-import { UpdateRecordContainer } from "./components/record/update/updateRecord.container";
+import { CreateRecordContainer } from "./components/record/create/recordCreate.container";
+import { ListRecordsContainer } from "./components/record/list/recordsList.container";
+import { ReadRecordContainer } from "./components/record/view/recordView.container";
+import { UpdateRecordContainer } from "./components/record/update/recordUpdate.container";
 import { CreateVehicleContainer } from "./components/vehicle/create/createVehicle.container";
 import { ListVehiclesContainer } from "./components/vehicle/list/listVehicles.container";
 import { ReadVehicleContainer } from "./components/vehicle/read/readVehicle.container";
