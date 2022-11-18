@@ -50,35 +50,35 @@ export const VehicleDetailedView: FC<Props> = ({
             sx={{
               height: "400px",
             }}
-            image={`${config.imageUrlPrefix}r-${vehicle.id}-0.jpg`}
+            image={`${config.imageUrlPrefix}v-${vehicle.id}-0.jpg`}
           />
         )}
 
         <Grid container>
-          <Grid item xs={12} md={6} lg={4} >
+          <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">
               Type: {getVehicleTypeLabel(vehicle.type)}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} >
+          <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">
               Manufacturing Year: {vehicle.manufac}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} >
+          <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">
               Make: {getVehicleBrandLabel(vehicle.brand)}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} >
+          <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">
               Chassis No: {vehicle.chassis}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} >
+          <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">Model: {vehicle.model}</Typography>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} >
+          <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">
               Type: {getVehicleTypeLabel(vehicle.type)}
             </Typography>
@@ -87,22 +87,22 @@ export const VehicleDetailedView: FC<Props> = ({
 
         <Grid container>
           <Grid item xs={3}>
-            <Button onClick={() => onEdit(vehicle)} size="small">
+            <Button onClick={() => onAddRecord(vehicle)} size="small">
               Add Record
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button onClick={() => onDelete(vehicle)} size="small">
+            <Button onClick={() => onViewRecord(vehicle)} size="small">
               View Records
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button onClick={() => onAddRecord(vehicle)} size="small">
+            <Button onClick={() => onEdit(vehicle)} size="small">
               Edit Vehicle
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button onClick={() => onViewRecord(vehicle)} size="small">
+            <Button onClick={() => onDelete(vehicle)} size="small">
               Delete Vehicle
             </Button>
           </Grid>
@@ -112,6 +112,3 @@ export const VehicleDetailedView: FC<Props> = ({
   }
   return <div>Vehicle Not found</div>;
 };
-function getFuelType(fuel: number): import("react").ReactNode {
-  throw new Error("Function not implemented.");
-}
