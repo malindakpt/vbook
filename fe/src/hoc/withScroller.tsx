@@ -15,6 +15,7 @@ export const withScroller = (Component: FC<any>) => {
         const newLastIndex = lastIndex + config.pageSize;
         setLastIndex(newLastIndex);
         props.onLoadMore(newLastIndex);
+        console.log('load more...');
       }
     };
 

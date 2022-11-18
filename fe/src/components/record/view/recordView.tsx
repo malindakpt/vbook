@@ -17,7 +17,7 @@ interface Props {
 }
 export const RecordView: FC<Props> = ({ r, onSelect }) => {
   return (
-    <Card raised sx={{ margin: 1 }} onClick={() => onSelect(r)}>
+    <Card sx={{ margin: 1 }} onClick={() => onSelect(r)}>
       <CardHeader title={getServiceTypeLabel(r.type)} subheader={r.date} />
       {r.imageCount > 0 && (
         <CardMedia
