@@ -7,6 +7,7 @@ export type Vehicle = InferAttributes<VehicleModel>;
 export class VehicleModel extends Model<InferAttributes<VehicleModel>, InferCreationAttributes<VehicleModel>>{
   declare id: CreationOptional<number>;
   declare regNo: string;
+  declare imageCount: number;
   declare createdAt?: Date;
   declare updatedAt?: Date;
   declare UserId?: number;
@@ -49,6 +50,10 @@ export const attributes = {
   model: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  imageCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   UserId: DataTypes.INTEGER.UNSIGNED,
   createdAt: DataTypes.DATE,
