@@ -17,7 +17,7 @@ interface Props {
   onEdit: (r: Record) => void;
   onDelete: (r: Record) => void;
 }
-export const RecordDetailedView: FC<Props> = ({
+export const RecordView: FC<Props> = ({
   r,
   loading,
   onEdit,

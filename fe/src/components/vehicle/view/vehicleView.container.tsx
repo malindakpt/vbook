@@ -8,7 +8,7 @@ import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
 import { VehicleDetailedView } from "./vehicleDetailedView";
 
-export const ReadVehicleContainer = () => {
+export const VehicleViewContainer = () => {
   let { vid } = useParams();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);

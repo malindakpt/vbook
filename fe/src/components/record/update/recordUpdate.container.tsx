@@ -6,7 +6,7 @@ import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
 import { CreateRecord } from "../create/recordCreate";
 
-export const UpdateRecordContainer = () => {
+export const RecordUpdate = () => {
   const { rid } = useParams();
   const user = useAppSelector((state) => state.app.user);
   const navigate = useNavigate();

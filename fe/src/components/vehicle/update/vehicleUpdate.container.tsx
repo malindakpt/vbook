@@ -6,9 +6,9 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { CreateVehicle } from "../create/vehicleCreate";
+import { VehicleCreate } from "../create/vehicleCreate";
 
-export const UpdateVehicleContainer = () => {
+export const VehicleUpdateContainer = () => {
   const { vid } = useParams();
   const user = useAppSelector((state) => state.app.user);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export const UpdateVehicleContainer = () => {
     return <div>Vehicle Not Found</div>
   }
   return (
-    <CreateVehicle
+    <VehicleCreate
       initialState={vehicle}
       onSave={handleUpdateVehicle}
       loading={false}

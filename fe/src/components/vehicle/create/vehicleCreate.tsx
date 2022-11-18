@@ -24,7 +24,7 @@ interface Props {
   initialState?: Partial<Vehicle>;
   onSave: (v: Vehicle, image: Blob | undefined) => void;
 }
-export const CreateVehicle: FC<Props> = ({
+export const VehicleCreate: FC<Props> = ({
   loading,
   userId,
   initialState,

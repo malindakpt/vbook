@@ -13,7 +13,7 @@ interface Props {
   r: Record;
   onSelect: (Record: Record) => void;
 }
-export const RecordView: FC<Props> = ({ r, onSelect }) => {
+export const RecordGridView: FC<Props> = ({ r, onSelect }) => {
   return (
     <Paper sx={{ margin: 1 }} onClick={() => onSelect(r)}>
       <CardHeader title={getServiceTypeLabel(r.type)} subheader={r.date} />

@@ -3,9 +3,9 @@ import { useCreateVehicleMutation } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
 import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
-import { CreateVehicle } from "./vehicleCreate";
+import { VehicleCreate } from "./vehicleCreate";
 
-export const CreateVehicleContainer = () => {
+export const VehicleCreateContainer = () => {
   const user = useAppSelector((state) => state.app.user);
   const [createVehicle] = useCreateVehicleMutation();
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const CreateVehicleContainer = () => {
   };
   
   return (
-    <CreateVehicle
+    <VehicleCreate
       onSave={handleSaveVehicle}
       loading={false}
       userId={user.id}

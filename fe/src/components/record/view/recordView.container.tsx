@@ -6,9 +6,9 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import { RecordDetailedView } from "./recordView";
+import { RecordView } from "./recordView";
 
-export const ReadRecordContainer = () => {
+export const RecordViewContainer = () => {
   let { rid } = useParams();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
@@ -32,7 +32,7 @@ export const ReadRecordContainer = () => {
   }
 
   return (
-    <RecordDetailedView
+    <RecordView
       onEdit={handleEdit}
       onDelete={handleDelete}
       loading={isLoading}

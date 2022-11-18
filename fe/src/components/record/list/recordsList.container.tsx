@@ -10,7 +10,7 @@ import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
 import ListRecords from "./recordsList";
 
-export const ListRecordsContainer = () => {
+export const RecordsListContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);

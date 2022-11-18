@@ -1,11 +1,10 @@
-import { Button, Container, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { withScroller } from "../../../hoc/withScroller";
 import { FC, useEffect, useState } from "react";
-import { config } from "../../../config";
 import { Record } from "../../../types/Record";
-import { RecordView } from "../view/recordGridView";
+import { RecordGridView } from "../view/recordGridView";
 
-export interface ListRecordsProps {
+export interface RecordsList {
   loading: boolean;
   records: Record[];
   onSelect: (Record: Record) => void;
@@ -13,7 +12,7 @@ export interface ListRecordsProps {
   onDelete: (Record: Record) => void;
   onLoadMore: (nextLimit: number) => void;
 }
-const ListRecords: FC<ListRecordsProps> = ({
+const ListRecords: FC<RecordsList> = ({
   records,
   onSelect,
   onEdit,
@@ -51,7 +50,7 @@ const ListRecords: FC<ListRecordsProps> = ({
         <Grid container spacing={2} rowSpacing={4}>
           {mergedData.map((record) => (
             <Grid key={record.id} xs={12} sm={6} md={4} item>
-              <RecordView
+              <RecordGridView
                 r={record}
                 onSelect={onSelect}
               />
