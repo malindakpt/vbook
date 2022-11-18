@@ -1,9 +1,16 @@
+import { BlobServiceClient } from "@azure/storage-blob";
 import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
+import { config } from "../../config";
 import { Vehicle } from "../../types/Vehicle";
+import { dataURLtoFile } from "../../util/helper";
+
+const blobServiceClient = new BlobServiceClient(config.azureSAS);
+const containerName = config.azureImageContainer;
+const containerClient = blobServiceClient.getContainerClient(containerName);
 
 // Define a service using a base URL and expected endpoints
 export const vehicleApi = createApi({
@@ -13,14 +20,37 @@ export const vehicleApi = createApi({
   endpoints: (build) => ({
     createVehicle: build.mutation({
       queryFn: async (
-        arg: Vehicle,
-      ) => await axios.post(`/vehicle/create`, arg)
+        arg: { veh: Vehicle; img: Blob | undefined },
+      ) => {
+        const vehicle = await axios.post(`/vehicle/create`, arg.veh);
+
+        if (arg.img) {
+          const imageName = `v-${vehicle.data.id}-0.jpg`;
+          const file = dataURLtoFile(arg.img, imageName);
+
+          const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+          await blockBlobClient.uploadBrowserData(file);
+        }
+        return vehicle;
+      },
+      invalidatesTags: ['Vehicle'],
     }),
 
     updateVehicle: build.mutation({
       queryFn: async (
-        args: Partial<Vehicle>,
-      ) => await axios.post(`/vehicle/update`, args),
+        arg: { veh: Partial<Vehicle>; img: Blob | undefined },
+      ) => {
+        const vehicle = await axios.post(`/vehicle/update`, arg.veh);
+
+        if (arg.img) {
+          const imageName = `v-${vehicle.data.id}-0.jpg`;
+          const file = dataURLtoFile(arg.img, imageName);
+
+          const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+          await blockBlobClient.uploadBrowserData(file);
+        }
+        return vehicle;
+      },
       invalidatesTags: ['Vehicle'],
     }),
 

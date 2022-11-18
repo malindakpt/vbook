@@ -15,8 +15,8 @@ export const CreateRecordContainer = () => {
 
   const [createRecord] = useCreateRecordMutation();
 
-  const handleSaveRecord = async (r: Record, image?: Blob) => {
-      const result: any = await createRecord({rec: r,  img: image});
+  const handleSaveRecord = async (rec: Record, img?: Blob) => {
+      const result: any = await createRecord({rec,  img});
       if(!result.error){
         navigate('/record/list');
       }
@@ -34,8 +34,8 @@ export const CreateRecordContainer = () => {
 
   return (
     <CreateRecord
-      vehicleList={vehicleList}
-      onSaveRecord={handleSaveRecord}
+      vehicleListOfUser={vehicleList}
+      onSave={handleSaveRecord}
       loading={false}
       userId={user.id}
       initialState={initialState}

@@ -40,9 +40,9 @@ export const UpdateRecordContainer = () => {
 
   return (
     <CreateRecord
-      vehicleList={vehicleList}
+      vehicleListOfUser={vehicleList}
       initialState={record}
-      onSaveRecord={handleUpdateRecord}
+      onSave={handleUpdateRecord}
       loading={false}
       userId={user.id}
     />

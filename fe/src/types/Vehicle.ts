@@ -7,6 +7,7 @@ export interface Vehicle {
     fuel: number;
     transmission: number;
     model: string;
+    imageCount: number;
 
     // Added by server
     id?: number;

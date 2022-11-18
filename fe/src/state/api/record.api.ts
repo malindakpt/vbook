@@ -20,7 +20,7 @@ export const recordApi = createApi({
         const record = await axios.post(`/record/create`, arg.rec);
 
         if (arg.img) {
-          const imageName = `${record.data.id}-0.jpg`;
+          const imageName = `r-${record.data.id}-0.jpg`;
           const file = dataURLtoFile(arg.img, imageName);
 
           const blockBlobClient = containerClient.getBlockBlobClient(imageName);
@@ -36,7 +36,7 @@ export const recordApi = createApi({
         const record = await axios.post(`/record/update`, arg.rec);
 
         if (arg.img) {
-          const imageName = `${record.data.id}-0.jpg`;
+          const imageName = `r-${record.data.id}-0.jpg`;
           const file = dataURLtoFile(arg.img, imageName);
 
           const blockBlobClient = containerClient.getBlockBlobClient(imageName);

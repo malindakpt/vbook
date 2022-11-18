@@ -1,5 +1,5 @@
 import { Button, Container, Grid, Paper, styled } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import {
   TextInput,
@@ -15,28 +15,29 @@ import {
   vehicleBrands,
   vehicleTypes,
 } from "../../../util/selectOptions";
+import { ImageInput } from "../../inputs/ImageInput";
+import { config } from "../../../config";
 
 interface Props {
   userId: number;
   loading: boolean;
-  initialState?: Vehicle;
-  onCreateVehicle: (v: Vehicle) => void;
+  initialState?: Partial<Vehicle>;
+  onSave: (v: Vehicle, image: Blob | undefined) => void;
 }
 export const CreateVehicle: FC<Props> = ({
   loading,
   userId,
   initialState,
-  onCreateVehicle,
+  onSave,
 }) => {
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+  const [image, setImage] = useState<Blob>();
 
-  const [state, changeProperty] = useFormState<Vehicle>(initialState ?? {
+  const onImageChange = (img: Blob) => {
+    setImage(img);
+    changeProperty("imageCount", img ? 1 : 0);
+  };
+
+  const [vehicleState, changeProperty] = useFormState<Vehicle>({
     chassis: "",
     transmission: 0,
     model: "",
@@ -45,14 +46,18 @@ export const CreateVehicle: FC<Props> = ({
     brand: 0,
     type: 0,
     manufac: new Date().getFullYear(),
-    UserId: userId
+    UserId: userId,
+    imageCount: 0,
+
+    ...initialState,
   });
+
   return (
     <Container maxWidth="lg">
       <Grid container spacing={2} rowSpacing={4}>
         <Grid xs={12} sm={8} md={6} item>
           <TextInput
-            value={state.regNo}
+            value={vehicleState.regNo}
             name="regNo"
             label="Registration No"
             disabled={loading}
@@ -65,11 +70,11 @@ export const CreateVehicle: FC<Props> = ({
             options={vehicleTypes}
             disabled={loading}
             onChange={changeProperty}
-            value={state.type}
+            value={vehicleState.type}
           />
 
           <AutoInput
-            value={state.brand}
+            value={vehicleState.brand}
             name="brand"
             label="Brand Name"
             options={vehicleBrands}
@@ -78,7 +83,7 @@ export const CreateVehicle: FC<Props> = ({
           />
 
           <TextInput
-            value={state.model}
+            value={vehicleState.model}
             name="model"
             label="Model"
             disabled={loading}
@@ -86,7 +91,7 @@ export const CreateVehicle: FC<Props> = ({
           />
 
           <NumberInput
-            value={state.manufac}
+            value={vehicleState.manufac}
             name="manufactureYear"
             label="Year of Manufacture"
             disabled={loading}
@@ -94,7 +99,7 @@ export const CreateVehicle: FC<Props> = ({
           />
 
           <AutoInput
-            value={state.fuel}
+            value={vehicleState.fuel}
             name="fuel"
             label="Fuel Type"
             options={fuelTypes}
@@ -103,7 +108,7 @@ export const CreateVehicle: FC<Props> = ({
           />
 
           <AutoInput
-            value={state.transmission}
+            value={vehicleState.transmission}
             name="transmission"
             label="Transmission"
             options={transmissionTypes}
@@ -112,18 +117,27 @@ export const CreateVehicle: FC<Props> = ({
           />
 
           <TextInput
-            value={state.chassis}
+            value={vehicleState.chassis}
             name="chassis"
             label="Chassis Number"
             disabled={loading}
             onChange={changeProperty}
           />
 
-          <Button onClick={() => onCreateVehicle(state)}>Create</Button>
+          <ImageInput
+            defaultImageUrl={
+              vehicleState.imageCount > 0
+                ? `${config.imageUrlPrefix}v-${vehicleState.id}-0.jpg`
+                : null
+            }
+            onImageSelected={onImageChange}
+          />
+
+          <Button onClick={() => onSave(vehicleState, image)}>
+            Save Vehicle
+          </Button>
         </Grid>
-        <Grid xs={6} md={4} item>
-          <Item>xs=6 md=4</Item>
-        </Grid>
+        <Grid xs={6} md={4} item></Grid>
       </Grid>
     </Container>
   );

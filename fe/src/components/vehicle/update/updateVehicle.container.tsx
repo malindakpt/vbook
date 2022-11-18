@@ -17,10 +17,10 @@ export const UpdateVehicleContainer = () => {
 
 
 
-  const handleUpdateVehicle = async (v: Vehicle) => {
-    const result: any = await updateVehicle(v);
+  const handleUpdateVehicle = async (veh: Vehicle, img?: Blob) => {
+    const result: any = await updateVehicle({veh, img});
     if(!result.error){
-      navigate(`/vehicle/${v.id}`);
+      navigate(`/vehicle/${veh.id}`);
     }
   };
 
@@ -38,7 +38,7 @@ export const UpdateVehicleContainer = () => {
   return (
     <CreateVehicle
       initialState={vehicle}
-      onCreateVehicle={handleUpdateVehicle}
+      onSave={handleUpdateVehicle}
       loading={false}
       userId={user.id}
     />

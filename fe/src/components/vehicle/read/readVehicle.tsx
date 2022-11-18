@@ -1,5 +1,6 @@
 import { Button, Container, Grid } from "@mui/material";
 import { FC } from "react";
+import { config } from "../../../config";
 import { Vehicle } from "../../../types/Vehicle";
 
 interface Props {
@@ -23,6 +24,7 @@ export const ReadVehicle: FC<Props> = ({ loading, vehicle, onEdit, onDelete, onA
             <div>{vehicle.regNo}</div>
             <div>{vehicle.fuel}</div>
             <div>{vehicle.type}</div>
+            <img alt="img" src={`${config.imageUrlPrefix}v-${vehicle.id}-0.jpg`} />
             <Button onClick={() => onEdit(vehicle)}>Edit</Button>
             <Button onClick={() => onDelete(vehicle)}>Delete</Button>
             <Button onClick={() => onAddRecord(vehicle)}>Add Record</Button>

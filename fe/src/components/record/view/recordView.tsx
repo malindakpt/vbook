@@ -36,7 +36,7 @@ export const RecordDetailedView: FC<Props> = ({
             sx={{
               height: "300px",
             }}
-            image={`${config.imageUrlPrefix}${r.id}-0.jpg`}
+            image={`${config.imageUrlPrefix}r-${r.id}-0.jpg`}
           />
         )}
         <CardContent>

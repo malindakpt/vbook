@@ -14,8 +14,8 @@ export const CreateVehicleContainer = () => {
     return <ErrorComponent text="User N/A" />;
   }
 
-  const handleCreateVehicle = async (v: Vehicle) => {
-    const result: any = await createVehicle(v);
+  const handleSaveVehicle = async (veh: Vehicle, img?: Blob) => {
+    const result: any = await createVehicle({veh, img});
     if(!result.error){
       navigate(`/vehicle/${result.data.id}`);
     }
@@ -23,7 +23,7 @@ export const CreateVehicleContainer = () => {
   
   return (
     <CreateVehicle
-      onCreateVehicle={handleCreateVehicle}
+      onSave={handleSaveVehicle}
       loading={false}
       userId={user.id}
     />

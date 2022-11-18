@@ -22,7 +22,7 @@ export const RecordView: FC<Props> = ({ r, onSelect }) => {
           sx={{
             height: "200px",
           }}
-          image={`${config.imageUrlPrefix}${r.id}-0.jpg`}
+          image={`${config.imageUrlPrefix}r-${r.id}-0.jpg`}
         />
       )}
       <CardContent>
