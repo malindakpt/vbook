@@ -11,13 +11,16 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import React from "react";
 import {
+  alpha,
   Avatar,
   Link,
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
+  styled,
 } from "@mui/material";
 import {
   Add,
@@ -34,6 +37,7 @@ const pages = [
 const actions = [
   { icon: <PlaylistAdd />, name: "Service Record", path: "record/create" },
   { icon: <DirectionsCar />, name: "Add Vehicle", path: "vehicle/create" },
+  { icon: <AddAPhoto />, name: "Add Photo", path: "vehicle/create/simple" },
 ];
 // const settings = ['Profile','Logout'];
 
@@ -64,6 +68,22 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }));
 
   return (
     <>
@@ -158,7 +178,15 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
                 </Button>
               ))}
             </Box>
-
+            {/* <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search> */}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

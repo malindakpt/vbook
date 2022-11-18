@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreateVehicleMutation } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
@@ -5,7 +6,10 @@ import { Vehicle } from "../../../types/Vehicle";
 import { ErrorComponent } from "../../error/error";
 import { VehicleCreate } from "./vehicleCreate";
 
-export const VehicleCreateContainer = () => {
+interface Props {
+  simple?: boolean;
+}
+export const VehicleCreateContainer: FC<Props> = ({simple}) => {
   const user = useAppSelector((state) => state.app.user);
   const [createVehicle] = useCreateVehicleMutation();
   const navigate = useNavigate();
@@ -26,6 +30,7 @@ export const VehicleCreateContainer = () => {
       onSave={handleSaveVehicle}
       loading={false}
       userId={user.id}
+      isSimpleMode={simple}
     />
   );
 };

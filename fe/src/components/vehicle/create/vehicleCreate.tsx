@@ -21,6 +21,7 @@ import { config } from "../../../config";
 interface Props {
   userId: number;
   loading: boolean;
+  isSimpleMode?: boolean;
   initialState?: Partial<Vehicle>;
   onSave: (v: Vehicle, image: Blob | undefined) => void;
 }
@@ -28,6 +29,7 @@ export const VehicleCreate: FC<Props> = ({
   loading,
   userId,
   initialState,
+  isSimpleMode,
   onSave,
 }) => {
   const [image, setImage] = useState<Blob>();
@@ -64,57 +66,69 @@ export const VehicleCreate: FC<Props> = ({
             onChange={changeProperty}
           />
 
-          <AutoInputImage
-            name="type"
-            label="Vehicle Type"
-            options={vehicleTypes}
-            disabled={loading}
-            onChange={changeProperty}
-            value={vehicleState.type}
-          />
+          {!isSimpleMode && (
+            <AutoInputImage
+              name="type"
+              label="Vehicle Type"
+              options={vehicleTypes}
+              disabled={loading}
+              onChange={changeProperty}
+              value={vehicleState.type}
+            />
+          )}
 
-          <AutoInput
-            value={vehicleState.brand}
-            name="brand"
-            label="Brand Name"
-            options={vehicleBrands}
-            disabled={loading}
-            onChange={changeProperty}
-          />
+          {!isSimpleMode && (
+            <AutoInput
+              value={vehicleState.brand}
+              name="brand"
+              label="Brand Name"
+              options={vehicleBrands}
+              disabled={loading}
+              onChange={changeProperty}
+            />
+          )}
 
-          <TextInput
-            value={vehicleState.model}
-            name="model"
-            label="Model"
-            disabled={loading}
-            onChange={changeProperty}
-          />
+          {!isSimpleMode && (
+            <TextInput
+              value={vehicleState.model}
+              name="model"
+              label="Model"
+              disabled={loading}
+              onChange={changeProperty}
+            />
+          )}
 
-          <NumberInput
-            value={vehicleState.manufac}
-            name="manufactureYear"
-            label="Year of Manufacture"
-            disabled={loading}
-            onChange={changeProperty}
-          />
+          {!isSimpleMode && (
+            <NumberInput
+              value={vehicleState.manufac}
+              name="manufactureYear"
+              label="Year of Manufacture"
+              disabled={loading}
+              onChange={changeProperty}
+            />
+          )}
 
-          <AutoInput
-            value={vehicleState.fuel}
-            name="fuel"
-            label="Fuel Type"
-            options={fuelTypes}
-            disabled={loading}
-            onChange={changeProperty}
-          />
+          {!isSimpleMode && (
+            <AutoInput
+              value={vehicleState.fuel}
+              name="fuel"
+              label="Fuel Type"
+              options={fuelTypes}
+              disabled={loading}
+              onChange={changeProperty}
+            />
+          )}
 
-          <AutoInput
-            value={vehicleState.transmission}
-            name="transmission"
-            label="Transmission"
-            options={transmissionTypes}
-            disabled={loading}
-            onChange={changeProperty}
-          />
+          {!isSimpleMode && (
+            <AutoInput
+              value={vehicleState.transmission}
+              name="transmission"
+              label="Transmission"
+              options={transmissionTypes}
+              disabled={loading}
+              onChange={changeProperty}
+            />
+          )}
 
           <TextInput
             value={vehicleState.chassis}
@@ -134,7 +148,7 @@ export const VehicleCreate: FC<Props> = ({
           />
 
           <Button onClick={() => onSave(vehicleState, image)}>
-            Save Vehicle
+            {isSimpleMode ? `Add Photo` : `Save Vehicle`}
           </Button>
         </Grid>
         <Grid xs={6} md={4} item></Grid>

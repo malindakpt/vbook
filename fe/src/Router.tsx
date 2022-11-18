@@ -11,6 +11,7 @@ import { VehicleUpdateContainer } from "./components/vehicle/update/vehicleUpdat
 
 export const Router = () => (
   <Routes>
+    <Route path={"/vehicle/create/simple"} element={<VehicleCreateContainer simple />} />
     <Route path={"/vehicle/update/:vid"} element={<VehicleUpdateContainer />} />
     <Route path={"/vehicle/list"} element={<VehiclesListContainer />} />
     <Route path={"/vehicle/create"} element={<VehicleCreateContainer />} />
