@@ -1,9 +1,10 @@
 import {
+  Card,
   Typography,
   CardMedia,
   CardHeader,
   CardContent,
-  Paper,
+  Button,
 } from "@mui/material";
 import { FC } from "react";
 import { config } from "../../../config";
@@ -11,11 +12,22 @@ import { Record } from "../../../types/Record";
 import { getServiceTypeLabel } from "../../../util/helper";
 interface Props {
   r: Record;
-  onSelect: (Record: Record) => void;
+  loading: boolean;
+  onEdit: (r: Record) => void;
+  onDelete: (r: Record) => void;
 }
-export const RecordView: FC<Props> = ({ r, onSelect }) => {
+export const RecordDetailedView: FC<Props> = ({
+  r,
+  loading,
+  onEdit,
+  onDelete,
+}) => {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <Paper sx={{ margin: 1 }} onClick={() => onSelect(r)}>
+    <Card sx={{ margin: 1 }}>
       <CardHeader title={getServiceTypeLabel(r.type)} subheader={r.date} />
       {r.imageCount > 0 && (
         <CardMedia
@@ -29,6 +41,9 @@ export const RecordView: FC<Props> = ({ r, onSelect }) => {
         <Typography variant="body2">{`ODO Meter: ${r.millage}`}</Typography>
         <Typography variant="body2">ODO Meter: {r.millage}</Typography>
       </CardContent>
-    </Paper>
+
+      <Button onClick={() => onEdit(r)}>Edit</Button>
+      <Button onClick={() => onDelete(r)}>Delete</Button>
+    </Card>
   );
 };

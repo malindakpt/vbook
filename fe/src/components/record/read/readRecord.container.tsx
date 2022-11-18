@@ -1,9 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useDeleteRecordMutation, useReadRecordQuery } from "../../../state/api/record.api";
+import {
+  useDeleteRecordMutation,
+  useReadRecordQuery,
+} from "../../../state/api/record.api";
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import { ReadRecord } from "./readRecord";
+import { RecordDetailedView } from "../view/recordDetaledView";
 
 export const ReadRecordContainer = () => {
   let { rid } = useParams();
@@ -29,11 +32,10 @@ export const ReadRecordContainer = () => {
   }
 
   return (
-    <ReadRecord
+    <RecordDetailedView
       onEdit={handleEdit}
       onDelete={handleDelete}
       loading={isLoading}
-      record={data}
-    />
+      r={data} />
   );
 };

@@ -34,10 +34,6 @@ const ListRecords: FC<ListRecordsProps> = ({
     };
   }, []);
 
-  //  if (!mergedData || mergedData.length === 0) {
-  //   return <div>No Records</div>;
-  // }
-
   // TODO: Refactor this logic
   if (
     records &&
@@ -57,8 +53,6 @@ const ListRecords: FC<ListRecordsProps> = ({
             <Grid key={record.id} xs={12} sm={6} md={4} item>
               <RecordView
                 r={record}
-                onEdit={onEdit}
-                onDelete={onDelete}
                 onSelect={onSelect}
               />
             </Grid>
