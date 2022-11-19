@@ -2,6 +2,7 @@ import { Container, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { config } from "../../../config";
+import { usePaginatedData } from "../../../hooks/usePaginatedData";
 import {
   useDeleteRecordMutation,
   useReadRecordsQuery,
@@ -36,24 +37,7 @@ export const RecordsListContainer = () => {
 
   const { data, error, isFetching, isLoading } = useReadRecordsQuery(query);
 
-  //////////////////////////////////////////
-
-  const [prevReceivedData, setPreReceivedvData] = useState<Record[]>([]);
-  const [mergedData, setMergedData] = useState<Record[]>([]);
-
-  const isNewDataReceived =
-    data?.length > 0 &&
-    (prevReceivedData.length === 0
-      ? true
-      : prevReceivedData[0].id !== data[0].id);
-
-  if (isNewDataReceived) {
-    const allData = [...mergedData, ...data];
-    setMergedData(allData);
-    setPreReceivedvData(data);
-  }
-
-  ///////////////////////////////////////////
+  const paginatedMergedData = usePaginatedData(data);
 
   const [deleteRecord, result] = useDeleteRecordMutation();
 
@@ -98,7 +82,7 @@ export const RecordsListContainer = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           loading={isFetching}
-          records={mergedData}
+          records={paginatedMergedData}
           onLoadMore={handleLoadMore}
         />
       ) : (
@@ -108,7 +92,7 @@ export const RecordsListContainer = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           loading={isFetching}
-          records={mergedData}
+          records={paginatedMergedData}
           onLoadMore={handleLoadMore}
         />
       )}
