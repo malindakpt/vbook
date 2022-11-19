@@ -30,7 +30,7 @@ export const RecordGridView: FC<Props> = ({ r, onSelect }) => {
         )}
         <CardContent>
           <Typography variant="body2">{`ODO Meter: ${r.millage}`}</Typography>
-          <Typography variant="body2">ODO Meter: {r.millage}</Typography>
+          <Typography variant="body2">Description: {r.desc}</Typography>
         </CardContent>
 
         <Divider variant="middle" />

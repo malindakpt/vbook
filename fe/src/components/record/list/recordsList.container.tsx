@@ -14,8 +14,6 @@ export const RecordsListContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
-
-
   const handleLoadMore = (nextLimit: number) => {
     setQuery(prev => {
       const next = {...prev, limit: config.pageSize, offset: nextLimit};

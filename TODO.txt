@@ -12,7 +12,7 @@ delete image from record
 pagination for records
 implement a image preview for Imge input
 What happens when remove vehicle image and save
-
+Remove image from record and vehicle
 
 Trade vehicles
 Trade parts

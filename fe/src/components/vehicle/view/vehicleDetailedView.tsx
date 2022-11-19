@@ -1,9 +1,6 @@
 import {
   Button,
-  CardActions,
   Container,
-  Paper,
-  styled,
   Grid,
   Typography,
   CardMedia,
@@ -17,6 +14,7 @@ import {
   getVehicleBrandLabel,
   getVehicleTypeLabel,
 } from "../../../util/helper";
+import { RecordsListContainer } from "../../record/list/recordsList.container";
 
 interface Props {
   vehicle: Vehicle;
@@ -114,6 +112,8 @@ export const VehicleDetailedView: FC<Props> = ({
         <Grid container>
           <Button onClick={() => onShowHistory(vehicle)}>Show history</Button>
         </Grid>
+
+        <RecordsListContainer />
       </Container>
     );
   }
