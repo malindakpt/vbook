@@ -1,8 +1,8 @@
 import { Container, Grid } from "@mui/material";
 import { withScroller } from "../../../hoc/withScroller";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Record } from "../../../types/Record";
-import { RecordGridView } from "../view/recordGridView";
+import { RecordGridView } from "./recordGridView";
 
 export interface RecordsList {
   loading: boolean;

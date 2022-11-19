@@ -94,7 +94,7 @@ export const CreateRecord: FC<Props> = ({
           <ImageInput
             defaultImageUrl={
               recordState.imageCount > 0
-                ? `${config.imageUrlPrefix}r-${recordState.id}-0.jpg`
+                ? `${config.imageUrlPrefix}r-${recordState.id}-0.jpg?${recordState.updatedAt}`
                 : null
             }
             onImageSelected={onImageChange}

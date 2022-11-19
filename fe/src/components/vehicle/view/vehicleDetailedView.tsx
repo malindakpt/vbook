@@ -53,7 +53,7 @@ export const VehicleDetailedView: FC<Props> = ({
             sx={{
               height: "400px",
             }}
-            image={`${config.imageUrlPrefix}v-${vehicle.id}-0.jpg`}
+            image={`${config.imageUrlPrefix}v-${vehicle.id}-0.jpg?${vehicle.updatedAt}`}
           />
         )}
 

@@ -38,6 +38,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
       where: { id },
     });
     if (foundVehicle) {
+      foundVehicle.changed('updatedAt', true);
       const updated = await foundVehicle.update(req.body);
       return res.status(201).send(updated);
     } else {

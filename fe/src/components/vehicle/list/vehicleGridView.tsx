@@ -1,9 +1,8 @@
 import {
-  Card,
+  Box,
   CardContent,
   CardHeader,
   CardMedia,
-  Paper,
   Typography,
 } from "@mui/material";
 import { FC } from "react";
@@ -18,14 +17,14 @@ interface Props {
 
 export const VehicleGridView: FC<Props> = ({ v, onSelect }) => {
   return (
-    <Paper sx={{ margin: 1 }} onClick={() => onSelect(v)}>
+    <Box sx={{ margin: 0 }} onClick={() => onSelect(v)}>
       <CardHeader title={v.regNo} subheader={getVehicleTypeLabel(v.type)} />
       {v.imageCount > 0 && (
         <CardMedia
           sx={{
             height: "200px",
           }}
-          image={`${config.imageUrlPrefix}v-${v.id}-0.jpg`}
+          image={`${config.imageUrlPrefix}v-${v.id}-0.jpg?${v.updatedAt}`}
         />
       )}
       <CardContent>
@@ -34,6 +33,6 @@ export const VehicleGridView: FC<Props> = ({ v, onSelect }) => {
         <Typography variant="body2">{`fuel: ${getFuelTypeLabel(v.fuel)}`}</Typography>
         <Typography variant="body2">{`transmission: ${getTransmissionTypeLabel(v.transmission)}`}</Typography>
       </CardContent>
-    </Paper>
+    </Box>
   );
 };

@@ -47,6 +47,7 @@ export const updateRecord = async (req: Request, res: Response) => {
       where: { id },
     });
     if (foundRecord) {
+      foundRecord.changed('updatedAt', true);
       const updated = await foundRecord.update(req.body);
       return res.status(201).send(updated);
     } else {
