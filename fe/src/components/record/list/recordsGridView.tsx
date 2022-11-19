@@ -30,7 +30,7 @@ const RecordsGridView: FC<RecordsList> = ({
 }) => {
   if (records) {
     return (
-      <Grid maxWidth="lg" container spacing={2} rowSpacing={4}>
+      <Grid container spacing={2} rowSpacing={4}>
         {records.map((r) => (
           <Grid key={r.id} xs={12} sm={6} item>
             <Box sx={{ margin: 0 }} onClick={() => onSelect(r)}>
