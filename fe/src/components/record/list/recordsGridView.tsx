@@ -15,6 +15,7 @@ import { config } from "../../../config";
 import { getServiceType } from "../../../util/helper";
 
 export interface RecordsList {
+  hasMore: boolean;
   loading: boolean;
   records: Record[];
   onSelect: (Record: Record) => void;
@@ -29,6 +30,7 @@ const RecordsGridView: FC<RecordsList> = ({
   onDelete,
 }) => {
   if (records) {
+    console.log('records Grid', records)
     return (
       <Grid container spacing={2} rowSpacing={4}>
         {records.map((r) => (
@@ -36,7 +38,7 @@ const RecordsGridView: FC<RecordsList> = ({
             <Box sx={{ margin: 0 }} onClick={() => onSelect(r)}>
               <CardHeader
                 title={getServiceType(r.type)?.label}
-                subheader={r.date}
+                subheader={r.id}
               />
               {r.imageCount > 0 && (
                 <CardMedia

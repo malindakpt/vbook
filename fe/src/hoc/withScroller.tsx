@@ -4,39 +4,32 @@ import { config } from "../config";
 import { Record } from "../types/Record";
 
 interface Props {
+  hasMore: boolean;
   records: Record[];
   loading: boolean;
   onLoadMore: (nextLimit: number) => void;
 }
 export const withScroller = <T extends Props>(Component: FC<T>) => {
   return (props: T) => {
-    const { records } = props;
+    const { records, hasMore } = props;
 
-    const [prevReceivedData, setPreReceivedvData] = useState<Record[]>([]);
-    const [mergedData, setMergedData] = useState<Record[]>([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [lastIndex, setLastIndex] = useState(0);
+    // const [prevReceivedData, setPreReceivedvData] = useState<Record[]>([]);
+    // const [mergedData, setMergedData] = useState<Record[]>([]);
 
-    if (hasMore && records && records.length === 0) {
-      setHasMore(false);
-    }
+    // const isNewDataReceived =
+    //   records?.length > 0 &&
+    //   (prevReceivedData.length === 0 ? true : prevReceivedData[0].id !== records[0].id);
 
-    const isNewDataReceived =
-      records?.length > 0 &&
-      (prevReceivedData.length === 0 ? true : prevReceivedData[0].id !== records[0].id);
-
-    if (isNewDataReceived) {
-      const allData = [...mergedData, ...records];
-      setMergedData(allData);
-      setPreReceivedvData(records);
-    }
+    // if (isNewDataReceived) {
+    //   const allData = [...mergedData, ...records];
+    //   setMergedData(allData);
+    //   setPreReceivedvData(records);
+    // }
 
     const loadFunc = () => {
       if (!props.loading) {
-        const newLastIndex = lastIndex + config.pageSize;
-        setLastIndex(newLastIndex);
+        const newLastIndex = records.length + config.pageSize;
         props.onLoadMore(newLastIndex);
-        console.log("loading upto ", newLastIndex);
       }
     };
 
@@ -44,10 +37,10 @@ export const withScroller = <T extends Props>(Component: FC<T>) => {
       <InfiniteScroll
         pageStart={0}
         loadMore={loadFunc}
-        hasMore={props.records?.length > 0}
+        hasMore={hasMore}
         loader={<div key={0}>Loading ...</div>}
       >
-        <Component {...{ ...props, records: mergedData }} />
+        <Component {...{ ...props }} />
       </InfiniteScroll>
     );
   };

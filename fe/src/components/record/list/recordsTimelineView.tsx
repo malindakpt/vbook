@@ -16,6 +16,7 @@ import { Record } from "../../../types/Record";
 import { getServiceType } from "../../../util/helper";
 
 export interface Props {
+  hasMore: boolean;
   loading: boolean;
   records: Record[];
   onSelect: (Record: Record) => void;
@@ -30,6 +31,7 @@ const RecordsTimelineView: FC<Props> = ({
   onEdit,
   onDelete,
 }) => {
+  console.log('records Timeline', records)
   if (records) {
     return (
       <Timeline position="alternate">
@@ -38,7 +40,6 @@ const RecordsTimelineView: FC<Props> = ({
             <TimelineSeparator>
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               <TimelineDot color={getServiceType(r.type)?.color}>
-                {/* <RepeatIcon /> */}
                 {getServiceType(r.type)?.Icon}
               </TimelineDot>
               <TimelineConnector />
@@ -48,7 +49,7 @@ const RecordsTimelineView: FC<Props> = ({
                 {getServiceType(r.type)?.label}
               </Typography>
               <Typography variant="subtitle1">
-                {r.millage}km
+                {r.id}
               </Typography> 
               <Typography>{r.desc}</Typography>
             </TimelineContent>
