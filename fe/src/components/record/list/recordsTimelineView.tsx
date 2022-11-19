@@ -36,7 +36,7 @@ const RecordsTimelineView: FC<Props> = ({
     return (
       <Timeline position="alternate">
         {records.map((r) => (
-          <TimelineItem key={r.id}>
+          <TimelineItem  onClick={() => onSelect(r)} key={r.id}>
             <TimelineSeparator>
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               <TimelineDot color={getServiceType(r.type)?.color}>

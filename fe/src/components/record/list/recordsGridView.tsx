@@ -34,8 +34,8 @@ const RecordsGridView: FC<RecordsList> = ({
     return (
       <Grid container spacing={2} rowSpacing={4}>
         {records.map((r) => (
-          <Grid key={r.id} xs={12} sm={6} item>
-            <Box sx={{ margin: 0 }} onClick={() => onSelect(r)}>
+          <Grid onClick={() => onSelect(r)} key={r.id} xs={12} sm={6} item>
+            <Box sx={{ margin: 0 }}>
               <CardHeader
                 title={getServiceType(r.type)?.label}
                 subheader={r.id}

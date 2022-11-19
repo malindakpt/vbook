@@ -109,10 +109,6 @@ export const VehicleDetailedView: FC<Props> = ({
           </Grid>
         </Grid>
 
-        <Grid container>
-          <Button onClick={() => onShowHistory(vehicle)}>Show history</Button>
-        </Grid>
-
         <RecordsListContainer />
       </Container>
     );
