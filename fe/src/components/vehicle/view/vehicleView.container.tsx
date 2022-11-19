@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useLazyReadRecordsQuery } from "../../../state/api/record.api";
 import {
   useDeleteVehicleMutation,
   useReadVehicleQuery,
@@ -13,6 +14,7 @@ export const VehicleViewContainer = () => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
   const { data, error, isLoading } = useReadVehicleQuery(vid ?? "");
+  const [ fetchHistory, historyData ] = useLazyReadRecordsQuery();
   const [deleteVehicle] = useDeleteVehicleMutation();
 
   if (!user) {
@@ -39,14 +41,20 @@ export const VehicleViewContainer = () => {
     }
   };
 
+  const handleShowHistory = (v: Vehicle) => {
+    fetchHistory({VehicleId: v.id});
+  }
+
   return (
     <VehicleDetailedView
       onAddRecord={handleOnAddRecord}
       onEdit={handleOnEdit}
       onDelete={handleOnDelete}
       onViewRecord={handleViewRecord}
+      onShowHistory={handleShowHistory}
       loading={isLoading}
       vehicle={data}
+      historyData={[]}
     />
   );
 };

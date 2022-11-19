@@ -11,6 +11,7 @@ import {
 import { FC } from "react";
 import { config } from "../../../config";
 import { Vehicle } from "../../../types/Vehicle";
+import { Record } from "../../../types/Record";
 import {
   getFuelTypeLabel,
   getVehicleBrandLabel,
@@ -20,18 +21,22 @@ import {
 interface Props {
   vehicle: Vehicle;
   loading: boolean;
+  historyData: Record[];
   onEdit: (vehicle: Vehicle) => void;
   onDelete: (vehicle: Vehicle) => void;
   onAddRecord: (vehicle: Vehicle) => void;
   onViewRecord: (vehicle: Vehicle) => void;
+  onShowHistory: (vehicle: Vehicle) => void;
 }
 export const VehicleDetailedView: FC<Props> = ({
   loading,
   vehicle,
+  historyData,
   onEdit,
   onDelete,
   onAddRecord,
   onViewRecord,
+  onShowHistory,
 }) => {
   if (loading) {
     return <div>Loading...</div>;
@@ -41,9 +46,7 @@ export const VehicleDetailedView: FC<Props> = ({
     return (
       <Container maxWidth="md">
         <Typography variant="h4">{vehicle.regNo}</Typography>
-        <Typography variant="h5">
-          Fuel: {getFuelTypeLabel(vehicle.fuel)}
-        </Typography>
+        <Typography variant="h5">{vehicle.manufac}</Typography>
 
         {vehicle.imageCount > 0 && (
           <CardMedia
@@ -62,7 +65,7 @@ export const VehicleDetailedView: FC<Props> = ({
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Typography variant="subtitle1">
-              Manufacturing Year: {vehicle.manufac}
+              Fuel: {getFuelTypeLabel(vehicle.fuel)}
             </Typography>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
@@ -106,6 +109,10 @@ export const VehicleDetailedView: FC<Props> = ({
               Delete Vehicle
             </Button>
           </Grid>
+        </Grid>
+
+        <Grid container>
+          <Button onClick={() => onShowHistory(vehicle)}>Show history</Button>
         </Grid>
       </Container>
     );

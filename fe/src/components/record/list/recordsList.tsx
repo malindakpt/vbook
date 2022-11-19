@@ -26,13 +26,6 @@ const ListRecords: FC<RecordsList> = ({
     setHasMore(false);
   }
 
-  useEffect(() => {
-    console.log("mkpt mounted");
-    return () => {
-      console.log("mkpt unmounted");
-    };
-  }, []);
-
   // TODO: Refactor this logic
   if (
     records &&
