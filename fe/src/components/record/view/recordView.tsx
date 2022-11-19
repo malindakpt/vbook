@@ -9,7 +9,7 @@ import {
 import { FC } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
-import { getServiceTypeLabel } from "../../../util/helper";
+import { getServiceType } from "../../../util/helper";
 interface Props {
   r: Record;
   loading: boolean;
@@ -23,7 +23,7 @@ export const RecordView: FC<Props> = ({ r, loading, onEdit, onDelete }) => {
 
   return (
     <Box sx={{ margin: 1 }} maxWidth="md">
-      <CardHeader title={getServiceTypeLabel(r.type)} subheader={r.date} />
+      <CardHeader title={getServiceType(r.type)?.label} subheader={r.date} />
       {r.imageCount > 0 && (
         <CardMedia
           sx={{

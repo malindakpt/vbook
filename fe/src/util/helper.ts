@@ -47,10 +47,7 @@ export const getVehicleTypeLabel = (id: number) => {
   return type ? type.label : 'N/A';
 }
 
-export const getServiceTypeLabel = (id: number) => {
-  const type = serviceTypes.find(s=> s.id === id);
-  return type ? type.label : 'N/A';
-}
+export const getServiceType = (id: number) => serviceTypes.find(s=> s.id === id);
 
 export const getFuelTypeLabel = (id: number) => {
   const type = fuelTypes.find(s=> s.id === id);

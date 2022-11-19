@@ -1,7 +1,11 @@
 import BikeImg from "../assets/vType/bike.png";
 import CarImg from "../assets/vType/car.png";
-import BusImg from  "../assets/vType/bus.png"
+import BusImg from "../assets/vType/bus.png";
 import { SelectOption } from "../types/SelectOption";
+import RepeatIcon from "@mui/icons-material/Repeat";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import LaptopMacIcon from "@mui/icons-material/LaptopMac";
+import HotelIcon from "@mui/icons-material/Hotel";
 
 export const vehicleBrands: SelectOption[] = [
   { label: "-Select a brand-", id: 0 },
@@ -36,6 +40,9 @@ export const transmissionTypes: SelectOption[] = [
 
 export const serviceTypes: SelectOption[] = [
   { label: "- Select Serive Type -", id: 0 },
-  { label: "Oil Change", id: 1 },
-  { label: "Tyre Change", id: 2 },
-]
+  { label: "Tyre Change", id: 1, Icon: <RepeatIcon />, color: 'primary' },
+  { label: "Body Wash", id: 2, Icon: <FastfoodIcon />, color: 'secondary' },
+  { label: "Engine Oil Change", id: 3, Icon: <LaptopMacIcon />, color: 'primary' },
+  { label: "Transmission Oil Change", id: 4, Icon: <RepeatIcon />, color: 'primary' },
+  { label: "Allignment Check", id: 5, Icon: <HotelIcon />, color: 'primary' },
+];

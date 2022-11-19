@@ -10,7 +10,7 @@ import {
 import { FC } from "react";
 import { config } from "../../../config";
 import { Record } from "../../../types/Record";
-import { getServiceTypeLabel } from "../../../util/helper";
+import { getServiceType } from "../../../util/helper";
 interface Props {
   r: Record;
   onSelect: (Record: Record) => void;
@@ -19,7 +19,7 @@ export const RecordGridView: FC<Props> = ({ r, onSelect }) => {
   return (
     <Grid key={r.id} xs={12} sm={6} item>
       <Box sx={{ margin: 0 }} onClick={() => onSelect(r)}>
-        <CardHeader title={getServiceTypeLabel(r.type)} subheader={r.date} />
+        <CardHeader title={getServiceType(r.type)?.label} subheader={r.date} />
         {r.imageCount > 0 && (
           <CardMedia
             sx={{

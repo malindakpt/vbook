@@ -9,6 +9,7 @@ import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
 import ListRecords from "./recordsList";
+import RecordsTimeline from "./recordsTimeline";
 
 export const RecordsListContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner
@@ -49,7 +50,8 @@ export const RecordsListContainer = () => {
   }
 
   return (
-    <ListRecords
+    // <ListRecords
+    <RecordsTimeline
       onSelect={handleSelect}
       onEdit={handleEdit}
       onDelete={handleDelete}
