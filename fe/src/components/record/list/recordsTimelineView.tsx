@@ -24,7 +24,7 @@ export interface Props {
   onLoadMore: (nextLimit: number) => void;
 }
 
-const RecordsTimeline: FC<Props> = ({
+const RecordsTimelineView: FC<Props> = ({
   records,
   onSelect,
   onEdit,
@@ -60,4 +60,4 @@ const RecordsTimeline: FC<Props> = ({
   return <div>Record Not found</div>;
 };
 
-export default withScroller(RecordsTimeline);
+export default withScroller(RecordsTimelineView);

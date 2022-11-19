@@ -1,3 +1,4 @@
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { config } from "../../../config";
@@ -8,24 +9,30 @@ import {
 import { useAppSelector } from "../../../state/store";
 import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
-import ListRecords from "./recordsList";
-import RecordsTimeline from "./recordsTimeline";
+import RecordsGridView from "./recordsGridView";
+import RecordsTimelineView from "./recordsTimelineView";
 
 export const RecordsListContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
   const handleLoadMore = (nextLimit: number) => {
-    setQuery(prev => {
-      const next = {...prev, limit: config.pageSize, offset: nextLimit};
+    setQuery((prev) => {
+      const next = { ...prev, limit: config.pageSize, offset: nextLimit };
       return next;
-    })
-  }
+    });
+  };
   const searchQuery = vid
     ? { UserId: user?.id, VehicleId: Number(vid) }
     : { UserId: user?.id };
 
-   const [query, setQuery] = useState({...searchQuery, limit: config.pageSize, offset: config.pageSize}) 
+  const [query, setQuery] = useState({
+    ...searchQuery,
+    limit: config.pageSize,
+    offset: config.pageSize,
+  });
+
+  const [viewMode, setViewMode] = useState<"Timeline" | "Grid">("Timeline");
 
   const { data, error, isFetching, isLoading } = useReadRecordsQuery(query);
 
@@ -50,14 +57,40 @@ export const RecordsListContainer = () => {
   }
 
   return (
-    // <ListRecords
-    <RecordsTimeline
-      onSelect={handleSelect}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      loading={isFetching}
-      records={data}
-      onLoadMore={handleLoadMore}
-    />
+    <>
+      <ToggleButtonGroup
+        color="primary"
+        value={viewMode}
+        exclusive
+        aria-label="Platform"
+      >
+        <ToggleButton value="Timeline" onClick={() => setViewMode("Timeline")}>
+          Timeline
+        </ToggleButton>
+        <ToggleButton value="Grid" onClick={() => setViewMode("Grid")}>
+          Grid
+        </ToggleButton>
+      </ToggleButtonGroup>
+
+      {viewMode === "Timeline" ? (
+        <RecordsTimelineView
+          onSelect={handleSelect}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          loading={isFetching}
+          records={data}
+          onLoadMore={handleLoadMore}
+        />
+      ) : (
+        <RecordsGridView
+          onSelect={handleSelect}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          loading={isFetching}
+          records={data}
+          onLoadMore={handleLoadMore}
+        />
+      )}
+    </>
   );
 };
