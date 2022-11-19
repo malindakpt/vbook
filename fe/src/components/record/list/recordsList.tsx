@@ -23,9 +23,7 @@ const ListRecords: FC<RecordsList> = ({
       <Container maxWidth="lg">
         <Grid container spacing={2} rowSpacing={4}>
           {records.map((record) => (
-            <Grid key={record.id} xs={12} sm={6} md={4} item>
-              <RecordGridView r={record} onSelect={onSelect} />
-            </Grid>
+            <RecordGridView key={record.id} r={record} onSelect={onSelect} />
           ))}
         </Grid>
       </Container>

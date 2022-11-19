@@ -3,6 +3,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Divider,
   Typography,
 } from "@mui/material";
 import { FC } from "react";
@@ -33,6 +34,8 @@ export const VehicleGridView: FC<Props> = ({ v, onSelect }) => {
         <Typography variant="body2">{`fuel: ${getFuelTypeLabel(v.fuel)}`}</Typography>
         <Typography variant="body2">{`transmission: ${getTransmissionTypeLabel(v.transmission)}`}</Typography>
       </CardContent>
+
+      <Divider variant="middle" />
     </Box>
   );
 };

@@ -51,7 +51,6 @@ export const ForgotPassword: FC<Props> = ({ loading, onSendCode }) => {
         />
 
         <Button
-          type="submit"
           fullWidth
           variant="contained"
           color={`success`}

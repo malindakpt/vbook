@@ -87,7 +87,6 @@ export const SignUp: FC<Props> = ({ loading, onSignUp }) => {
         />
 
         <Button
-          type="submit"
           fullWidth
           variant="contained"
           color={`success`}

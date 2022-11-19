@@ -73,7 +73,6 @@ export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
         />
 
         <Button
-          type="submit"
           fullWidth
           variant="contained"
           color="primary"

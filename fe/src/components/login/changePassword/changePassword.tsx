@@ -84,7 +84,6 @@ export const ChangePassword: FC<Props> = ({ loading, onChangePassword, identifie
         />
         
         <Button
-          type="submit"
           fullWidth
           variant="contained"
           color={`success`}
