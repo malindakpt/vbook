@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { config } from "../config";
 import { Record } from "../types/Record";
@@ -12,19 +12,6 @@ interface Props {
 export const withScroller = <T extends Props>(Component: FC<T>) => {
   return (props: T) => {
     const { records, hasMore } = props;
-
-    // const [prevReceivedData, setPreReceivedvData] = useState<Record[]>([]);
-    // const [mergedData, setMergedData] = useState<Record[]>([]);
-
-    // const isNewDataReceived =
-    //   records?.length > 0 &&
-    //   (prevReceivedData.length === 0 ? true : prevReceivedData[0].id !== records[0].id);
-
-    // if (isNewDataReceived) {
-    //   const allData = [...mergedData, ...records];
-    //   setMergedData(allData);
-    //   setPreReceivedvData(records);
-    // }
 
     const loadFunc = () => {
       if (!props.loading) {

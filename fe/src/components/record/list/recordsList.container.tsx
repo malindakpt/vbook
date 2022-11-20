@@ -12,8 +12,8 @@ import { Record } from "../../../types/Record";
 import { ErrorComponent } from "../../error/error";
 import RecordsGridView from "./recordsGridView";
 import RecordsTimelineView from "./recordsTimelineView";
-import TimelineIcon from '@mui/icons-material/Timeline';
-import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import TimelineIcon from "@mui/icons-material/Timeline";
+import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 
 export const RecordsListContainer = () => {
   let { vid } = useParams(); // incase if we need to view Records of other owner

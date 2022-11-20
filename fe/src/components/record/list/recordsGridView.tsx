@@ -13,6 +13,7 @@ import { FC } from "react";
 import { Record } from "../../../types/Record";
 import { config } from "../../../config";
 import { getServiceType } from "../../../util/helper";
+import { GridItemAdd } from "./addNew/gridItemAdd";
 
 export interface RecordsList {
   hasMore: boolean;
@@ -33,6 +34,7 @@ const RecordsGridView: FC<RecordsList> = ({
     console.log('records Grid', records)
     return (
       <Grid container spacing={2} rowSpacing={4}>
+        <GridItemAdd />
         {records.map((r) => (
           <Grid onClick={() => onSelect(r)} key={r.id} xs={12} sm={6} item>
             <Box sx={{ margin: 0 }}>
@@ -43,7 +45,7 @@ const RecordsGridView: FC<RecordsList> = ({
               {r.imageCount > 0 && (
                 <CardMedia
                   sx={{
-                    height: "200px",
+                    height: "150px",
                   }}
                   image={`${config.imageUrlPrefix}r-${r.id}-0.jpg?${r.updatedAt}`}
                 />

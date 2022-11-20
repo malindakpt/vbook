@@ -14,6 +14,7 @@ import { withScroller } from "../../../hoc/withScroller";
 import { FC } from "react";
 import { Record } from "../../../types/Record";
 import { getServiceType } from "../../../util/helper";
+import { TimelineAdd } from "./addNew/timeLineAdd";
 
 export interface Props {
   hasMore: boolean;
@@ -31,12 +32,21 @@ const RecordsTimelineView: FC<Props> = ({
   onEdit,
   onDelete,
 }) => {
-  console.log('records Timeline', records)
+  console.log("records Timeline", records);
   if (records) {
     return (
       <Timeline position="alternate">
+        <TimelineAdd />
         {records.map((r) => (
-          <TimelineItem  onClick={() => onSelect(r)} key={r.id}>
+          <TimelineItem onClick={() => onSelect(r)} key={r.id}>
+            <TimelineOppositeContent
+              sx={{ m: "auto 0" }}
+              align="right"
+              variant="body2"
+              color="text.secondary"
+            >
+              { new Date(r.date).toLocaleDateString()}
+            </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               <TimelineDot color={getServiceType(r.type)?.color}>
@@ -48,10 +58,8 @@ const RecordsTimelineView: FC<Props> = ({
               <Typography variant="h6" component="span">
                 {getServiceType(r.type)?.label}
               </Typography>
-              <Typography variant="subtitle1">
-                {r.id}
-              </Typography> 
-              <Typography>{r.desc}</Typography>
+              <Typography variant="subtitle1">{r.millage} Km</Typography>
+              {/* <Typography>{r.desc}</Typography> */}
             </TimelineContent>
           </TimelineItem>
         ))}
