@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import AddAPhoto from '@mui/icons-material/AddAPhoto';
+import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import React from "react";
 
 import {
@@ -31,7 +31,7 @@ import {
   TimeToLeave,
 } from "@mui/icons-material";
 import { SearchBox } from "./search";
-import { BadgeAvatars } from "./avatar";
+import { AvatarBadge } from "./avatarBadge";
 
 const pages = [
   { label: "Vehicles", path: "vehicle/list" },
@@ -53,27 +53,15 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = (path: string) => {
     setAnchorElNav(null);
     onMenuClick(path);
   };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-
 
   return (
     <>
@@ -168,47 +156,13 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
                 </Button>
               ))}
             </Box>
-           <SearchBox />
-            <Box sx={{ flexGrow: 0, marginLeft: 1 }}>
-       
-                <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-
-               
-              </Tooltip>  
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {/* <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem> */}
-
-                <MenuItem onClick={onLogout}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
+            <SearchBox />
+            <AvatarBadge onLogout={onLogout} />
           </Toolbar>
         </Container>
       </AppBar>
 
-      <div
-      >
+      <div>
         <SpeedDial
           direction="up"
           ariaLabel="SpeedDial basic example"
