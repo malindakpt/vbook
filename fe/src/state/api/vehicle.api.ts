@@ -82,5 +82,6 @@ export const {
   useReadVehicleQuery,
   useCreateVehicleMutation,
   useDeleteVehicleMutation,
-  useLazySearchVehiclesQuery
+  useLazySearchVehiclesQuery,
+  useSearchVehiclesQuery
 } = vehicleApi;
