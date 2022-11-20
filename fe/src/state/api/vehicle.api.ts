@@ -65,6 +65,12 @@ export const vehicleApi = createApi({
         await axios.post(`/vehicle/list`, arg),
       providesTags: ["Vehicle"],
     }),
+
+    searchVehicles: build.query({
+      queryFn: async (arg: { key: string}) =>
+        await axios.post(`/vehicle/search`, arg),
+      providesTags: ["Vehicle"],
+    }),
   }),
 });
 
@@ -76,4 +82,5 @@ export const {
   useReadVehicleQuery,
   useCreateVehicleMutation,
   useDeleteVehicleMutation,
+  useLazySearchVehiclesQuery
 } = vehicleApi;

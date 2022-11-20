@@ -47,9 +47,10 @@ const actions = [
 
 interface Props {
   onMenuClick: (path: string) => void;
+  onSearch:(key: string) => void;
   onLogout: () => void;
 }
-export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
+export const TopBar: FC<Props> = ({ onMenuClick, onLogout, onSearch }) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -156,7 +157,7 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
                 </Button>
               ))}
             </Box>
-            <SearchBox />
+            <SearchBox onSearch={onSearch} />
             <AvatarBadge onLogout={onLogout} />
           </Toolbar>
         </Container>

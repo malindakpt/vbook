@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { UserModel } from "models/user.model";
 import { VehicleModel } from "models/vehicle.model";
 
 export const createVehicle = async (req: Request, res: Response) => {
@@ -58,6 +59,21 @@ export const deleteVehicle = async (req: Request, res: Response) => {
       },
     });
     return res.status(201).send();
+  } catch (e: any) {
+    return res.status(500).send(e.message);
+  }
+};
+
+export const searchVehicles = async (req: Request, res: Response) => {
+  try {
+    const foundVehicles = await VehicleModel.findAll({
+      where: {
+        regNo: req.body.key
+      },
+      order: [['updatedAt', 'DESC']],
+      include: UserModel
+    });
+    return res.status(201).send(foundVehicles);
   } catch (e: any) {
     return res.status(500).send(e.message);
   }
