@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../state/store";
 import { logout } from "../../state/thunks";
 import { TopBar } from "./topbar"
+import { TopBar2 } from "./topbar2";
 
 export const TopBarContainer = () => {
 
@@ -22,4 +23,5 @@ export const TopBarContainer = () => {
     }
 
     return <TopBar onMenuClick={handleNavigate} onLogout={handleLogout}/>
+    // return <TopBar2 />;
 }

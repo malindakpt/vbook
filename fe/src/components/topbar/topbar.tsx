@@ -13,9 +13,11 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import React from "react";
+
 import {
   alpha,
   Avatar,
+  InputBase,
   Link,
   SpeedDial,
   SpeedDialAction,
@@ -28,6 +30,8 @@ import {
   PlaylistAdd,
   TimeToLeave,
 } from "@mui/icons-material";
+import { SearchBox } from "./search";
+import { BadgeAvatars } from "./avatar";
 
 const pages = [
   { label: "Vehicles", path: "vehicle/list" },
@@ -69,21 +73,7 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
     setAnchorElUser(null);
   };
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  }));
+
 
   return (
     <>
@@ -178,21 +168,16 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout }) => {
                 </Button>
               ))}
             </Box>
-            {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search> */}
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+           <SearchBox />
+            <Box sx={{ flexGrow: 0, marginLeft: 1 }}>
+       
+                <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
-              </Tooltip>
+
+               
+              </Tooltip>  
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
