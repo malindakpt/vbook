@@ -47,10 +47,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface Props {
+  searchKey: string;
   onSearch: (key: string) => void;
 }
-export const SearchBox: FC<Props> = ({ onSearch }) => {
-  const [keyword, setKeyword] = useState("");
+export const SearchBox: FC<Props> = ({ searchKey, onSearch }) => {
+  const [keyword, setKeyword] = useState(searchKey);
 
   return (
     <Search>

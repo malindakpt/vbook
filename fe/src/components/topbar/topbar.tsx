@@ -46,11 +46,12 @@ const actions = [
 // const settings = ['Profile','Logout'];
 
 interface Props {
+  searchKey: string;
   onMenuClick: (path: string) => void;
   onSearch:(key: string) => void;
   onLogout: () => void;
 }
-export const TopBar: FC<Props> = ({ onMenuClick, onLogout, onSearch }) => {
+export const TopBar: FC<Props> = ({ searchKey, onMenuClick, onLogout, onSearch }) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -157,7 +158,7 @@ export const TopBar: FC<Props> = ({ onMenuClick, onLogout, onSearch }) => {
                 </Button>
               ))}
             </Box>
-            <SearchBox onSearch={onSearch} />
+            <SearchBox searchKey={searchKey} onSearch={onSearch} />
             <AvatarBadge onLogout={onLogout} />
           </Toolbar>
         </Container>

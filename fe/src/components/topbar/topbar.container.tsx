@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../state/store";
 import { logout } from "../../state/thunks";
 import { TopBar } from "./topbar";
@@ -7,6 +7,8 @@ export const TopBarContainer = () => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.app.user);
   const dispatch = useAppDispatch();
+  let [searchParams] = useSearchParams();
+  const key = searchParams.get("key") ?? "";
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -29,6 +31,7 @@ export const TopBarContainer = () => {
       onMenuClick={handleNavigate}
       onSearch={handleSearch}
       onLogout={handleLogout}
+      searchKey={key}
     />
   );
 };

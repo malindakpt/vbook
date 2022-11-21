@@ -1,6 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  useReadVehiclesQuery,
   useSearchVehiclesQuery,
 } from "../../../state/api/vehicle.api";
 import { useAppSelector } from "../../../state/store";
