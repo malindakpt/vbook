@@ -66,10 +66,12 @@ export const deleteVehicle = async (req: Request, res: Response) => {
 
 export const searchVehicles = async (req: Request, res: Response) => {
   try {
+
+    const where = req.body.key ? {
+      regNo: req.body.key
+    } : {};
     const foundVehicles = await VehicleModel.findAll({
-      where: {
-        regNo: req.body.key
-      },
+      where,
       order: [['updatedAt', 'DESC']],
       include: UserModel
     });

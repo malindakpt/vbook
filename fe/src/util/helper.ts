@@ -3,7 +3,13 @@ import { AxiosError } from "axios";
 import { removeCookie } from "typescript-cookie";
 import { PopupType } from "../enum/popup.type";
 import { showPopup } from "../state/api/userSlice";
-import { fuelTypes, serviceTypes, transmissionTypes, vehicleBrands, vehicleTypes } from "./selectOptions";
+import {
+  fuelTypes,
+  serviceTypes,
+  transmissionTypes,
+  vehicleBrands,
+  vehicleTypes,
+} from "./selectOptions";
 
 export const showErrorFromResponse = (e: unknown, dispatch: Dispatch) => {
   dispatch(
@@ -41,25 +47,27 @@ export const getFormattedDate = (d: Date) => {
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 };
 
-
 export const getVehicleTypeLabel = (id: number) => {
-  const type = vehicleTypes.find(s=> s.id === id);
-  return type ? type.label : 'N/A';
-}
+  const type = vehicleTypes.find((s) => s.id === id);
+  return type ? type.label : "N/A";
+};
 
-export const getServiceType = (id: number) => serviceTypes.find(s=> s.id === id);
+export const getServiceType = (id: number) =>
+  serviceTypes.find((s) => s.id === id);
 
 export const getFuelTypeLabel = (id: number) => {
-  const type = fuelTypes.find(s=> s.id === id);
-  return type ? type.label : 'N/A';
-}
+  const type = fuelTypes.find((s) => s.id === id);
+  return type ? type.label : "N/A";
+};
 
 export const getTransmissionTypeLabel = (id: number) => {
-  const type = transmissionTypes.find(s=> s.id === id);
-  return type ? type.label : 'N/A';
-}
+  const type = transmissionTypes.find((s) => s.id === id);
+  return type ? type.label : "N/A";
+};
 
 export const getVehicleBrandLabel = (id: number) => {
-  const type = vehicleBrands.find(s=> s.id === id);
-  return type ? type.label : 'N/A';
-}
+  const type = vehicleBrands.find((s) => s.id === id);
+  return type ? type.label : "N/A";
+};
+
+export const removeSpecialCharactorsAndCapitalize = (str: string) => str.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();

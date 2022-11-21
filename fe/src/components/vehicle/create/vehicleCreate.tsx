@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Paper, styled } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import { FC, useState } from "react";
 import { useFormState } from "../../../hooks/useFormState";
 import {
@@ -17,6 +17,7 @@ import {
 } from "../../../util/selectOptions";
 import { ImageInput } from "../../inputs/ImageInput";
 import { config } from "../../../config";
+import { sanitizeVehicle } from "./vehicleCreate.util";
 
 interface Props {
   userId: number;
@@ -147,7 +148,7 @@ export const VehicleCreate: FC<Props> = ({
             onImageSelected={onImageChange}
           />
 
-          <Button onClick={() => onSave(vehicleState, image)}>
+          <Button onClick={() => onSave(sanitizeVehicle(vehicleState), image)}>
             {isSimpleMode ? `Add Photo` : `Save Vehicle`}
           </Button>
         </Grid>

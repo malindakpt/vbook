@@ -2,6 +2,7 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { FC, useState } from "react";
+import { removeSpecialCharactorsAndCapitalize } from "../../util/helper";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -51,11 +52,6 @@ interface Props {
 export const SearchBox: FC<Props> = ({ onSearch }) => {
   const [keyword, setKeyword] = useState("");
 
-  const invokeSearch = (e: any) => {
-    console.log(keyword);
-    onSearch(keyword);
-  };
-
   return (
     <Search>
       <SearchIconWrapper>
@@ -71,8 +67,7 @@ export const SearchBox: FC<Props> = ({ onSearch }) => {
           if (ev.key === "Enter") {
             // Do code here
             ev.preventDefault();
-            console.log(keyword);
-            onSearch(keyword);
+            onSearch(removeSpecialCharactorsAndCapitalize(keyword));
           }
         }}
       />

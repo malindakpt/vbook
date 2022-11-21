@@ -13,11 +13,17 @@ pagination for records
 implement a image preview for Imge input
 What happens when remove vehicle image and save
 Remove image from record and vehicle
+RegNo and chassis trim()
+loading behavior handling
+SSR for FE routes
+seach desc, regNo, chassis model by searchRoute be
 
 Trade vehicles
 Trade parts
 Insurance company integration
 
+
+A feedback box to get customer suggersions
 
 commmonJS esm es umd module 
 package.json module attr
