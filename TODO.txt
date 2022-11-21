@@ -19,9 +19,7 @@ SSR for FE routes
 seach desc, regNo, chassis model by searchRoute be
 fill searchbox with key value in url
 
-Trade vehicles
-Trade parts
-Insurance company integration
+Show only available fields in vehicle grid view and detail view
 
 
 A feedback box to get customer suggersions
@@ -34,3 +32,7 @@ module system of nodejs
 
 Domain names:
 VBOX
+
+Trade vehicles
+Trade parts
+Insurance company integration

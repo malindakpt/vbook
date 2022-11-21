@@ -69,7 +69,14 @@ export const searchVehicles = async (req: Request, res: Response) => {
   try {
     const where = req.body.key
       ? {
-          regNo: { [Op.like]: `%${req.body.key}%` },
+          [Op.or]: [
+            {
+              regNo: { [Op.like]: `%${req.body.key}%` },
+            },
+            {
+              chassis: { [Op.like]: `%${req.body.key}%` },
+            },
+          ],
         }
       : {};
     const foundVehicles = await VehicleModel.findAll({
