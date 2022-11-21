@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserModel } from "models/user.model";
 import { VehicleModel } from "models/vehicle.model";
+import { Op } from "sequelize";
 
 export const createVehicle = async (req: Request, res: Response) => {
   try {
@@ -24,7 +25,7 @@ export const readVehicles = async (req: Request, res: Response) => {
   try {
     const foundVehicles = await VehicleModel.findAll({
       where: req.body,
-      order: [['updatedAt', 'DESC']]
+      order: [["updatedAt", "DESC"]],
     });
     return res.status(201).send(foundVehicles);
   } catch (e: any) {
@@ -39,7 +40,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
       where: { id },
     });
     if (foundVehicle) {
-      foundVehicle.changed('updatedAt', true);
+      foundVehicle.changed("updatedAt", true);
       const updated = await foundVehicle.update(req.body);
       return res.status(201).send(updated);
     } else {
@@ -66,14 +67,15 @@ export const deleteVehicle = async (req: Request, res: Response) => {
 
 export const searchVehicles = async (req: Request, res: Response) => {
   try {
-
-    const where = req.body.key ? {
-      regNo: req.body.key
-    } : {};
+    const where = req.body.key
+      ? {
+          regNo: { [Op.like]: `%${req.body.key}%` },
+        }
+      : {};
     const foundVehicles = await VehicleModel.findAll({
       where,
-      order: [['updatedAt', 'DESC']],
-      include: UserModel
+      order: [["updatedAt", "DESC"]],
+      include: UserModel,
     });
     return res.status(201).send(foundVehicles);
   } catch (e: any) {
