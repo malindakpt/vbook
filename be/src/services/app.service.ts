@@ -1,5 +1,6 @@
 import { config } from "config";
 import express from "express";
+import https from 'https';
 import { setUserRoutes } from "../routes/user.routes";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -9,7 +10,19 @@ import cookies from "cookie-parser";
 import { setRecordRoutes } from "routes/record.routes";
 import { setVehicleRoutes } from "routes/vehicle.routes";
 import path from 'path';
+import fs from 'fs';
+
+
 const app = express();
+
+const credentials = {
+  key: fs.readFileSync('./cert/key.pem'),
+  cert: fs.readFileSync('./cert/cert.pem')
+};
+
+
+
+
 
 app.use(
   cors({
@@ -53,8 +66,10 @@ app.use('/', express.static('build'))
 //   }
 // });
 
+const httpsServer = https.createServer(credentials, app);
+
 export const startApplication = () => {
-  app.listen(config.port, () => {
+  httpsServer.listen(config.port, () => {
     console.log("------------- Server Started -------------", config.port);
   });
 };

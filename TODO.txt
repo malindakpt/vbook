@@ -1,3 +1,6 @@
+rootadmin
+abcd1234@
+
 How to add a column to existing table
 Sync table schema with actual db at startup
 Reset password windw and generate link
@@ -21,7 +24,7 @@ fill searchbox with key value in url
 Implement routes which can be accessed without login and SSR them if possible
 Show only available fields in vehicle grid view and detail view
 location selector/automatically select location
-
+Include user i nformataion in vehicle page
 
 A feedback box to get customer suggersions
 
@@ -30,10 +33,32 @@ package.json module attr
 module system of nodejs
 
 
+odopin.com
+motohis.com
+ODOTREE
+camrot.com
 
+
+
+------------
 Domain names:
 VBOX
-
+vehisit
+carnet.com
+vtree
+vehibox.com
+odotree.com
+vmarker.com
+~past~
+odomarker.com
+pastmobile.com
+autopool.com
+motopast.com
+panel
+board
+memo
 Trade vehicles
 Trade parts
 Insurance company integration
+
+Night drive assit feature
