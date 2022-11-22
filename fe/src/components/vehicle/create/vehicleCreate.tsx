@@ -6,7 +6,7 @@ import {
   NumberInput,
   AutoInput,
   AutoInputImage,
-} from "../../inputs";
+} from "../../shared";
 
 import { Vehicle } from "../../../types/Vehicle";
 import {
@@ -15,7 +15,7 @@ import {
   vehicleBrands,
   vehicleTypes,
 } from "../../../util/selectOptions";
-import { ImageInput } from "../../inputs/ImageInput";
+import { ImageInput } from "../../shared/ImageInput";
 import { config } from "../../../config";
 import { sanitizeVehicle } from "./vehicleCreate.util";
 

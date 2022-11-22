@@ -1,13 +1,13 @@
 import { Button, Container, Grid } from "@mui/material";
 import { FC, useState } from "react";
 import { useFormState } from "../../../hooks/useFormState";
-import { TextInput, NumberInput, AutoInput } from "../../inputs";
+import { TextInput, NumberInput, AutoInput } from "../../shared";
 
 import { Record } from "../../../types/Record";
 import { SelectOption } from "../../../types/SelectOption";
 import { serviceTypes } from "../../../util/selectOptions";
-import { ImageInput } from "../../inputs/ImageInput";
-import { DateInput } from "../../inputs/DateInput";
+import { ImageInput } from "../../shared/ImageInput";
+import { DateInput } from "../../shared/DateInput";
 import { getFormattedDate } from "../../../util/helper";
 import { config } from "../../../config";
 

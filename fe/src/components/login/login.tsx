@@ -4,17 +4,17 @@ import { FC } from "react";
 import { Copyright } from "./copyright";
 import { SignUpContainer } from "./signUp/signUp.container";
 import { LoginUIMode } from "../../enum/login.ui.mode";
-import { colors, Grid, Link } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { SignInContainer } from "./signIn/signIn.container";
 import { ForgotPasswordContainer } from "./forgotPassword/forgotPassword.container";
 import { ChangePasswordContainer } from "./changePassword/changePassword.container";
 
 const theme = createTheme({
-  palette:{
-    primary: {
-      main: colors.deepPurple[500],
-    }
-  }
+  // palette: {
+  //   primary: {
+  //     // main: colors.deepPurple[500],
+  //   },
+  // },
 });
 
 interface Props {
@@ -43,9 +43,25 @@ export const Login: FC<Props> = ({ onModeChange, mode }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container>
-        <Grid item xs={12} sm={5}>
-          <Box 
+      <Grid
+        container
+        style={{ background: "#e0f7fa", height: "100vh" }}
+        alignItems="center"
+        justifyContent="center"
+        textAlign={"center"}
+      >
+        <Grid item xs={12} sm={6} margin={1}>
+          <Typography variant="h1">
+            <b>All In One</b>
+          </Typography>
+          <Typography variant="h3">Diary Of Vehicles</Typography>
+          <Typography variant="subtitle1">
+            Say <b>'NO'</b>to paper service records and let all new owners to
+            check the history from one place
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={5} md={4} lg={3}>
+          <Box
             sx={{
               margin: 4,
               display: "flex",

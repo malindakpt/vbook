@@ -6,6 +6,7 @@ interface Props {
   name: string;
   value: string;
   label: string;
+  type?: string;
   multiline?: boolean;
   disabled: boolean;
   onChange: (key: string, value: number | string) => void;
@@ -16,7 +17,8 @@ export const TextInput: FC<Props> = ({
   label,
   onChange,
   disabled,
-  multiline
+  multiline,
+  type
 }) => {
   return (
     <TextField
@@ -25,11 +27,13 @@ export const TextInput: FC<Props> = ({
       margin="normal"
       required
       fullWidth
+      type = {type}
       multiline={multiline}
       label={label}
       autoComplete="off"
       error={!Validators.text(value)}
       disabled={disabled}
+      variant="standard"
     />
   );
 };

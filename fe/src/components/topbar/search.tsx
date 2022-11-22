@@ -63,7 +63,7 @@ export const SearchBox: FC<Props> = ({ searchKey, onSearch }) => {
       {/* </SearchIconWrapper> */}
       <StyledInputBase
         value={keyword}
-        placeholder="Search…"
+        placeholder="Veicle Reg No, Chassis No ..."
         inputProps={{ "aria-label": "search" }}
         // onBlur={invokeSearch}
         onChange={(e) => setKeyword(e.target.value)}

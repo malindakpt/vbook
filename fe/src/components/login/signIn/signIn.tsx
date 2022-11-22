@@ -1,87 +1,68 @@
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Validators } from "../../../util/validators";
+import { TextInput } from "../../shared";
+import { useFormState } from "../../../hooks/useFormState";
+import { CustomButton } from "../../shared/CustomButton";
 
 interface Props {
   loading: boolean;
-  onSignIn: (args: {
-    identifier: string;
-    password: string;
-  }) => void;
+  onSignIn: (args: { identifier: string; password: string }) => void;
 }
 export const SignIn: FC<Props> = ({ loading, onSignIn }) => {
-  const [state, setState] = useState({
+
+  const [state, changeProperty] = useFormState({
     identifier: "",
     password: "",
   });
-
-  const handleStateChange = (prop: string, value: string | number) => {
-    setState((prev) => ({ ...prev, [prop]: value }));
-  };
 
   const handleSignIn = () => {
     onSignIn(state);
   };
 
   const isReadyToSubmit = () => {
-    if(Validators.text(state.identifier) && Validators.text(state.password) ){
+    if (Validators.text(state.identifier) && Validators.text(state.password)) {
       return true;
     }
     return false;
-  }
+  };
 
   return (
     <>
-      <Typography component="h1" variant="h3" color="primary">
+      <Typography component="h1" variant="h4" color="primary">
         Sign In
       </Typography>
       <Box component="form" noValidate sx={{ mt: 1 }}>
 
-        <TextField
+        <TextInput
           value={state.identifier}
-          onChange={(e) => handleStateChange("identifier", e.target.value)}
-          margin="normal"
-          required
-          fullWidth
+          name="identifier"
           label="Email Address/ Phone Number"
-          autoFocus
-          error={!Validators.text(state.identifier)}
+          onChange={changeProperty}
           disabled={loading}
         />
 
-        <TextField
+        <TextInput
           value={state.password}
-          onChange={(e) => handleStateChange("password", e.target.value)}
-          margin="normal"
-          required
-          fullWidth
-          label="Enter Password"
-          type="password"
-          autoComplete="off"
-          error={!Validators.password(state.password)}
+          name="password"
+          label="Password"
+          onChange={changeProperty}
           disabled={loading}
-        /> 
+        />
 
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
         />
 
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          sx={{ mt: 3, mb: 2 }}
+        <CustomButton
+          label="Sign In"
           onClick={handleSignIn}
           disabled={loading || !isReadyToSubmit()}
-        >
-          Sign In
-        </Button>
+        />
       </Box>
     </>
   );

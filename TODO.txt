@@ -20,6 +20,7 @@ seach desc, regNo, chassis model by searchRoute be
 fill searchbox with key value in url
 Implement routes which can be accessed without login and SSR them if possible
 Show only available fields in vehicle grid view and detail view
+location selector/automatically select location
 
 
 A feedback box to get customer suggersions
