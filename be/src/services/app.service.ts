@@ -9,7 +9,6 @@ import { validateToken } from "middlewares/token.middleware";
 import cookies from "cookie-parser";
 import { setRecordRoutes } from "routes/record.routes";
 import { setVehicleRoutes } from "routes/vehicle.routes";
-import path from 'path';
 import fs from 'fs';
 
 
@@ -42,9 +41,9 @@ setUserRoutes(app);
 setRecordRoutes(app);
 setVehicleRoutes(app);
 
-// app.get("/", (req, res) => {
-//   res.status(200).send("<h3>App is working</h3>");
-// });
+app.get("/sttus", (req, res) => {
+  res.status(200).send("<h3>App is working</h3>");
+});
 
 app.use('/', express.static('build'))
 // app.use('/static/js/', express.static('build/static/js'))
@@ -69,7 +68,10 @@ app.use('/', express.static('build'))
 const httpsServer = https.createServer(credentials, app);
 
 export const startApplication = () => {
-  httpsServer.listen(config.port, () => {
+  app.listen(config.port, () => {
     console.log("------------- Server Started -------------", config.port);
   });
+  // httpsServer.listen(config.port, () => {
+  //   console.log("------------- Server Started -------------", config.port);
+  // });
 };
