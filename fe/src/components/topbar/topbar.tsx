@@ -8,30 +8,23 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import React from "react";
 
 import {
-  alpha,
-  Avatar,
-  InputBase,
-  Link,
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
-  styled,
 } from "@mui/material";
 import {
-  Add,
   DirectionsCar,
   PlaylistAdd,
-  TimeToLeave,
 } from "@mui/icons-material";
 import { SearchBox } from "./search";
 import { AvatarBadge } from "./avatarBadge";
+import logo from './logo.png';
 
 const pages = [
   { label: "Vehicles", path: "vehicle/list" },
@@ -70,7 +63,7 @@ export const TopBar: FC<Props> = ({ searchKey, onMenuClick, onLogout, onSearch }
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -86,9 +79,9 @@ export const TopBar: FC<Props> = ({ searchKey, onMenuClick, onLogout, onSearch }
                 textDecoration: "none",
               }}
             >
-              LOGO
-            </Typography>
-
+              <img src={logo} alt="asd" height="50px"/>
+            </Typography> */}
+            <img src={logo} alt="asd" height="50px"/>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
